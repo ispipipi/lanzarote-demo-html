@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lanzarote - Producción por Turno</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .delta-track {
+            height: 6px;
+            background-color: #e5eeff;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        .delta-fill {
+            height: 100%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(203, 219, 245, 0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#f8f9ff",
+                      "surface-tint": "#565e74",
+                      "surface-dim": "#cbdbf5",
+                      "surface-container": "#e5eeff",
+                      "background": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-container": "#131b2e",
+                      "error": "#ba1a1a",
+                      "outline": "#76777d",
+                      "tertiary-container": "#002113",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-tertiary-container": "#009668",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-primary-container": "#7c839b",
+                      "on-background": "#0b1c30",
+                      "inverse-primary": "#bec6e0",
+                      "surface-container-high": "#dce9ff",
+                      "primary-fixed": "#dae2fd",
+                      "on-surface": "#0b1c30",
+                      "surface-container-low": "#eff4ff",
+                      "tertiary": "#000000",
+                      "on-tertiary-fixed": "#002113",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d3e4fe",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary": "#000000",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#001a42",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#d8e2ff",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#213145",
+                      "secondary": "#0058be",
+                      "outline-variant": "#c6c6cd",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-container": "#fefcff",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "secondary-container": "#2170e4",
+                      "on-primary-fixed": "#131b2e",
+                      "surface-bright": "#f8f9ff",
+                      "on-surface-variant": "#45464d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "card-padding": "20px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "32px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "mono-data": ["JetBrains Mono"],
+                      "label-caps": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "display-kpi": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-kpi": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface font-body-sm text-on-surface min-h-screen flex">
+<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-gutter px-4 z-50" id="sidebar"></aside>
+<main class="flex-1 flex flex-col min-w-0">
+<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-40 bg-surface-bright shadow-sm border-b border-outline-variant" id="topbar"></header>
+<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-6" id="dashboard-root"></div>
+</main>
+<script src="state.js"></script>
+<script>
+        const dashboardApi = window.LanzaroteState;
+
+        function renderDashboard() {
+            const snapshot = dashboardApi.recalcularDashboard();
+            const state = snapshot.state;
+            const metrics = snapshot.metrics;
+            const soldConfig = [
+                { id: "meson", label: "Meson", tone: "bg-secondary" },
+                { id: "retiro", label: "Retiro", tone: "bg-slate-500" },
+                { id: "delivery", label: "Delivery", tone: "bg-emerald-500" }
+            ];
+
+            dashboardApi.mountShell({
+                activePage: "dashboard",
+                title: "Dashboard",
+                header: {
+                    eyebrow: "GLOBAL OVERVIEW",
+                    badge: "Ultimo cruce 14:30",
+                    badgeIcon: "schedule",
+                    secondaryActions: [
+                        { id: "dashboard-refresh", icon: "autorenew", label: "Refrescar" },
+                        { id: "dashboard-history", icon: "history", label: "Historial" }
+                    ],
+                    primaryAction: { id: "dashboard-reset", icon: "restart_alt", label: "Reset Demo" }
+                }
+            });
+
+            const soldCards = soldConfig.map((item) => {
+                const units = metrics.soldByChannel[item.id].units;
+                const width = Math.max(18, Math.min(100, Math.round((units / Math.max(1, metrics.totalSoldUnits || 1)) * 100)));
+
+                return `
+                    <div class="rounded border border-outline-variant/20 bg-surface-container-low p-3">
+                        <p class="mb-2 text-xs font-label-caps uppercase text-on-surface-variant">${item.label}</p>
+                        <p class="font-display-kpi text-xl leading-none text-primary">${units.toLocaleString("es-CL")}</p>
+                        <div class="mt-2 h-1 w-full overflow-hidden rounded-full bg-slate-200">
+                            <div class="h-full ${item.tone}" style="width:${width}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            const rows = metrics.recentConciliations.map((row, index) => {
+                const channelLabel = index % 3 === 0 ? "Retiro" : index % 3 === 1 ? "Meson" : "Delivery";
+                const soldReference = [83, 38, 44, 76, 22][index] || 0;
+                const badgeClass = row.estado === "Revision"
+                    ? "bg-error-container text-error"
+                    : "bg-on-tertiary-container/10 text-on-tertiary-container";
+
+                return `
+                    <tr class="transition-colors hover:bg-surface-container-low">
+                        <td class="px-6 py-4 font-mono-data">${dashboardApi.escapeHtml(row.producto)}</td>
+                        <td class="px-6 py-4">${channelLabel}</td>
+                        <td class="px-6 py-4">${row.real.toLocaleString("es-CL")}</td>
+                        <td class="px-6 py-4 font-bold ${row.estado === "Revision" ? "text-error" : "text-primary"}">${soldReference.toLocaleString("es-CL")}</td>
+                        <td class="px-6 py-4">
+                            <span class="rounded px-2 py-1 text-xs font-bold ${badgeClass}">${row.estado}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+
+            const alerts = state.alertas.slice(0, 3).map((alert, index) => `
+                <div class="rounded-xl bg-surface-container-low p-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <span class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">${alert.tipo}</span>
+                        <span class="rounded px-2 py-1 text-[10px] font-bold ${
+                            alert.severidad === "alta"
+                                ? "bg-error-container text-error"
+                                : alert.severidad === "media"
+                                    ? "bg-secondary-fixed text-secondary"
+                                    : "bg-surface-container text-on-surface-variant"
+                        }">${alert.severidad}</span>
+                    </div>
+                    <p class="mt-2 text-sm text-on-surface">${dashboardApi.escapeHtml(alert.mensaje)}</p>
+                    <button class="mt-3 text-xs font-semibold uppercase tracking-widest text-secondary alert-detail-button" data-alert-index="${index}" type="button">Ver detalle</button>
+                </div>
+            `).join("");
+
+            const root = document.getElementById("dashboard-root");
+            root.innerHTML = `
+                <section class="relative overflow-hidden rounded-[28px] border border-outline-variant bg-[radial-gradient(circle_at_top_left,_rgba(33,112,228,0.18),_transparent_35%),linear-gradient(135deg,_#ffffff,_#eff4ff)] p-8 shadow-sm">
+                    <div class="absolute -right-10 top-0 h-40 w-40 rounded-full bg-secondary/10 blur-3xl"></div>
+                    <div class="absolute bottom-0 left-10 h-24 w-24 rounded-full bg-tertiary-fixed/40 blur-2xl"></div>
+                    <div class="relative grid grid-cols-12 gap-6">
+                        <div class="col-span-8">
+                            <span class="inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-white/80 px-3 py-1 text-[11px] font-label-caps uppercase tracking-[0.2em] text-secondary">
+                                <span class="material-symbols-outlined text-sm">campaign</span>
+                                Demo comercial en vivo
+                            </span>
+                            <h2 class="mt-4 max-w-3xl font-headline-lg text-[36px] leading-[44px] text-primary">Convierte un recorrido operativo en una historia visible: producir, asignar, vender y conciliar sin salir del mismo demo.</h2>
+                            <p class="mt-4 max-w-2xl text-body-lg text-on-surface-variant">Usa este bloque como cabecera de presentación: muestra el estado global, lanza un pitch guiado y salta directo al módulo que quieras enseñar.</p>
+                            <div class="mt-6 flex flex-wrap gap-3">
+                                <button class="rounded-xl bg-primary px-5 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-colors hover:bg-primary-container" id="dashboard-guided-pitch" type="button">Guided Pitch</button>
+                                <button class="rounded-xl bg-white px-5 py-3 text-sm font-semibold uppercase tracking-widest text-secondary shadow-sm transition-colors hover:bg-surface-container" id="dashboard-demo-story" type="button">Storyline</button>
+                                <button class="rounded-xl bg-white px-5 py-3 text-sm font-semibold uppercase tracking-widest text-primary shadow-sm transition-colors hover:bg-surface-container" id="dashboard-jump-live" type="button">Jump to Live Flow</button>
+                            </div>
+                        </div>
+                        <div class="col-span-4 space-y-3">
+                            <div class="rounded-2xl bg-white/85 p-4 shadow-sm">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Valor que se demuestra</p>
+                                <p class="mt-2 text-sm text-on-surface">Control en tiempo real, trazabilidad completa y conversación comercial lista para dueños y operadores.</p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="rounded-2xl bg-primary-container p-4 text-left text-white transition-transform hover:-translate-y-0.5" id="dashboard-open-production-card" type="button">
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-primary-fixed-dim">Paso 1</p>
+                                    <p class="mt-2 font-semibold">Produccion</p>
+                                </button>
+                                <button class="rounded-2xl bg-white/85 p-4 text-left shadow-sm transition-transform hover:-translate-y-0.5" id="dashboard-open-sales-card" type="button">
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Paso 3</p>
+                                    <p class="mt-2 font-semibold text-primary">Ventas</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="grid grid-cols-12 items-stretch gap-6">
+                    <div class="col-span-8 relative overflow-hidden rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <div class="mb-8 flex items-start justify-between gap-4">
+                            <div>
+                                <span class="mb-1 block font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Conciliacion automatica</span>
+                                <h3 class="font-headline-lg text-headline-lg text-primary">Estado de Flujo Real-Time</h3>
+                            </div>
+                            <div class="flex items-center gap-2 rounded border border-outline-variant/30 bg-surface-container px-3 py-1.5">
+                                <span class="material-symbols-outlined text-sm text-secondary">schedule</span>
+                                <span class="font-mono-data text-mono-data text-on-surface-variant">Sin backend · localStorage</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-12 py-4">
+                            <div class="relative flex h-48 w-48 items-center justify-center">
+                                <svg class="h-full w-full -rotate-90" viewBox="0 0 200 200">
+                                    <circle cx="100" cy="100" fill="transparent" r="88" stroke="#E2E8F0" stroke-width="12"></circle>
+                                    <circle
+                                        cx="100"
+                                        cy="100"
+                                        fill="transparent"
+                                        r="88"
+                                        stroke="#0058be"
+                                        stroke-dasharray="${2 * Math.PI * 88}"
+                                        stroke-dashoffset="${(2 * Math.PI * 88) - ((Math.max(0, Math.min(100, metrics.conciliationPct)) / 100) * (2 * Math.PI * 88))}"
+                                        stroke-linecap="round"
+                                        stroke-width="12"
+                                    ></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="font-display-kpi text-display-kpi leading-none text-primary">${metrics.conciliationPct}%</span>
+                                    <span class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant">Eficacia Conc.</span>
+                                </div>
+                            </div>
+                            <div class="w-full flex-1 space-y-6">
+                                ${renderDeltaBar("Unidades producidas", metrics.totalPlanned, metrics.totalProduced, "")}
+                                ${renderDeltaBar("Volumen de carga (KG)", 840, 842.1, " kg")}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-4 flex flex-col gap-6">
+                        <div class="relative overflow-hidden rounded-lg border border-on-tertiary-container/20 bg-tertiary-container p-card-padding text-on-tertiary shadow-sm">
+                            <div class="relative z-10">
+                                <div class="mb-2 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-tertiary-fixed">check_circle</span>
+                                    <span class="font-label-caps text-label-caps uppercase tracking-widest text-tertiary-fixed">Status operativo</span>
+                                </div>
+                                <h4 class="font-headline-lg text-headline-lg leading-tight">${metrics.statusLabel}</h4>
+                                <p class="mt-2 text-body-sm text-tertiary-fixed/80">
+                                    ${metrics.statusLabel === "Todo Cuadra"
+                                        ? "Los flujos de produccion coinciden con las ordenes activas."
+                                        : "Existen desviaciones controladas entre produccion, distribucion y ventas."}
+                                </p>
+                            </div>
+                            <div class="relative z-10 mt-6 space-y-3">
+                                <div class="rounded-lg border border-white/10 bg-black/20 p-3">
+                                    <div class="mb-1 flex items-center justify-between text-xs font-label-caps">
+                                        <span>Cumplimiento SLA</span>
+                                        <span class="text-tertiary-fixed">${state.slaCumplimiento}%</span>
+                                    </div>
+                                    <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+                                        <div class="h-full bg-tertiary-fixed" style="width:${state.slaCumplimiento}%"></div>
+                                    </div>
+                                </div>
+                                <button class="w-full rounded bg-tertiary-fixed py-3 text-xs font-semibold uppercase tracking-widest text-tertiary-container" id="open-production" type="button">
+                                    Ir a Production
+                                </button>
+                            </div>
+                        </div>
+                        <div class="rounded-lg border border-outline-variant bg-white p-4 shadow-sm">
+                            <div class="mb-4 flex items-center justify-between">
+                                <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Alertas activas</p>
+                                <span class="text-sm font-semibold text-secondary">${String(state.alertas.length).padStart(2, "0")}</span>
+                            </div>
+                            <div class="space-y-3">
+                                ${alerts || '<p class="text-sm text-on-surface-variant">Sin alertas activas.</p>'}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="grid grid-cols-4 gap-6">
+                    <div class="rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <div class="mb-4 flex items-start justify-between gap-3">
+                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Producido total</span>
+                            <span class="material-symbols-outlined text-on-surface-variant/40">heat</span>
+                        </div>
+                        <div class="mb-1 flex items-baseline gap-2">
+                            <span class="font-display-kpi text-3xl leading-none text-primary">${metrics.totalProduced.toLocaleString("es-CL")}</span>
+                            <span class="text-body-sm text-on-surface-variant">uds</span>
+                        </div>
+                        <p class="text-xs font-bold text-secondary">${metrics.productionAccuracy}% del plan diario</p>
+                    </div>
+                    <div class="rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <div class="mb-4 flex items-start justify-between gap-3">
+                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Volumen activo</span>
+                            <span class="material-symbols-outlined text-on-surface-variant/40">stacks</span>
+                        </div>
+                        <div class="mb-1 flex items-baseline gap-2">
+                            <span class="font-display-kpi text-3xl leading-none text-primary">${metrics.availableUnits.toLocaleString("es-CL")}</span>
+                            <span class="text-body-sm text-on-surface-variant">uds</span>
+                        </div>
+                        <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                            <div class="h-full rounded-full bg-secondary" style="width:${Math.max(18, Math.min(100, metrics.productionAccuracy))}%"></div>
+                        </div>
+                        <p class="mt-2 text-xs font-bold text-secondary">Stock listo para asignacion</p>
+                    </div>
+                    <div class="col-span-2 rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <div class="mb-4 flex items-start justify-between gap-3">
+                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Vendido por canal</span>
+                            <span class="material-symbols-outlined text-on-surface-variant/40">shopping_bag</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            ${soldCards}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="grid grid-cols-4 gap-6">
+                    <div class="col-span-3 rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <div class="mb-4 flex items-start justify-between gap-3">
+                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Merma / no vendido</span>
+                            <span class="material-symbols-outlined text-on-surface-variant/40">delete_sweep</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="rounded border border-outline-variant/20 bg-surface-container-low p-3">
+                                <p class="mb-2 text-xs font-label-caps uppercase text-on-surface-variant">Descarte</p>
+                                <p class="font-display-kpi text-xl leading-none text-primary">${metrics.totalWaste.toLocaleString("es-CL")}</p>
+                                <p class="mt-2 text-xs font-bold text-error">Controlado</p>
+                            </div>
+                            <div class="rounded border border-outline-variant/20 bg-surface-container-low p-3">
+                                <p class="mb-2 text-xs font-label-caps uppercase text-on-surface-variant">No vendido</p>
+                                <p class="font-display-kpi text-xl leading-none text-primary">${metrics.unsoldUnits.toLocaleString("es-CL")}</p>
+                                <p class="mt-2 text-xs font-bold text-secondary">En canal</p>
+                            </div>
+                            <div class="rounded border border-outline-variant/20 bg-surface-container-low p-3">
+                                <p class="mb-2 text-xs font-label-caps uppercase text-on-surface-variant">Impacto</p>
+                                <p class="font-display-kpi text-xl leading-none text-primary">${((metrics.noVendidoTotal / Math.max(1, metrics.totalProduced)) * 100).toFixed(1)}%</p>
+                                <p class="mt-2 text-xs font-bold text-error">Objetivo &lt; 2%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <div class="mb-4 flex items-center justify-between gap-3">
+                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Cobrado hoy</span>
+                            <span class="material-symbols-outlined text-on-surface-variant/40">payments</span>
+                        </div>
+                        <p class="font-display-kpi text-3xl leading-none text-primary">${metrics.formattedSoldAmount}</p>
+                        <p class="mt-2 text-xs font-bold text-on-tertiary-container">${metrics.totalSoldUnits.toLocaleString("es-CL")} unidades vendidas</p>
+                    </div>
+                </section>
+
+                <section class="grid grid-cols-3 gap-6">
+                    <div class="col-span-2 overflow-hidden rounded-lg border border-outline-variant bg-white shadow-sm">
+                        <div class="flex items-center justify-between border-b border-outline-variant bg-surface-bright p-card-padding">
+                            <h3 class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Ultimos registros de conciliacion</h3>
+                            <button class="flex items-center gap-1 text-xs font-bold text-secondary" id="go-sales" type="button">
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                Ir a Sales
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left font-body-sm">
+                                <thead>
+                                    <tr class="bg-surface-container-lowest text-xs font-label-caps uppercase text-on-surface-variant">
+                                        <th class="px-6 py-3">Referencia</th>
+                                        <th class="px-6 py-3">Canal</th>
+                                        <th class="px-6 py-3">Producido</th>
+                                        <th class="px-6 py-3">Vendido</th>
+                                        <th class="px-6 py-3">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-outline-variant/30">
+                                    ${rows}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="flex flex-col overflow-hidden rounded-lg bg-surface-container-highest p-1">
+                        <div class="relative min-h-[420px] flex-1 overflow-hidden rounded-lg border border-outline-variant bg-gradient-to-b from-sky-100 via-slate-200 to-slate-500">
+                            <div class="absolute inset-0" style="background:radial-gradient(circle at 20% 20%, rgba(255,255,255,0.42), transparent 22%), linear-gradient(180deg, rgba(255,255,255,0.08), rgba(15,23,42,0.26));"></div>
+                            <div class="absolute border border-slate-500/20 bg-gradient-to-b from-slate-300 to-slate-500 shadow-inner" style="left:14%; top:12%; width:66%; height:72%; border-radius:42%;"></div>
+                            <div class="absolute border border-slate-600/15 bg-gradient-to-b from-slate-200/80 to-slate-400/80" style="left:24%; top:15%; width:52%; height:67%; border-radius:38%;"></div>
+                            ${[
+                                { top: "18%", left: "62%" },
+                                { top: "22%", left: "70%" },
+                                { top: "35%", left: "58%" },
+                                { top: "43%", left: "76%" },
+                                { top: "48%", left: "67%" },
+                                { top: "58%", left: "54%" },
+                                { top: "64%", left: "72%" },
+                                { top: "74%", left: "60%" }
+                            ].map((point) => `<span class="absolute h-2.5 w-2.5 rounded-full bg-cyan-400" style="top:${point.top}; left:${point.left}; box-shadow:0 0 0 4px rgba(34,211,238,0.18);"></span>`).join("")}
+                            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/80 to-transparent p-4">
+                                <span class="mb-1 block font-label-caps text-xs uppercase text-white/70">Live Tracking</span>
+                                <h5 class="font-headline-md text-headline-md leading-none text-white">Rutas de Distribucion</h5>
+                                <div class="mt-3 flex items-center gap-2">
+                                    <div class="flex -space-x-2">
+                                        <div class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-primary bg-secondary text-xs text-white">4</div>
+                                        <div class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-primary bg-tertiary-fixed text-xs text-primary">2</div>
+                                    </div>
+                                    <span class="font-mono-data text-xs text-white/80">6 camiones en ruta</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="m-3 flex items-center justify-center gap-2 rounded bg-white p-3 text-xs font-semibold uppercase tracking-widest text-primary shadow-sm transition-colors hover:bg-primary hover:text-white" id="go-distribution" type="button">
+                            <span class="material-symbols-outlined text-sm">map</span>
+                            Ver distribucion
+                        </button>
+                    </div>
+                </section>
+            `;
+
+            document.getElementById("dashboard-refresh").addEventListener("click", () => {
+                renderDashboard();
+                dashboardApi.showToast("Dashboard recalculado con el estado actual.", "info");
+            });
+            document.getElementById("dashboard-reset").addEventListener("click", () => {
+                dashboardApi.resetState();
+                dashboardApi.showToast("Demo reiniciada a los datos precargados.", "success");
+                renderDashboard();
+            });
+            document.getElementById("dashboard-history").addEventListener("click", () => {
+                window.location.href = "dashboard.html";
+            });
+            document.getElementById("open-production").addEventListener("click", () => {
+                window.location.href = "production.html";
+            });
+            document.getElementById("go-sales").addEventListener("click", () => {
+                window.location.href = "sales.html";
+            });
+            document.getElementById("go-distribution").addEventListener("click", () => {
+                window.location.href = "distribution.html";
+            });
+            document.getElementById("dashboard-guided-pitch").addEventListener("click", () => {
+                dashboardApi.openModal({
+                    kicker: "Pitch Track",
+                    title: "Guion sugerido para presentar Lanzarote",
+                    body: `
+                        <div class="space-y-4">
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">1. Problema</p>
+                                <p class="mt-2 text-sm text-on-surface">Hoy la panaderia trabaja entre papel, telefonos y planillas. Lanzarote convierte eso en un tablero operativo visible.</p>
+                            </div>
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">2. Flujo</p>
+                                <p class="mt-2 text-sm text-on-surface">Mostramos produccion, luego asignacion por canal y finalmente ventas, todo conciliado en el dashboard.</p>
+                            </div>
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">3. Cierre</p>
+                                <p class="mt-2 text-sm text-on-surface">El mensaje final es control, velocidad y menos friccion para tomar decisiones durante el dia.</p>
+                            </div>
+                        </div>
+                    `,
+                    actions: [
+                        { id: "pitch-close", label: "Cerrar" },
+                        { id: "pitch-go-production", label: "Abrir Production", className: "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-container" }
+                    ]
+                });
+                document.getElementById("pitch-close").addEventListener("click", dashboardApi.closeModal);
+                document.getElementById("pitch-go-production").addEventListener("click", () => {
+                    window.location.href = "production.html";
+                });
+            });
+            document.getElementById("dashboard-demo-story").addEventListener("click", () => {
+                dashboardApi.openModal({
+                    kicker: "Storyline",
+                    title: "Escena sugerida de demo",
+                    body: `
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Morning Rush</p>
+                                <p class="mt-2 text-sm text-on-surface">Parte desde Production con preset estable y avanza a asignacion express.</p>
+                            </div>
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Channel Pressure</p>
+                                <p class="mt-2 text-sm text-on-surface">Usa Distribution para mostrar estrategias retail o delivery en segundos.</p>
+                            </div>
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Cash Visibility</p>
+                                <p class="mt-2 text-sm text-on-surface">Cierra en Sales con tickets y resumen por canal para mostrar impacto.</p>
+                            </div>
+                        </div>
+                    `,
+                    actions: [{ id: "story-close", label: "Cerrar" }]
+                });
+                document.getElementById("story-close").addEventListener("click", dashboardApi.closeModal);
+            });
+            document.getElementById("dashboard-jump-live").addEventListener("click", () => {
+                window.location.href = "production.html";
+            });
+            document.getElementById("dashboard-open-production-card").addEventListener("click", () => {
+                window.location.href = "production.html";
+            });
+            document.getElementById("dashboard-open-sales-card").addEventListener("click", () => {
+                window.location.href = "sales.html";
+            });
+            document.querySelectorAll(".alert-detail-button").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    const alert = state.alertas[Number(event.target.dataset.alertIndex)];
+                    if (!alert) {
+                        return;
+                    }
+                    dashboardApi.openModal({
+                        kicker: "Operational Alert",
+                        title: alert.tipo.toUpperCase(),
+                        body: `
+                            <div class="space-y-4">
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Severidad</p>
+                                    <p class="mt-2 text-base font-semibold text-primary">${dashboardApi.escapeHtml(alert.severidad)}</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Mensaje</p>
+                                    <p class="mt-2 text-sm text-on-surface">${dashboardApi.escapeHtml(alert.mensaje)}</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Timestamp</p>
+                                    <p class="mt-2 text-sm text-on-surface">${dashboardApi.escapeHtml(alert.timestamp)}</p>
+                                </div>
+                            </div>
+                        `,
+                        actions: [
+                            { id: "modal-close-alert", label: "Cerrar" },
+                            { id: "modal-go-audit", label: "Ver Audit Trail", className: "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-container" }
+                        ]
+                    });
+                    document.getElementById("modal-close-alert").addEventListener("click", dashboardApi.closeModal);
+                    document.getElementById("modal-go-audit").addEventListener("click", () => {
+                        window.location.href = "dashboard.html";
+                    });
+                });
+            });
+        }
+
+        function renderDeltaBar(label, expected, real, unit) {
+            const delta = dashboardApi.calcularDelta(expected, real);
+            const width = expected === 0 ? 100 : Math.min(Math.max((real / expected) * 100, 0), 100);
+
+            return `
+                <div class="space-y-2">
+                    <div class="flex items-end justify-between gap-3">
+                        <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">${label}</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="font-mono-data text-lg text-primary">${Number(real).toLocaleString("es-CL")}${unit}</span>
+                            <span class="font-mono-data text-xs text-on-surface-variant opacity-60">/ ${Number(expected).toLocaleString("es-CL")}${unit}</span>
+                        </div>
+                    </div>
+                    <div class="h-3 w-full overflow-hidden rounded-full bg-slate-100">
+                        <div class="h-full rounded-full ${delta.fillClass}" style="width:${width}%"></div>
+                    </div>
+                    <div class="flex justify-end">
+                        <span class="font-mono-data text-[10px] font-bold ${delta.colorClass}">${delta.pct > 0 ? "+" : ""}${delta.pct.toFixed(1)}% ${delta.label}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.addEventListener("focus", renderDashboard);
+        window.addEventListener("storage", renderDashboard);
+        renderDashboard();
+    </script>
+</body></html>

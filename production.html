@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lanzarote - Producción por Turno</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .delta-track {
+            height: 6px;
+            background-color: #e5eeff;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        .delta-fill {
+            height: 100%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(203, 219, 245, 0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#f8f9ff",
+                      "surface-tint": "#565e74",
+                      "surface-dim": "#cbdbf5",
+                      "surface-container": "#e5eeff",
+                      "background": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-container": "#131b2e",
+                      "error": "#ba1a1a",
+                      "outline": "#76777d",
+                      "tertiary-container": "#002113",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-tertiary-container": "#009668",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-primary-container": "#7c839b",
+                      "on-background": "#0b1c30",
+                      "inverse-primary": "#bec6e0",
+                      "surface-container-high": "#dce9ff",
+                      "primary-fixed": "#dae2fd",
+                      "on-surface": "#0b1c30",
+                      "surface-container-low": "#eff4ff",
+                      "tertiary": "#000000",
+                      "on-tertiary-fixed": "#002113",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d3e4fe",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary": "#000000",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#001a42",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#d8e2ff",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#213145",
+                      "secondary": "#0058be",
+                      "outline-variant": "#c6c6cd",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-container": "#fefcff",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "secondary-container": "#2170e4",
+                      "on-primary-fixed": "#131b2e",
+                      "surface-bright": "#f8f9ff",
+                      "on-surface-variant": "#45464d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "card-padding": "20px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "32px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "mono-data": ["JetBrains Mono"],
+                      "label-caps": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "display-kpi": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-kpi": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface font-body-sm text-on-surface min-h-screen flex">
+<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-gutter px-4 z-50" id="sidebar"></aside>
+<main class="flex-1 flex flex-col min-w-0">
+<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-40 bg-surface-bright shadow-sm border-b border-outline-variant" id="topbar"></header>
+<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-8" id="production-root"></div>
+</main>
+<div class="fixed inset-0 bg-primary-container/90 z-[100] hidden items-center justify-center p-8 backdrop-blur-md" id="success-overlay">
+<div class="max-w-md w-full bg-white rounded-2xl p-12 text-center">
+<div class="w-24 h-24 bg-tertiary-fixed rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-4xl text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg mb-2">Turno Cerrado</h2>
+<p class="text-on-surface-variant mb-8">El reporte de produccion fue guardado y el stock terminado ya quedo disponible para distribucion.</p>
+<button class="w-full bg-primary text-white py-4 rounded-xl font-bold font-headline-md" id="overlay-go-distribution" type="button">Ir a Distribution</button>
+</div>
+</div>
+<script src="state.js"></script>
+<script>
+        const productionApi = window.LanzaroteState;
+        let productionDraft = {};
+        let productionFilterMode = "all";
+        let productionLayoutMode = "expanded";
+        const productionPresets = {
+            estable: {
+                note: "Preset comercial: operacion estable lista para mostrar eficiencia.",
+                apply(product) {
+                    return {
+                        plan: product.rendimientoEsperado,
+                        real: Math.round(product.rendimientoEsperado * 0.99),
+                        merma: Math.max(2, Math.round(product.rendimientoEsperado * 0.015))
+                    };
+                }
+            },
+            tension: {
+                note: "Preset comercial: tension operativa con desviaciones visibles en tiempo real.",
+                apply(product, index) {
+                    const factors = [0.94, 1.07, 0.91, 1.04, 0.88];
+                    const real = Math.round(product.rendimientoEsperado * (factors[index] || 1));
+                    return {
+                        plan: product.rendimientoEsperado,
+                        real,
+                        merma: Math.max(3, Math.round(real * 0.04))
+                    };
+                }
+            },
+            premium: {
+                note: "Preset comercial: dia premium con sobreproduccion y merma controlada.",
+                apply(product) {
+                    const real = Math.round(product.rendimientoEsperado * 1.05);
+                    return {
+                        plan: product.rendimientoEsperado,
+                        real,
+                        merma: Math.max(2, Math.round(real * 0.01))
+                    };
+                }
+            }
+        };
+
+        function buildDraft(state) {
+            return state.productos.reduce((accumulator, product) => {
+                accumulator[product.id] = {
+                    plan: product.rendimientoEsperado,
+                    real: product.rendimientoEsperado,
+                    merma: Math.max(2, Math.round(product.rendimientoEsperado * 0.02))
+                };
+                return accumulator;
+            }, {});
+        }
+
+        function ensureDraft(state) {
+            if (!Object.keys(productionDraft).length) {
+                productionDraft = buildDraft(state);
+            }
+        }
+
+        function renderProduction() {
+            const state = productionApi.getState();
+            ensureDraft(state);
+            const visibleProducts = state.productos.filter((product) => {
+                if (productionFilterMode === "all") {
+                    return true;
+                }
+                const delta = productionApi.calcularDelta(productionDraft[product.id].plan, productionDraft[product.id].real);
+                return delta.estado === productionFilterMode;
+            });
+
+            productionApi.mountShell({
+                activePage: "production",
+                title: "Production",
+                header: {
+                    eyebrow: "REGISTRO DE PRODUCCION",
+                    badge: "Turno operativo activo",
+                    badgeIcon: "schedule",
+                    secondaryActions: [
+                        { id: "production-refresh", icon: "autorenew", label: "Refrescar" },
+                        { id: "production-dashboard", icon: "dashboard", label: "Dashboard" }
+                    ],
+                    primaryAction: { id: "production-clear-notes", icon: "notes", label: "Limpiar Notas" }
+                }
+            });
+
+            const root = document.getElementById("production-root");
+            root.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+                    ${topStat("PRODUCCION TOTAL", '<span id="total-production">0</span>', "+0.0% vs Plan")}
+                    ${topStat("MERMA ACTUAL", '<span id="waste-percent">0.0</span><small class="text-lg">%</small>', "Limite: 3%", "bg-error-container text-on-error-container")}
+                    ${topStat("RECETAS COMPLETADAS", `${state.productos.length}/${state.productos.length}`, "", "", "check_circle")}
+                    ${topStat("ESTADO DE HORNOS", '3 <small class="text-lg">ON</small>', "Estables", "bg-secondary-fixed text-on-secondary-fixed-variant")}
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
+                    <div class="xl:col-span-8 space-y-4">
+                        <div class="flex justify-between items-center px-2">
+                            <div>
+                                <h3 class="font-headline-md text-headline-md">Lineas de Produccion Activas</h3>
+                                <p class="mt-1 text-xs uppercase tracking-widest text-on-surface-variant">Vista ${productionLayoutMode === "expanded" ? "completa" : "compacta"} · filtro ${productionFilterMode}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors" id="production-filter-toggle" title="Cambiar filtro" type="button">
+                                    <span class="material-symbols-outlined">filter_list</span>
+                                </button>
+                                <button class="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors" id="production-layout-toggle" title="Cambiar vista" type="button">
+                                    <span class="material-symbols-outlined">grid_view</span>
+                                </button>
+                            </div>
+                        </div>
+                        ${visibleProducts.length
+                            ? visibleProducts.map((product) => productionCard(product, productionDraft[product.id])).join("")
+                            : `
+                                <div class="rounded-2xl border border-dashed border-outline-variant bg-white p-10 text-center shadow-sm">
+                                    <span class="material-symbols-outlined text-4xl text-on-surface-variant">filter_alt_off</span>
+                                    <h4 class="mt-3 font-headline-md text-primary">No hay lineas visibles con este filtro</h4>
+                                    <p class="mt-2 text-on-surface-variant">Cambia el filtro para volver a ver todas las recetas del turno.</p>
+                                </div>
+                            `}
+                    </div>
+                    <div class="xl:col-span-4 space-y-6">
+                        <div class="bg-primary-container text-on-primary text-white p-6 rounded-2xl shadow-xl sticky top-24">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span class="material-symbols-outlined text-secondary-fixed-dim">analytics</span>
+                                <h3 class="font-headline-md">Balance de Turno</h3>
+                            </div>
+                            <div class="space-y-4 mb-6">
+                                <div class="flex justify-between items-center py-2 border-b border-on-primary-container">
+                                    <span class="text-on-primary-container">Total Estimado</span>
+                                    <span class="font-mono-data" id="summary-estimated">0 Un.</span>
+                                </div>
+                                <div class="flex justify-between items-center py-2 border-b border-on-primary-container">
+                                    <span class="text-on-primary-container">Total Real</span>
+                                    <span class="font-mono-data text-secondary-fixed-dim" id="summary-real">0 Un.</span>
+                                </div>
+                                <div class="flex justify-between items-center py-2 border-b border-on-primary-container">
+                                    <span class="text-on-primary-container">Merma Total</span>
+                                    <span class="font-mono-data text-error-container" id="summary-waste">0 Un.</span>
+                                </div>
+                                <div class="flex justify-between items-center py-2">
+                                    <span class="text-on-primary-container">Eficiencia General</span>
+                                    <span class="font-mono-data text-on-tertiary-container" id="summary-efficiency">0%</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 mb-6">
+                                <label class="rounded-xl bg-white/10 p-4">
+                                    <span class="text-xs text-on-primary-container mb-2 block font-label-caps">FECHA OPERATIVA</span>
+                                    <input class="w-full bg-transparent border-none p-0 text-sm text-white focus:ring-0" id="turn-date" type="date" value="${productionApi.getToday()}"/>
+                                </label>
+                                <label class="rounded-xl bg-white/10 p-4">
+                                    <span class="text-xs text-on-primary-container mb-2 block font-label-caps">TURNO</span>
+                                    <select class="w-full bg-transparent border-none p-0 text-sm text-white focus:ring-0" id="turn-selector">
+                                        <option class="text-primary" value="Manana">Manana</option>
+                                        <option class="text-primary" value="Tarde">Tarde</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="mb-6">
+                                <p class="mb-3 text-xs font-label-caps uppercase tracking-widest text-on-primary-container">PRESETS DE DEMO</p>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button class="rounded-lg bg-white/10 px-3 py-3 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-white/20" id="preset-estable" type="button">Estable</button>
+                                    <button class="rounded-lg bg-white/10 px-3 py-3 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-white/20" id="preset-tension" type="button">Tension</button>
+                                    <button class="rounded-lg bg-white/10 px-3 py-3 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-white/20" id="preset-premium" type="button">Premium</button>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-white/10 rounded-xl mb-8">
+                                <p class="text-xs text-on-primary-container mb-2 font-label-caps">INCIDENCIAS DEL TURNO</p>
+                                <textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm placeholder:text-on-primary-container/50 resize-none h-20" id="turn-notes" placeholder="Anadir notas sobre desviaciones o fallos de equipo..."></textarea>
+                            </div>
+                            <button class="w-full bg-secondary text-white py-4 rounded-xl font-bold font-headline-md hover:bg-secondary-container transition-all active:scale-95 shadow-lg flex items-center justify-center gap-3" id="finalizar-turno" type="button">
+                                <span class="material-symbols-outlined">task_alt</span>
+                                Finalizar Turno
+                            </button>
+                            <p class="text-[10px] text-center mt-4 text-on-primary-container">Al finalizar se enviara el reporte al panel de distribucion.</p>
+                        </div>
+                        <div class="bg-surface-container-low p-6 rounded-2xl border border-outline-variant">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-label-caps text-on-surface-variant">ESTADO DE EQUIPOS</h4>
+                                <span class="material-symbols-outlined text-sm text-on-surface-variant">info</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 rounded-full bg-on-tertiary-container"></div>
+                                    <span class="text-sm flex-1">Horno A (De Piso)</span>
+                                    <span class="text-[10px] font-mono-data">220C</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 rounded-full bg-on-tertiary-container"></div>
+                                    <span class="text-sm flex-1">Horno B (Rotativo)</span>
+                                    <span class="text-[10px] font-mono-data">185C</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 rounded-full bg-error"></div>
+                                    <span class="text-sm flex-1">Amasadora Industrial</span>
+                                    <span class="text-[10px] font-mono-data">MANTE.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("production-refresh").addEventListener("click", () => {
+                refreshComputed();
+                productionApi.showToast("Produccion recalculada con los valores actuales.", "info");
+            });
+            document.getElementById("production-dashboard").addEventListener("click", () => {
+                window.location.href = "index.html";
+            });
+            document.getElementById("production-clear-notes").addEventListener("click", () => {
+                document.getElementById("turn-notes").value = "";
+                productionApi.showToast("Notas del turno limpiadas.", "success");
+            });
+            document.getElementById("preset-estable").addEventListener("click", () => applyPreset("estable"));
+            document.getElementById("preset-tension").addEventListener("click", () => applyPreset("tension"));
+            document.getElementById("preset-premium").addEventListener("click", () => applyPreset("premium"));
+            document.getElementById("production-filter-toggle").addEventListener("click", cycleFilterMode);
+            document.getElementById("production-layout-toggle").addEventListener("click", toggleLayoutMode);
+            document.getElementById("finalizar-turno").addEventListener("click", finalizeTurn);
+            document.getElementById("overlay-go-distribution").addEventListener("click", () => {
+                window.location.href = "distribution.html";
+            });
+
+            attachInputHandlers();
+            refreshComputed();
+        }
+
+        function topStat(label, valueHtml, helper, helperClass, icon) {
+            if (icon) {
+                return `
+                    <div class="bg-white p-card-padding border border-outline-variant rounded-xl shadow-sm">
+                        <p class="font-label-caps text-on-surface-variant mb-2">${label}</p>
+                        <div class="flex items-end justify-between">
+                            <span class="font-display-kpi text-on-surface">${valueHtml}</span>
+                            <span class="material-symbols-outlined text-on-primary-container">${icon}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="bg-white p-card-padding border border-outline-variant rounded-xl shadow-sm">
+                    <p class="font-label-caps text-on-surface-variant mb-2">${label}</p>
+                    <div class="flex items-end justify-between">
+                        <span class="font-display-kpi text-on-surface">${valueHtml}</span>
+                        <span class="px-2 py-1 rounded text-xs font-bold ${helperClass || "bg-tertiary-fixed text-on-tertiary-container"}">${helper}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function productionCard(product, values) {
+            return `
+                <div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group" data-product-card="${product.id}">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="w-full ${productionLayoutMode === "compact" ? "md:w-20 h-24" : "md:w-32 h-32"} md:h-auto overflow-hidden">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${product.imagen}" alt="${productionApi.escapeHtml(product.nombre)}"/>
+                        </div>
+                        <div class="flex-1 p-card-padding">
+                            <div class="flex justify-between items-start mb-4 gap-6">
+                                <div>
+                                    <h4 class="font-headline-md">${product.nombre}</h4>
+                                    <p class="text-xs text-on-surface-variant">Receta ID: ${product.recetaId} • ${product.equipo}</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-label-caps text-on-surface-variant">EXPECTED YIELD</span>
+                                    <p class="font-mono-data text-on-primary-container">${product.rendimientoEsperado.toLocaleString("es-CL")} Unidades</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div class="space-y-1">
+                                    <label class="font-label-caps text-[10px] text-on-surface-variant">TANDA / CANTIDAD</label>
+                                    <input class="w-full bg-surface-container-low border border-outline-variant rounded p-2 font-mono-data focus:ring-2 focus:ring-secondary outline-none product-input" data-field="real" data-product="${product.id}" data-expected="${product.rendimientoEsperado}" type="number" value="${values.real}"/>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="font-label-caps text-[10px] text-on-surface-variant">MERMA (UNIDADES)</label>
+                                    <input class="w-full bg-surface-container-low border border-outline-variant rounded p-2 font-mono-data focus:ring-2 focus:ring-secondary outline-none merma-input" data-field="merma" data-product="${product.id}" type="number" value="${values.merma}"/>
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <div class="w-full">
+                                        <div class="mb-1 flex justify-between text-[10px] font-label-caps">
+                                            <span>DESVIACION</span>
+                                            <span class="status-text">0.0% (Optimo)</span>
+                                        </div>
+                                        <div class="delta-track">
+                                            <div class="delta-fill bg-on-tertiary-container"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm ${productionLayoutMode === "compact" ? "hidden" : ""}">
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps text-on-surface-variant">Plan Diario</p>
+                                    <p class="mt-2 font-mono-data text-primary">${values.plan.toLocaleString("es-CL")} uds</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps text-on-surface-variant">Salida Neta</p>
+                                    <p class="mt-2 font-mono-data text-primary net-output">${Math.max(0, values.real - values.merma).toLocaleString("es-CL")} uds</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps text-on-surface-variant">Nota Operativa</p>
+                                    <p class="mt-2 text-on-surface-variant">${product.descripcion}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function attachInputHandlers() {
+            document.querySelectorAll(".product-input, .merma-input").forEach((input) => {
+                input.addEventListener("input", (event) => {
+                    const productId = event.target.dataset.product;
+                    const field = event.target.dataset.field;
+                    const rawValue = Math.max(0, Number(event.target.value || 0));
+                    productionDraft[productId][field] = rawValue;
+                    refreshComputed();
+                });
+            });
+        }
+
+        function refreshComputed() {
+            const state = productionApi.getState();
+            let totalReal = 0;
+            let totalPlan = 0;
+            let totalWaste = 0;
+
+            state.productos.forEach((product) => {
+                const current = productionDraft[product.id];
+                const card = document.querySelector(`[data-product-card="${product.id}"]`);
+                const delta = productionApi.calcularDelta(current.plan, current.real);
+                const fillWidth = current.plan === 0 ? 100 : Math.min(Math.max((current.real / current.plan) * 100, 0), 100);
+
+                totalReal += Number(current.real || 0);
+                totalPlan += Number(current.plan || 0);
+                totalWaste += Number(current.merma || 0);
+
+                const statusText = card.querySelector(".status-text");
+                const deltaFill = card.querySelector(".delta-fill");
+                const netOutput = card.querySelector(".net-output");
+
+                statusText.textContent = `${delta.pct > 0 ? "+" : ""}${delta.pct.toFixed(1)}% (${delta.label})`;
+                statusText.className = `status-text ${delta.colorClass}`;
+                deltaFill.className = `delta-fill ${delta.fillClass}`;
+                deltaFill.style.width = `${fillWidth}%`;
+                netOutput.textContent = `${Math.max(0, current.real - current.merma).toLocaleString("es-CL")} uds`;
+            });
+
+            const efficiency = totalPlan === 0 ? 100 : ((totalReal / totalPlan) * 100);
+            const wastePct = totalReal === 0 ? 0 : ((totalWaste / totalReal) * 100);
+
+            document.getElementById("total-production").textContent = totalReal.toLocaleString("es-CL");
+            document.getElementById("waste-percent").textContent = wastePct.toFixed(1);
+            document.getElementById("summary-estimated").textContent = `${totalPlan.toLocaleString("es-CL")} Un.`;
+            document.getElementById("summary-real").textContent = `${totalReal.toLocaleString("es-CL")} Un.`;
+            document.getElementById("summary-waste").textContent = `${totalWaste.toLocaleString("es-CL")} Un.`;
+            document.getElementById("summary-efficiency").textContent = `${efficiency.toFixed(1)}%`;
+        }
+
+        function applyPreset(presetName) {
+            const preset = productionPresets[presetName];
+            const state = productionApi.getState();
+            state.productos.forEach((product, index) => {
+                productionDraft[product.id] = preset.apply(product, index);
+            });
+            renderProduction();
+            document.getElementById("turn-notes").value = preset.note;
+            productionApi.showToast(`Preset ${presetName} aplicado para la presentacion.`, "success");
+        }
+
+        function cycleFilterMode() {
+            const order = ["all", "alerta", "optimo", "excedente"];
+            const currentIndex = order.indexOf(productionFilterMode);
+            productionFilterMode = order[(currentIndex + 1) % order.length];
+            productionApi.showToast(`Filtro cambiado a ${productionFilterMode}.`, "info");
+            renderProduction();
+        }
+
+        function toggleLayoutMode() {
+            productionLayoutMode = productionLayoutMode === "expanded" ? "compact" : "expanded";
+            productionApi.showToast(`Vista ${productionLayoutMode === "expanded" ? "completa" : "compacta"} activada.`, "success");
+            renderProduction();
+        }
+
+        function finalizeTurn() {
+            const state = productionApi.getState();
+            const fecha = document.getElementById("turn-date").value || productionApi.getToday();
+            const turno = document.getElementById("turn-selector").value;
+            const notas = document.getElementById("turn-notes").value.trim();
+            const button = document.getElementById("finalizar-turno");
+
+            button.disabled = true;
+            button.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Procesando...';
+
+            const payload = state.productos.map((product) => ({
+                fecha,
+                turno,
+                productoId: product.id,
+                cantidadPlan: productionDraft[product.id].plan,
+                cantidadReal: productionDraft[product.id].real,
+                merma: productionDraft[product.id].merma,
+                notas
+            }));
+
+            window.setTimeout(() => {
+                productionApi.registrarProduccionBatch(payload);
+                productionApi.showToast("Turno registrado y stock enviado a distribucion.", "success");
+                document.getElementById("success-overlay").classList.remove("hidden");
+                document.getElementById("success-overlay").classList.add("flex");
+                button.disabled = false;
+                button.innerHTML = '<span class="material-symbols-outlined">task_alt</span> Finalizar Turno';
+                productionDraft = buildDraft(productionApi.getState());
+            }, 700);
+        }
+
+        window.addEventListener("focus", refreshComputed);
+        window.addEventListener("storage", renderProduction);
+        renderProduction();
+    </script>
+</body></html>

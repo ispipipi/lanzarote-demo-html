@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lanzarote - Producción por Turno</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .delta-track {
+            height: 6px;
+            background-color: #e5eeff;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        .delta-fill {
+            height: 100%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(203, 219, 245, 0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#f8f9ff",
+                      "surface-tint": "#565e74",
+                      "surface-dim": "#cbdbf5",
+                      "surface-container": "#e5eeff",
+                      "background": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-container": "#131b2e",
+                      "error": "#ba1a1a",
+                      "outline": "#76777d",
+                      "tertiary-container": "#002113",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-tertiary-container": "#009668",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-primary-container": "#7c839b",
+                      "on-background": "#0b1c30",
+                      "inverse-primary": "#bec6e0",
+                      "surface-container-high": "#dce9ff",
+                      "primary-fixed": "#dae2fd",
+                      "on-surface": "#0b1c30",
+                      "surface-container-low": "#eff4ff",
+                      "tertiary": "#000000",
+                      "on-tertiary-fixed": "#002113",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d3e4fe",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary": "#000000",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#001a42",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#d8e2ff",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#213145",
+                      "secondary": "#0058be",
+                      "outline-variant": "#c6c6cd",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-container": "#fefcff",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "secondary-container": "#2170e4",
+                      "on-primary-fixed": "#131b2e",
+                      "surface-bright": "#f8f9ff",
+                      "on-surface-variant": "#45464d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "card-padding": "20px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "32px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "mono-data": ["JetBrains Mono"],
+                      "label-caps": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "display-kpi": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-kpi": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface font-body-sm text-on-surface min-h-screen flex">
+<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-gutter px-4 z-50" id="sidebar"></aside>
+<main class="flex-1 flex flex-col min-w-0">
+<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-40 bg-surface-bright shadow-sm border-b border-outline-variant" id="topbar"></header>
+<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-8" id="audit-root"></div>
+</main>
+<script src="state.js"></script>
+<script>
+        const auditApi = window.LanzaroteState;
+        let auditFilter = "all";
+
+        function renderAudit() {
+            const state = auditApi.getState();
+            const metrics = auditApi.buildMetrics(state);
+            const productMap = auditApi.getProductMap(state);
+
+            auditApi.mountShell({
+                activePage: "",
+                title: "Audit Trail",
+                header: {
+                    eyebrow: "AUDIT TRAIL",
+                    badge: `${state.alertas.length} alertas activas`,
+                    badgeIcon: "query_stats",
+                    secondaryActions: [
+                        { id: "audit-refresh", icon: "autorenew", label: "Refrescar" },
+                        { id: "audit-home", icon: "dashboard", label: "Dashboard" }
+                    ],
+                    primaryAction: { id: "audit-export", icon: "download", label: "Resumen Demo" }
+                }
+            });
+
+            const timeline = buildTimeline(state, productMap).filter((entry) => {
+                if (auditFilter === "all") {
+                    return true;
+                }
+                return entry.tipo === auditFilter;
+            });
+
+            const root = document.getElementById("audit-root");
+            root.innerHTML = `
+                <section class="grid grid-cols-4 gap-6">
+                    <div class="rounded-2xl border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Eventos</p>
+                        <p class="mt-3 font-display-kpi text-3xl text-primary">${timeline.length}</p>
+                        <p class="mt-2 text-xs font-semibold text-secondary">Filtro ${auditFilter}</p>
+                    </div>
+                    <div class="rounded-2xl border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Produccion auditada</p>
+                        <p class="mt-3 font-display-kpi text-3xl text-primary">${state.turnos.length}</p>
+                        <p class="mt-2 text-xs font-semibold text-on-tertiary-container">${metrics.totalProduced.toLocaleString("es-CL")} uds netas</p>
+                    </div>
+                    <div class="rounded-2xl border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Ventas auditadas</p>
+                        <p class="mt-3 font-display-kpi text-3xl text-primary">${state.ventas.length}</p>
+                        <p class="mt-2 text-xs font-semibold text-secondary">${metrics.formattedSoldAmount}</p>
+                    </div>
+                    <div class="rounded-2xl border border-outline-variant bg-white p-card-padding shadow-sm">
+                        <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">SLA vigente</p>
+                        <p class="mt-3 font-display-kpi text-3xl text-primary">${state.slaCumplimiento}%</p>
+                        <p class="mt-2 text-xs font-semibold text-on-surface-variant">${metrics.statusLabel}</p>
+                    </div>
+                </section>
+
+                <section class="rounded-2xl border border-outline-variant bg-white p-6 shadow-sm">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Filtros</p>
+                            <h3 class="mt-2 font-headline-md text-headline-md text-primary">Timeline operacional</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            ${["all", "produccion", "distribucion", "venta", "alerta"].map((filter) => `
+                                <button class="rounded-full px-4 py-2 text-sm font-semibold ${auditFilter === filter ? "bg-primary text-white" : "bg-surface-container-low text-on-surface-variant"} audit-filter" data-filter="${filter}" type="button">
+                                    ${filter}
+                                </button>
+                            `).join("")}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="grid grid-cols-12 gap-6">
+                    <div class="col-span-8 rounded-2xl border border-outline-variant bg-white shadow-sm">
+                        <div class="border-b border-outline-variant px-6 py-4">
+                            <h3 class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Registro cronologico</h3>
+                        </div>
+                        <div class="divide-y divide-outline-variant/30">
+                            ${timeline.length ? timeline.map((entry, index) => `
+                                <div class="px-6 py-5">
+                                    <div class="flex items-start justify-between gap-4">
+                                        <div class="flex gap-4">
+                                            <div class="mt-1 flex h-9 w-9 items-center justify-center rounded-full ${entry.tipo === "alerta" ? "bg-error-container text-error" : entry.tipo === "venta" ? "bg-secondary-fixed text-secondary" : "bg-surface-container text-primary"}">
+                                                <span class="material-symbols-outlined text-sm">${entry.icono}</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">${entry.tipo}</p>
+                                                <h4 class="mt-2 font-semibold text-primary">${auditApi.escapeHtml(entry.titulo)}</h4>
+                                                <p class="mt-2 text-sm text-on-surface-variant">${auditApi.escapeHtml(entry.detalle)}</p>
+                                            </div>
+                                        </div>
+                                        <button class="rounded-lg border border-outline-variant px-3 py-2 text-xs font-semibold uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container audit-detail" data-index="${index}" type="button">
+                                            Ver
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join("") : `
+                                <div class="px-6 py-14 text-center">
+                                    <span class="material-symbols-outlined text-4xl text-on-surface-variant">event_busy</span>
+                                    <h4 class="mt-3 font-headline-md text-primary">No hay eventos para este filtro</h4>
+                                    <p class="mt-2 text-on-surface-variant">Prueba con otro tipo para seguir explorando la demo.</p>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+
+                    <div class="col-span-4 space-y-6">
+                        <div class="rounded-2xl border border-outline-variant bg-white p-6 shadow-sm">
+                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Alertas activas</p>
+                            <div class="mt-4 space-y-3">
+                                ${state.alertas.length ? state.alertas.map((alert) => `
+                                    <div class="rounded-xl bg-surface-container-low p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <span class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">${alert.tipo}</span>
+                                            <span class="rounded px-2 py-1 text-[10px] font-bold ${alert.severidad === "alta" ? "bg-error-container text-error" : alert.severidad === "media" ? "bg-secondary-fixed text-secondary" : "bg-surface-container text-on-surface-variant"}">${alert.severidad}</span>
+                                        </div>
+                                        <p class="mt-2 text-sm text-on-surface">${auditApi.escapeHtml(alert.mensaje)}</p>
+                                    </div>
+                                `).join("") : '<p class="text-sm text-on-surface-variant">Sin alertas abiertas.</p>'}
+                            </div>
+                        </div>
+
+                        <div class="rounded-2xl border border-outline-variant bg-primary-container p-6 text-white shadow-sm">
+                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed-dim">Acciones rapidas</p>
+                            <div class="mt-4 space-y-3">
+                                <button class="w-full rounded-xl bg-white/10 px-4 py-3 text-left text-sm font-semibold transition-colors hover:bg-white/20" id="audit-go-production" type="button">Abrir Production</button>
+                                <button class="w-full rounded-xl bg-white/10 px-4 py-3 text-left text-sm font-semibold transition-colors hover:bg-white/20" id="audit-go-distribution" type="button">Abrir Distribution</button>
+                                <button class="w-full rounded-xl bg-white/10 px-4 py-3 text-left text-sm font-semibold transition-colors hover:bg-white/20" id="audit-go-sales" type="button">Abrir Sales</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+
+            document.getElementById("audit-refresh").addEventListener("click", () => {
+                renderAudit();
+                auditApi.showToast("Audit Trail recalculado.", "info");
+            });
+            document.getElementById("audit-home").addEventListener("click", () => {
+                window.location.href = "index.html";
+            });
+            document.getElementById("audit-export").addEventListener("click", () => {
+                auditApi.openModal({
+                    kicker: "Demo Export",
+                    title: "Resumen listo para presentacion",
+                    body: `
+                        <div class="space-y-4">
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Produccion neta</p>
+                                <p class="mt-2 text-base font-semibold text-primary">${metrics.totalProduced.toLocaleString("es-CL")} uds</p>
+                            </div>
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Ventas acumuladas</p>
+                                <p class="mt-2 text-base font-semibold text-primary">${metrics.formattedSoldAmount}</p>
+                            </div>
+                            <div class="rounded-xl bg-surface-container-low p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Narrativa sugerida</p>
+                                <p class="mt-2 text-sm text-on-surface">Puedes presentar esta demo como un flujo trazable desde produccion hasta conciliacion, con alertas y SLA visibles en tiempo real.</p>
+                            </div>
+                        </div>
+                    `,
+                    actions: [
+                        { id: "audit-export-close", label: "Cerrar" }
+                    ]
+                });
+                document.getElementById("audit-export-close").addEventListener("click", auditApi.closeModal);
+            });
+
+            document.querySelectorAll(".audit-filter").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    auditFilter = event.target.dataset.filter;
+                    auditApi.showToast(`Filtro audit trail: ${auditFilter}.`, "info");
+                    renderAudit();
+                });
+            });
+
+            document.querySelectorAll(".audit-detail").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    const entry = timeline[Number(event.target.dataset.index)];
+                    if (!entry) {
+                        return;
+                    }
+                    auditApi.openModal({
+                        kicker: "Event Detail",
+                        title: entry.titulo,
+                        body: `
+                            <div class="space-y-4">
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Tipo</p>
+                                    <p class="mt-2 text-sm text-primary">${auditApi.escapeHtml(entry.tipo)}</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Detalle</p>
+                                    <p class="mt-2 text-sm text-on-surface">${auditApi.escapeHtml(entry.detalle)}</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-4">
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Fecha</p>
+                                    <p class="mt-2 text-sm text-on-surface">${auditApi.escapeHtml(entry.fecha)}</p>
+                                </div>
+                            </div>
+                        `,
+                        actions: [
+                            { id: "audit-detail-close", label: "Cerrar" }
+                        ]
+                    });
+                    document.getElementById("audit-detail-close").addEventListener("click", auditApi.closeModal);
+                });
+            });
+
+            document.getElementById("audit-go-production").addEventListener("click", () => {
+                window.location.href = "production.html";
+            });
+            document.getElementById("audit-go-distribution").addEventListener("click", () => {
+                window.location.href = "distribution.html";
+            });
+            document.getElementById("audit-go-sales").addEventListener("click", () => {
+                window.location.href = "sales.html";
+            });
+        }
+
+        function buildTimeline(state, productMap) {
+            const productionEvents = state.turnos.map((turno) => ({
+                tipo: "produccion",
+                icono: "oven_gen",
+                titulo: `${productMap[turno.productoId].nombre} · ${turno.turno}`,
+                detalle: `Plan ${turno.cantidadPlan} / Real ${turno.cantidadReal} / Merma ${turno.merma}.`,
+                fecha: turno.fecha
+            }));
+
+            const distributionEvents = state.canales.flatMap((canal) =>
+                canal.stock.map((item) => ({
+                    tipo: "distribucion",
+                    icono: "local_shipping",
+                    titulo: `${canal.nombre} · ${productMap[item.productoId].nombre}`,
+                    detalle: `${item.cantidad} unidades asignadas al canal.`,
+                    fecha: state.updatedAt || auditApi.getToday()
+                })),
+            );
+
+            const salesEvents = state.ventas.map((venta) => ({
+                tipo: "venta",
+                icono: "payments",
+                titulo: `${productMap[venta.productoId].nombre} · ${venta.medioPago}`,
+                detalle: `${venta.cantidad} unidades vendidas por ${auditApi.formatCurrency(venta.monto)}.`,
+                fecha: venta.timestamp
+            }));
+
+            const alertEvents = state.alertas.map((alert) => ({
+                tipo: "alerta",
+                icono: "warning",
+                titulo: `${alert.tipo} · ${alert.severidad}`,
+                detalle: alert.mensaje,
+                fecha: alert.timestamp
+            }));
+
+            return [...alertEvents, ...salesEvents, ...distributionEvents, ...productionEvents].sort((a, b) => {
+                return String(b.fecha).localeCompare(String(a.fecha));
+            });
+        }
+
+        window.addEventListener("focus", renderAudit);
+        window.addEventListener("storage", renderAudit);
+        renderAudit();
+    </script>
+</body></html>

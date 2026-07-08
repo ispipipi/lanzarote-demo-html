@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lanzarote - Producción por Turno</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .delta-track {
+            height: 6px;
+            background-color: #e5eeff;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        .delta-fill {
+            height: 100%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(203, 219, 245, 0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#f8f9ff",
+                      "surface-tint": "#565e74",
+                      "surface-dim": "#cbdbf5",
+                      "surface-container": "#e5eeff",
+                      "background": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-container": "#131b2e",
+                      "error": "#ba1a1a",
+                      "outline": "#76777d",
+                      "tertiary-container": "#002113",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-tertiary-container": "#009668",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-primary-container": "#7c839b",
+                      "on-background": "#0b1c30",
+                      "inverse-primary": "#bec6e0",
+                      "surface-container-high": "#dce9ff",
+                      "primary-fixed": "#dae2fd",
+                      "on-surface": "#0b1c30",
+                      "surface-container-low": "#eff4ff",
+                      "tertiary": "#000000",
+                      "on-tertiary-fixed": "#002113",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d3e4fe",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary": "#000000",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#001a42",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#d8e2ff",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#213145",
+                      "secondary": "#0058be",
+                      "outline-variant": "#c6c6cd",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-container": "#fefcff",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "secondary-container": "#2170e4",
+                      "on-primary-fixed": "#131b2e",
+                      "surface-bright": "#f8f9ff",
+                      "on-surface-variant": "#45464d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "card-padding": "20px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "32px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "mono-data": ["JetBrains Mono"],
+                      "label-caps": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "display-kpi": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-kpi": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface font-body-sm text-on-surface min-h-screen flex">
+<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-gutter px-4 z-50" id="sidebar"></aside>
+<main class="flex-1 flex flex-col min-w-0">
+<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-40 bg-surface-bright shadow-sm border-b border-outline-variant" id="topbar"></header>
+<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-8" id="sales-root"></div>
+</main>
+<script src="state.js"></script>
+<script>
+        const salesApi = window.LanzaroteState;
+        let activeChannelId = "meson";
+        const salesScenarios = {
+            breakfast: { label: "Breakfast Rush", channelId: "meson", quantity: 8 },
+            wholesale: { label: "Wholesale Pick-up", channelId: "retiro", quantity: 12 },
+            sprint: { label: "Delivery Sprint", channelId: "delivery", quantity: 10 }
+        };
+
+        function renderSales() {
+            const state = salesApi.getState();
+            const metrics = salesApi.buildMetrics(state);
+            const productMap = salesApi.getProductMap(state);
+            const activeChannel = state.canales.find((canal) => canal.id === activeChannelId) || state.canales[0];
+            activeChannelId = activeChannel.id;
+            const availableProducts = activeChannel.stock.filter((item) => item.cantidad > 0);
+            const selectedProductId = availableProducts[0] ? availableProducts[0].productoId : "";
+            const selectedProduct = productMap[selectedProductId];
+            const soldUnitsForChannel = metrics.soldByChannel[activeChannelId].units;
+            const assignedUnitsForChannel = activeChannel.stock.reduce((sum, item) => sum + item.cantidad, 0) + soldUnitsForChannel;
+
+            salesApi.mountShell({
+                activePage: "sales",
+                title: "Sales",
+                header: {
+                    eyebrow: "SALES COMMAND",
+                    badge: metrics.formattedSoldAmount,
+                    badgeIcon: "payments",
+                    secondaryActions: [
+                        { id: "sales-refresh", icon: "autorenew", label: "Refrescar" },
+                        { id: "sales-dashboard", icon: "dashboard", label: "Dashboard" }
+                    ],
+                    primaryAction: { id: "sales-distribution", icon: "local_shipping", label: "Ver Distribution" }
+                }
+            });
+
+            const root = document.getElementById("sales-root");
+            root.innerHTML = `
+                <section class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                    <div>
+                        <h2 class="font-headline-lg text-headline-lg text-primary">Sales Command</h2>
+                        <p class="text-body-lg text-on-surface-variant">Registra venta por canal, medio de pago y conciliacion diaria.</p>
+                    </div>
+                    <div class="rounded-full bg-surface-container px-4 py-2 text-sm font-semibold text-secondary">
+                        ${metrics.formattedSoldAmount} cobrados hoy
+                    </div>
+                </section>
+
+                <section class="grid grid-cols-12 gap-6">
+                    <div class="col-span-8 rounded-2xl border border-outline-variant bg-white p-6 shadow-sm">
+                        <div class="flex items-center justify-between gap-4">
+                            <div>
+                                <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Demo accelerators</p>
+                                <h3 class="mt-2 font-headline-md text-headline-md text-primary">Simula momentos comerciales con un solo clic</h3>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="rounded-xl bg-primary px-4 py-3 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-primary-container scenario-button" data-scenario="breakfast" type="button">Breakfast Rush</button>
+                                <button class="rounded-xl bg-white px-4 py-3 text-xs font-semibold uppercase tracking-widest text-secondary shadow-sm transition-colors hover:bg-surface-container scenario-button" data-scenario="wholesale" type="button">Wholesale Pick-up</button>
+                                <button class="rounded-xl bg-white px-4 py-3 text-xs font-semibold uppercase tracking-widest text-primary shadow-sm transition-colors hover:bg-surface-container scenario-button" data-scenario="sprint" type="button">Delivery Sprint</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-4 rounded-2xl border border-outline-variant bg-primary-container p-6 text-white shadow-sm">
+                        <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed-dim">Speaker note</p>
+                        <p class="mt-3 text-sm text-white/90">Usa estos botones para mostrar que el demo reacciona como un sistema vivo y no como una maqueta estática.</p>
+                    </div>
+                </section>
+
+                <section class="grid gap-6 xl:grid-cols-12">
+                    <div class="space-y-6 xl:col-span-8">
+                        <div class="rounded-xl border border-outline-variant bg-white p-card-padding shadow-sm">
+                            <div class="mb-5 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                                <div>
+                                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Canal activo</p>
+                                    <h3 class="mt-2 text-2xl font-semibold text-primary">Registro de venta por frente comercial</h3>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    ${state.canales.map((canal) => `
+                                        <button class="rounded-full px-4 py-2 text-sm font-semibold ${canal.id === activeChannelId ? "bg-primary text-white" : "bg-surface-container-low text-on-surface-variant"} channel-switch" data-channel="${canal.id}" type="button">
+                                            ${canal.nombre}
+                                        </button>
+                                    `).join("")}
+                                </div>
+                            </div>
+
+                            <form class="grid gap-4 md:grid-cols-2" id="sales-form">
+                                <label class="rounded-xl bg-surface-container-low p-4">
+                                    <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Producto</span>
+                                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-sm" id="sale-product">
+                                        ${availableProducts.map((item) => `
+                                            <option value="${item.productoId}">${productMap[item.productoId].nombre} · ${item.cantidad} uds</option>
+                                        `).join("")}
+                                        ${availableProducts.length === 0 ? '<option value="">Sin stock asignado</option>' : ""}
+                                    </select>
+                                </label>
+
+                                <label class="rounded-xl bg-surface-container-low p-4">
+                                    <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Cantidad</span>
+                                    <input class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 font-mono-data text-mono-data" id="sale-quantity" min="1" type="number" value="1"/>
+                                </label>
+
+                                <label class="rounded-xl bg-surface-container-low p-4">
+                                    <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Medio de pago</span>
+                                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-sm" id="sale-payment">
+                                        ${salesApi.paymentMethods.map((method) => `<option value="${method}">${method}</option>`).join("")}
+                                    </select>
+                                </label>
+
+                                <div class="rounded-xl bg-primary-container p-4 text-white">
+                                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed-dim">Monto estimado</p>
+                                    <p class="mt-2 text-3xl font-semibold" id="sale-total">${selectedProduct ? salesApi.formatCurrency(selectedProduct.precioUnitario) : salesApi.formatCurrency(0)}</p>
+                                    <p class="mt-2 text-sm text-primary-fixed-dim">La venta descuenta stock del canal de inmediato.</p>
+                                </div>
+
+                                <button class="md:col-span-2 rounded-xl bg-primary px-4 py-4 text-sm font-semibold uppercase tracking-widest text-white disabled:cursor-not-allowed disabled:bg-outline" ${availableProducts.length ? "" : "disabled"} type="submit">
+                                    Registrar venta
+                                </button>
+                            </form>
+                        </div>
+
+                        ${renderDeltaIndicator(assignedUnitsForChannel || 1, soldUnitsForChannel, activeChannel.nombre)}
+
+                        <div class="rounded-xl border border-outline-variant bg-white p-card-padding shadow-sm">
+                            <div class="flex items-center justify-between gap-3">
+                                <div>
+                                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Ventas del dia</p>
+                                    <h3 class="mt-2 text-xl font-semibold text-primary">Movimientos recientes</h3>
+                                </div>
+                                <div class="text-sm text-on-primary-container">${metrics.formattedSoldAmount}</div>
+                            </div>
+                            <div class="mt-4 space-y-3">
+                                ${[...state.ventas].reverse().slice(0, 8).map((sale) => `
+                                    <div class="rounded-xl bg-surface-container-low p-4">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div>
+                                                <p class="font-semibold text-on-surface">${productMap[sale.productoId].nombre}</p>
+                                                <p class="text-sm text-on-primary-container">${state.canales.find((canal) => canal.id === sale.canalId).nombre} · ${sale.medioPago}</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="font-mono-data text-mono-data text-on-surface">${sale.cantidad} uds</p>
+                                                <p class="text-sm text-on-primary-container">${salesApi.formatCurrency(sale.monto)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join("")}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 xl:col-span-4">
+                        <div class="rounded-xl border border-outline-variant bg-white p-card-padding shadow-sm">
+                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Resumen por canal</p>
+                            <div class="mt-5 space-y-4">
+                                ${state.canales.map((canal) => `
+                                    <div class="rounded-xl bg-surface-container-low p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div>
+                                                <h4 class="font-semibold text-on-surface">${canal.nombre}</h4>
+                                                <p class="text-sm text-on-primary-container">${metrics.soldByChannel[canal.id].units.toLocaleString("es-CL")} uds vendidas</p>
+                                            </div>
+                                            <span class="text-sm font-semibold text-secondary">${salesApi.formatCurrency(metrics.soldByChannel[canal.id].revenue)}</span>
+                                        </div>
+                                    </div>
+                                `).join("")}
+                            </div>
+                        </div>
+
+                        <div class="rounded-xl border border-outline-variant bg-primary-container p-card-padding text-white shadow-sm">
+                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed-dim">Stock utilizable</p>
+                            <div class="mt-4 space-y-3">
+                                ${availableProducts.map((item) => `
+                                    <div class="rounded-xl bg-white/10 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <span class="font-medium">${productMap[item.productoId].nombre}</span>
+                                            <span class="font-mono-data text-mono-data">${item.cantidad} uds</span>
+                                        </div>
+                                    </div>
+                                `).join("")}
+                                ${availableProducts.length === 0 ? '<p class="text-sm text-primary-fixed-dim">Este canal no tiene stock disponible.</p>' : ""}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+
+            document.getElementById("sales-refresh").addEventListener("click", () => {
+                renderSales();
+                salesApi.showToast("Resumen de ventas actualizado.", "info");
+            });
+            document.getElementById("sales-dashboard").addEventListener("click", () => {
+                window.location.href = "index.html";
+            });
+            document.getElementById("sales-distribution").addEventListener("click", () => {
+                window.location.href = "distribution.html";
+            });
+            document.querySelectorAll(".scenario-button").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    runScenario(event.target.dataset.scenario);
+                });
+            });
+
+            document.querySelectorAll(".channel-switch").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    activeChannelId = event.target.dataset.channel;
+                    salesApi.showToast(`Canal activo: ${state.canales.find((canal) => canal.id === activeChannelId).nombre}.`, "info");
+                    renderSales();
+                });
+            });
+
+            const productSelect = document.getElementById("sale-product");
+            const quantityInput = document.getElementById("sale-quantity");
+            const paymentSelect = document.getElementById("sale-payment");
+
+            function updateTotal() {
+                const product = productMap[productSelect.value];
+                const quantity = Math.max(1, Number(quantityInput.value || 1));
+                document.getElementById("sale-total").textContent = salesApi.formatCurrency(product ? product.precioUnitario * quantity : 0);
+            }
+
+            productSelect.addEventListener("change", updateTotal);
+            quantityInput.addEventListener("input", updateTotal);
+
+            document.getElementById("sales-form").addEventListener("submit", (event) => {
+                event.preventDefault();
+                if (!productSelect.value) {
+                    return;
+                }
+
+                const quantity = Math.max(1, Math.floor(Number(quantityInput.value || 1)));
+                const product = productMap[productSelect.value];
+                salesApi.registrarVenta({
+                    canalId: activeChannelId,
+                    productoId: productSelect.value,
+                    cantidad: quantity,
+                    medioPago: paymentSelect.value,
+                    monto: quantity * product.precioUnitario
+                });
+                salesApi.showToast(`Venta registrada por ${quantity} unidades de ${product.nombre}.`, "success");
+                showReceiptModal(product.nombre, quantity, quantity * product.precioUnitario, paymentSelect.value, activeChannelId, state);
+                renderSales();
+            });
+        }
+
+        function renderDeltaIndicator(expected, real, channelName) {
+            const delta = salesApi.calcularDelta(expected, real);
+            const width = expected === 0 ? 100 : Math.min(Math.max((real / expected) * 100, 0), 100);
+
+            return `
+                <div class="rounded-xl border border-outline-variant bg-white p-card-padding shadow-sm">
+                    <div class="mb-5 flex items-center justify-between gap-3">
+                        <div>
+                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Conciliacion del canal</p>
+                            <h3 class="mt-2 text-xl font-semibold text-primary">${channelName}</h3>
+                        </div>
+                        <span class="rounded px-3 py-1 text-xs font-bold ${delta.toneClass}">${delta.label}</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="rounded-xl bg-surface-container-low p-4">
+                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Esperado</p>
+                            <p class="mt-2 font-mono-data text-mono-data text-primary">${expected.toLocaleString("es-CL")} uds</p>
+                        </div>
+                        <div class="rounded-xl bg-surface-container-low p-4">
+                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Real</p>
+                            <p class="mt-2 font-mono-data text-mono-data text-primary">${real.toLocaleString("es-CL")} uds</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="mb-2 flex justify-between text-xs font-semibold uppercase tracking-widest">
+                            <span class="text-on-surface-variant">Delta</span>
+                            <span class="${delta.colorClass}">${delta.pct > 0 ? "+" : ""}${delta.pct.toFixed(1)}% (${delta.label})</span>
+                        </div>
+                        <div class="delta-track">
+                            <div class="delta-fill ${delta.fillClass}" style="width:${width}%"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function runScenario(scenarioName) {
+            const scenario = salesScenarios[scenarioName];
+            if (!scenario) {
+                return;
+            }
+            const state = salesApi.getState();
+            const channel = state.canales.find((item) => item.id === scenario.channelId);
+            const stockItem = channel && channel.stock.find((item) => item.cantidad > 0);
+
+            if (!channel || !stockItem) {
+                salesApi.showToast(`No hay stock disponible para ${scenario.label}.`, "warn");
+                return;
+            }
+
+            const product = state.productos.find((item) => item.id === stockItem.productoId);
+            const quantity = Math.min(scenario.quantity, stockItem.cantidad);
+            const paymentMethod = scenario.channelId === "retiro" ? "Transferencia" : "POS";
+
+            salesApi.registrarVenta({
+                canalId: scenario.channelId,
+                productoId: stockItem.productoId,
+                cantidad: quantity,
+                medioPago: paymentMethod,
+                monto: quantity * product.precioUnitario
+            });
+            salesApi.showToast(`${scenario.label} ejecutado en ${channel.nombre}.`, "success");
+            showReceiptModal(product.nombre, quantity, quantity * product.precioUnitario, paymentMethod, scenario.channelId, state, scenario.label);
+            activeChannelId = scenario.channelId;
+            renderSales();
+        }
+
+        function showReceiptModal(productName, quantity, amount, paymentMethod, channelId, state, scenarioLabel) {
+            const channel = state.canales.find((item) => item.id === channelId);
+            salesApi.openModal({
+                kicker: scenarioLabel || "Live Receipt",
+                title: "Ticket comercial generado",
+                body: `
+                    <div class="space-y-4">
+                        <div class="rounded-2xl border border-dashed border-outline-variant bg-surface-container-low p-5">
+                            <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Canal</p>
+                            <p class="mt-2 text-base font-semibold text-primary">${salesApi.escapeHtml(channel ? channel.nombre : channelId)}</p>
+                            <div class="mt-4 grid grid-cols-3 gap-3 text-sm">
+                                <div>
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Producto</p>
+                                    <p class="mt-2 text-on-surface">${salesApi.escapeHtml(productName)}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Cantidad</p>
+                                    <p class="mt-2 text-on-surface">${quantity} uds</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Pago</p>
+                                    <p class="mt-2 text-on-surface">${salesApi.escapeHtml(paymentMethod)}</p>
+                                </div>
+                            </div>
+                            <div class="mt-5 rounded-xl bg-white p-4">
+                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Monto</p>
+                                <p class="mt-2 font-headline-md text-primary">${salesApi.formatCurrency(amount)}</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                actions: [
+                    { id: "receipt-close", label: "Cerrar" }
+                ]
+            });
+            document.getElementById("receipt-close").addEventListener("click", salesApi.closeModal);
+        }
+
+        window.addEventListener("focus", renderSales);
+        window.addEventListener("storage", renderSales);
+        renderSales();
+    </script>
+</body></html>
