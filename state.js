@@ -79,9 +79,9 @@ const paymentMethods = ["Efectivo", "POS", "Transferencia"];
 
 const pageMeta = {
   dashboard: { href: "index.html", label: "Dashboard", icon: "dashboard" },
-  production: { href: "production.html", label: "Production", icon: "oven_gen" },
-  distribution: { href: "distribution.html", label: "Distribution", icon: "local_shipping" },
-  sales: { href: "sales.html", label: "Sales", icon: "payments" },
+  production: { href: "production.html", label: "Producción", icon: "oven_gen" },
+  distribution: { href: "distribution.html", label: "Distribución", icon: "local_shipping" },
+  sales: { href: "sales.html", label: "Ventas", icon: "payments" },
 };
 
 const seedActions = [
@@ -818,7 +818,7 @@ function renderSidebar(activePage) {
   return `
     <div class="mb-10 px-4">
       <h1 class="font-headline-md text-headline-md font-bold text-primary">Lanzarote</h1>
-      <p class="font-body-sm text-on-primary-container">Operational Command</p>
+      <p class="font-body-sm text-on-primary-container">Comando Operacional</p>
     </div>
     <nav class="flex-1 space-y-1">
       ${navItems}
@@ -826,7 +826,7 @@ function renderSidebar(activePage) {
     <div class="pt-6 mt-6 border-t border-outline-variant space-y-1">
       <a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="dashboard.html">
         <span class="material-symbols-outlined">query_stats</span>
-        <span class="font-body-sm">Audit Trail</span>
+        <span class="font-body-sm">Auditoría</span>
       </a>
       <button
         class="flex w-full items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg text-left"
@@ -834,18 +834,18 @@ function renderSidebar(activePage) {
         type="button"
       >
         <span class="material-symbols-outlined">restart_alt</span>
-        <span class="font-body-sm">Reset Demo</span>
+        <span class="font-body-sm">Reiniciar Demo</span>
       </button>
       <div class="mt-4 px-4 flex items-center gap-3">
         <div class="w-8 h-8 rounded-full bg-surface-dim overflow-hidden">
           <img
             class="w-full h-full object-cover"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNAP0nJNLdVmzt3LzvmxqaQAHKixtFrll3BGFhdvZk_sqMoW2gGo5SY8Ojhm5xmed6frQ0_VlHSgdWwZecBtNw8yhlUfGb6njvAHK79XMvHTNJO_VEbFBsv6MexH6URWp6BlxM_uFKlT65hpspNUe4fbIxOuuJOsbI0NVsyWH6sqh59umfOYN5Xb4-rmuO48_Udwv7Qv1Z_LIux-f5cA4pB5GyRGSy4USxJvFJWO1pJuXQJ9OlNdBNfmihC9HRpTpn0BmPZjgj8uEX"
-            alt="Bakery Manager"
+            alt="Encargado de Panadería"
           />
         </div>
         <div class="overflow-hidden">
-          <p class="text-xs font-bold truncate">Bakery Manager</p>
+          <p class="text-xs font-bold truncate">Encargado de Panadería</p>
           <p class="text-[10px] text-on-surface-variant truncate">Turno Manana</p>
         </div>
       </div>

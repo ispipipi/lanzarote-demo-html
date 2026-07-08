@@ -229,7 +229,7 @@
                     ${topStat("PRODUCCION TOTAL", '<span id="total-production">0</span>', "+0.0% vs Plan")}
                     ${topStat("MERMA ACTUAL", '<span id="waste-percent">0.0</span><small class="text-lg">%</small>', "Limite: 3%", "bg-error-container text-on-error-container")}
                     ${topStat("RECETAS COMPLETADAS", `${state.productos.length}/${state.productos.length}`, "", "", "check_circle")}
-                    ${topStat("ESTADO DE HORNOS", '3 <small class="text-lg">ON</small>', "Estables", "bg-secondary-fixed text-on-secondary-fixed-variant")}
+                    ${topStat("ESTADO DE HORNOS", '3 <small class="text-lg">ENCENDIDOS</small>', "Estables", "bg-secondary-fixed text-on-secondary-fixed-variant")}
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
@@ -403,7 +403,7 @@
                                     <p class="text-xs text-on-surface-variant">Receta ID: ${product.recetaId} • ${product.equipo}</p>
                                 </div>
                                 <div class="text-right">
-                                    <span class="font-label-caps text-on-surface-variant">EXPECTED YIELD</span>
+                                    <span class="font-label-caps text-on-surface-variant">RENDIMIENTO ESPERADO</span>
                                     <p class="font-mono-data text-on-primary-container">${product.rendimientoEsperado.toLocaleString("es-CL")} Unidades</p>
                                 </div>
                             </div>
