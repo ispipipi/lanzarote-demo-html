@@ -2102,19 +2102,19 @@ function renderSidebar(activePage, sidebarSubmenu, openSubmenuPage) {
             <span class="material-symbols-outlined text-[18px] text-[#6a7a98] transition-transform ${submenuOpen ? "rotate-180" : ""}">chevron_right</span>
           </button>
 
-          <div class="${submenuOpen ? "mt-2 sm:mt-0" : "hidden"} sm:absolute sm:left-[calc(100%+14px)] sm:top-0 sm:z-40 sm:w-[296px]">
-            <div class="rounded-[26px] border border-[#d9e0ef] bg-white/98 p-3 shadow-[0_22px_48px_rgba(37,70,183,0.16)] backdrop-blur">
-              <div class="mb-3 flex items-center justify-between gap-3 px-2 py-1">
+          <div class="${submenuOpen ? "mt-2 block" : "hidden"}">
+            <div class="ml-3 rounded-[24px] border border-[#d9e0ef] bg-white/98 p-3.5 shadow-[0_18px_36px_rgba(37,70,183,0.12)] backdrop-blur">
+              <div class="mb-3 flex items-start justify-between gap-2 px-1 py-1">
                 <div>
                   <p class="text-label-caps text-[#7181a3]">Submenú</p>
                   <p class="mt-1 text-body-md font-semibold text-[#2341ae]">${escapeHtml(item.label)}</p>
                 </div>
-                <a class="inline-flex items-center gap-1 rounded-full border border-[#dce4ff] bg-[#f8faff] px-3 py-1 text-body-sm font-medium text-[#3556c5]" href="${escapeHtml(item.href)}">
+                <a class="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#dce4ff] bg-[#f8faff] px-2.5 py-1 text-body-sm font-medium text-[#3556c5]" href="${escapeHtml(item.href)}">
                   <span class="material-symbols-outlined text-[16px]">home_storage</span>
-                  Ir al módulo
+                  Ir
                 </a>
               </div>
-              <div class="max-h-[calc(100vh-180px)] space-y-2 overflow-y-auto pr-1">
+              <div class="space-y-2">
                 ${submenuItems}
               </div>
             </div>
@@ -2125,27 +2125,27 @@ function renderSidebar(activePage, sidebarSubmenu, openSubmenuPage) {
     .join("");
 
   return `
-    <div class="flex h-full min-h-0 flex-col rounded-[24px] border border-[#d9c29a] bg-[radial-gradient(circle_at_top_left,_rgba(255,215,153,0.4),_transparent_28%),radial-gradient(circle_at_bottom_left,_rgba(213,227,253,0.5),_transparent_34%),linear-gradient(180deg,rgba(255,252,246,0.98),rgba(248,243,233,0.96))] p-3 shadow-[0_18px_42px_rgba(140,96,31,0.12)] backdrop-blur sm:rounded-[28px] sm:p-5">
-      <div class="flex items-center justify-between gap-3">
+    <div class="flex h-full min-h-0 flex-col overflow-hidden rounded-[24px] border border-[#d9c29a] bg-[radial-gradient(circle_at_top_left,_rgba(255,215,153,0.4),_transparent_28%),radial-gradient(circle_at_bottom_left,_rgba(213,227,253,0.5),_transparent_34%),linear-gradient(180deg,rgba(255,252,246,0.98),rgba(248,243,233,0.96))] p-3 shadow-[0_18px_42px_rgba(140,96,31,0.12)] backdrop-blur sm:rounded-[28px] sm:p-5">
+      <div class="flex flex-col gap-3">
         <div class="min-w-0">
-          <div class="flex items-center gap-3">
+          <div class="flex items-start gap-3">
             <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#b46b00,#f1b33f)] text-white shadow-[0_12px_24px_rgba(180,107,0,0.28)] md:h-11 md:w-11">
               <span class="material-symbols-outlined text-[20px]">bakery_dining</span>
             </div>
-            <div class="min-w-0">
-              ${BRAND_COMPANY ? `<p class="truncate text-label-caps text-[#9d6400]">${escapeHtml(BRAND_COMPANY)}</p>` : `<p class="truncate text-label-caps text-[#9d6400]">Suite panadera</p>`}
-              <h1 class="truncate font-display-lg text-[22px] leading-none text-[#6a4320] sm:text-[24px] md:text-[34px]">${escapeHtml(BRAND_SOLUTION)}</h1>
+            <div class="min-w-0 flex-1">
+              ${BRAND_COMPANY ? `<p class="text-label-caps text-[#9d6400]">${escapeHtml(BRAND_COMPANY)}</p>` : `<p class="text-label-caps text-[#9d6400]">Suite panadera</p>`}
+              <h1 class="mt-1 break-words font-display-lg text-[28px] leading-[0.95] text-[#6a4320] sm:text-[30px] md:text-[32px]">${escapeHtml(BRAND_SOLUTION)}</h1>
             </div>
           </div>
           <p class="mt-2 hidden text-label-caps uppercase tracking-[0.16em] text-[#9a8567] sm:block">Operación Panadera</p>
         </div>
-        <div class="flex shrink-0 flex-col items-end gap-2">
+        <div class="flex flex-wrap items-center gap-2">
           <span class="rounded-full border border-[#ffb52f]/30 bg-[#fff4d8] px-3 py-1 text-label-caps text-[#9c6400]">Modo demo</span>
-          <span class="hidden rounded-full bg-[#fff1d5] px-3 py-1 text-label-caps text-[#9c6400] md:inline-flex">Suite panadera</span>
+          <span class="rounded-full bg-[#fff1d5] px-3 py-1 text-label-caps text-[#9c6400]">Suite panadera</span>
         </div>
       </div>
 
-      <nav class="mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:grid-cols-1 sm:space-y-2">
+      <nav class="mt-4 grid min-h-0 flex-1 content-start grid-cols-2 gap-2 overflow-y-auto pr-1 sm:mt-6 sm:grid-cols-1 sm:space-y-2">
         ${navItems}
       </nav>
 
@@ -2246,12 +2246,12 @@ function renderHeader(options) {
   `;
 }
 
-function applyViewportShellLayout() {
+function applyViewportShellLayout(options = {}) {
   document.body.classList.add("h-screen", "overflow-hidden");
 
   const sidebarHost = document.getElementById("sidebar");
   if (sidebarHost) {
-    sidebarHost.classList.add("h-full", "overflow-visible");
+    sidebarHost.classList.add("h-full", "overflow-hidden");
   }
 
   const main = document.querySelector("main");
@@ -2264,14 +2264,16 @@ function applyViewportShellLayout() {
     header.classList.add("shrink-0");
     const contentRoot = header.nextElementSibling;
     if (contentRoot) {
-      contentRoot.classList.add("flex-1", "min-h-0", "overflow-hidden");
+      contentRoot.classList.add("flex-1", "min-h-0");
+      contentRoot.classList.remove("overflow-hidden", "overflow-y-auto");
+      contentRoot.classList.add(options.allowPageScroll ? "overflow-y-auto" : "overflow-hidden");
     }
   }
 }
 
 function mountShell(options) {
   ensureUiChrome();
-  applyViewportShellLayout();
+  applyViewportShellLayout({ allowPageScroll: Boolean(options.allowPageScroll) });
   const sidebar = document.getElementById("sidebar");
   const header = document.getElementById("topbar");
   let openSubmenuPage = null;
