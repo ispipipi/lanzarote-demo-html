@@ -215,7 +215,7 @@
                     KPIs por módulo.
                   </p>
                 </div>
-                <div class="grid gap-3 sm:grid-cols-3 xl:min-w-[480px]">
+                <div class="grid gap-3 md:grid-cols-3 xl:min-w-[480px]">
                   <div class="rounded-2xl border border-[#dce4ff] bg-white/88 px-4 py-3">
                     <p class="text-label-caps text-[#7181a3]">Ventas mes</p>
                     <p class="mt-2 text-[24px] font-bold leading-none tracking-[-0.03em] text-[#2341ae]">${dashboardApi.formatCurrency(salesMonthAmount)}</p>
@@ -233,7 +233,7 @@
             </section>
 
             <section class="grid gap-4">
-              <div class="grid gap-4 xl:grid-cols-3">
+              <div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
                 ${sectionCard({
                   href: "sales.html?focus=plata",
                   icon: "paid",
@@ -569,10 +569,10 @@
             </div>
           </div>
 
-          <div class="mt-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_132px]">
+          <div class="mt-4 grid gap-3 lg:grid-cols-[minmax(0,1fr)_132px]">
             <div class="rounded-[22px] bg-white/92 p-4 shadow-[0_12px_24px_rgba(47,87,211,0.05)]">
               <p class="text-label-caps text-[#7a86a4]">${heroLabel}</p>
-              <p class="mt-2 text-[28px] font-bold leading-none tracking-[-0.04em] ${selected.metricValue}">${heroValue}</p>
+              <p class="mt-2 text-[24px] font-bold leading-none tracking-[-0.04em] md:text-[28px] ${selected.metricValue}">${heroValue}</p>
               <p class="mt-2 text-body-sm ${selected.helper}">${summary}</p>
             </div>
 

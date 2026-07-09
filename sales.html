@@ -161,7 +161,28 @@
       const maxChannelUnits = Math.max(1, ...channelSummary.map((item) => item.units));
       const mixRows = metrics.productMix.slice(0, 6);
       const topMixShare = Math.max(1, ...mixRows.map((item) => item.sharePct || 0));
+      const mixPalette = ["#ffb72b", "#2f57d3", "#39b980", "#ff7a66", "#8b6ef2", "#6d4627"];
+      const mixChartRows = mixRows.map((item, index) => ({
+        ...item,
+        color: mixPalette[index % mixPalette.length],
+      }));
+      const mixChartGradient = (() => {
+        if (!mixChartRows.length) {
+          return "conic-gradient(#e8eeff 0deg 360deg)";
+        }
+        let cursor = 0;
+        return `conic-gradient(${mixChartRows.map((item) => {
+          const start = cursor;
+          cursor += Math.max(0, Number(item.sharePct || 0)) * 3.6;
+          return `${item.color} ${start}deg ${cursor}deg`;
+        }).join(", ")})`;
+      })();
       const collectionProgress = Math.max(8, Math.min(100, Math.round(((metrics.realCollections || 0) / Math.max(1, metrics.expectedCollections || 1)) * 100)));
+      const averageTicket = state.ventas.length ? Math.round(state.ventas.reduce((sum, sale) => sum + sale.monto, 0) / state.ventas.length) : 0;
+      const topChannel = [...channelSummary].sort((a, b) => b.revenue - a.revenue)[0] || { label: "Sin canal", revenue: 0, units: 0 };
+      const activeChannelUnits = activeChannel.stock.reduce((sum, item) => sum + item.cantidad, 0);
+      const selectedCustomerStatus = selectedCustomer ? salesApi.getCustomerStatus(selectedCustomer) : null;
+      const productUnitPrice = selectedProduct ? selectedProduct.precioUnitario : 0;
 
       salesApi.mountShell({
         activePage: "sales",
@@ -191,7 +212,7 @@
                 <span class="rounded-full bg-white px-3 py-1 text-body-sm text-[#8f775c] shadow-soft">Panadator</span>
               </div>
               <h1 class="mt-4 max-w-4xl text-[34px] font-bold leading-[1.02] tracking-[-0.05em] text-primary md:text-[48px]">Ventas, cobro y devoluciones en una sola vista.</h1>
-              <p class="mt-3 max-w-3xl text-body-md text-[#6f624f]">Canal activo, cobranza comercial y caja del día.</p>
+              <p class="mt-3 max-w-3xl text-body-md text-[#6f624f]">Canal activo, caja y saldo comercial.</p>
               <div class="mt-6 grid gap-3 md:grid-cols-4">
                 ${salesMetricCard("payments", "Venta total", metrics.formattedSoldAmount, `${metrics.totalSoldUnits} u`, "soft")}
                 ${salesMetricCard("storefront", "Canal activo", activeChannel.nombre, `${availableProducts.length} productos`, "warm")}
@@ -264,36 +285,53 @@
               </a>
             </div>
             <div class="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1.1fr)_320px]">
-              <div class="space-y-3">
-                ${mixRows.map((item) => `
-                  <article class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
-                    <div class="flex items-center justify-between gap-3">
-                      <div>
-                        <p class="text-body-md font-semibold text-primary">${item.producto}</p>
-                        <p class="mt-1 text-body-sm text-on-surface-variant">${item.units} unidades · ${salesApi.formatCurrency(item.revenue)}</p>
+              <div class="rounded-[24px] border border-outline-variant bg-white p-5 shadow-soft">
+                <div class="grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center">
+                  <div class="flex flex-col items-center justify-center">
+                    <div class="relative h-[220px] w-[220px] rounded-full shadow-[0_18px_36px_rgba(140,96,31,0.14)]" style="background:${mixChartGradient}">
+                      <div class="absolute left-1/2 top-1/2 flex h-[112px] w-[112px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-[#fff3db] bg-white text-center shadow-[0_10px_24px_rgba(47,87,211,0.08)]">
+                        <p class="text-label-caps text-[#9c6400]">Líder</p>
+                        <p class="mt-2 text-body-md font-semibold text-primary">${mixChartRows[0]?.producto || "Sin mix"}</p>
+                        <p class="mt-1 font-data-md text-[#7a4f00]">${mixChartRows[0]?.sharePct || 0}%</p>
                       </div>
-                      <span class="font-data-md text-[#7a4f00]">${item.sharePct}%</span>
                     </div>
-                    <div class="mt-3 h-2.5 overflow-hidden rounded-full bg-[#f2e6c9]">
-                      <div class="h-full rounded-full bg-[#ffb72b]" style="width:${Math.max(8, Math.round((item.sharePct / topMixShare) * 100))}%"></div>
-                    </div>
-                  </article>
-                `).join("") || '<p class="rounded-xl bg-white p-4 text-body-md text-on-surface-variant">Sin ventas para calcular mix.</p>'}
+                    <p class="mt-4 text-body-sm text-on-surface-variant">Participación sobre venta total.</p>
+                  </div>
+                  <div class="space-y-3">
+                    ${mixChartRows.map((item) => `
+                      <article class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
+                        <div class="flex items-center justify-between gap-3">
+                          <div class="flex min-w-0 items-start gap-3">
+                            <span class="mt-1 h-3.5 w-3.5 shrink-0 rounded-full" style="background:${item.color}"></span>
+                            <div class="min-w-0">
+                              <p class="text-body-md font-semibold text-primary">${item.producto}</p>
+                              <p class="mt-1 text-body-sm text-on-surface-variant">${item.units} unidades · ${salesApi.formatCurrency(item.revenue)}</p>
+                            </div>
+                          </div>
+                          <span class="font-data-md text-[#7a4f00]">${item.sharePct}%</span>
+                        </div>
+                        <div class="mt-3 h-2.5 overflow-hidden rounded-full bg-[#f2e6c9]">
+                          <div class="h-full rounded-full" style="width:${Math.max(8, Math.round((item.sharePct / topMixShare) * 100))}%; background:${item.color}"></div>
+                        </div>
+                      </article>
+                    `).join("") || '<p class="rounded-xl bg-white p-4 text-body-md text-on-surface-variant">Sin ventas para calcular mix.</p>'}
+                  </div>
+                </div>
               </div>
               <aside class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
                 <p class="text-label-caps text-on-surface-variant">Lectura rápida</p>
                 <div class="mt-4 space-y-3">
                   <div class="rounded-2xl bg-surface-container-low p-4">
                     <p class="text-label-caps text-on-surface-variant">Producto líder</p>
-                    <p class="mt-2 text-body-md font-semibold text-primary">${mixRows[0]?.producto || "Sin líder"}</p>
+                    <p class="mt-2 text-body-md font-semibold text-primary">${mixChartRows[0]?.producto || "Sin líder"}</p>
                   </div>
                   <div class="rounded-2xl bg-surface-container-low p-4">
                     <p class="text-label-caps text-on-surface-variant">Participación</p>
-                    <p class="mt-2 font-data-lg text-primary">${mixRows[0]?.sharePct || 0}%</p>
+                    <p class="mt-2 font-data-lg text-primary">${mixChartRows[0]?.sharePct || 0}%</p>
                   </div>
                   <div class="rounded-2xl bg-surface-container-low p-4">
                     <p class="text-label-caps text-on-surface-variant">Productos con venta</p>
-                    <p class="mt-2 font-data-lg text-primary">${mixRows.length}</p>
+                    <p class="mt-2 font-data-lg text-primary">${mixChartRows.length}</p>
                   </div>
                 </div>
               </aside>
@@ -387,10 +425,10 @@
         ` : ""}
 
         <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          ${summaryCard("Venta del día", metrics.formattedSoldAmount, `${metrics.totalSoldUnits} unidades`, "soft")}
-          ${summaryCard("Saldo por cobrar", metrics.formattedReceivables, `${state.clientesComerciales.filter((item) => item.saldo > 0).length} clientes con saldo`, "default")}
-          ${summaryCard("Cobranza del mes", salesApi.formatCurrency(metrics.realCollections), `Esperado ${salesApi.formatCurrency(metrics.expectedCollections)}`, "data")}
-          ${summaryCard("Saldo vencido", salesApi.formatCurrency(metrics.overdueReceivables), metrics.overdueReceivables ? "requiere seguimiento" : "sin alertas", "alert")}
+          ${headlineKpiCard("point_of_sale", "Caja del día", metrics.formattedSoldAmount, `${metrics.totalSoldUnits} u vendidas`, "soft")}
+          ${headlineKpiCard("receipt_long", "Ticket medio", salesApi.formatCurrency(averageTicket), `${topChannel.label} lidera`, "warm")}
+          ${headlineKpiCard("account_balance_wallet", "Cobranza", salesApi.formatCurrency(metrics.realCollections), `${metrics.effectiveCollectionsPct}% del esperado`, "data")}
+          ${headlineKpiCard("warning", "Saldo vencido", salesApi.formatCurrency(metrics.overdueReceivables), metrics.overdueReceivables ? `${state.clientesComerciales.filter((item) => item.saldo > 0).length} clientes con saldo` : "sin desvíos", "alert")}
         </section>
 
         <section class="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_360px]">
@@ -399,7 +437,7 @@
               <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <p class="text-label-caps text-[#8f775c]">Registro de venta</p>
-                  <h2 class="mt-2 text-[28px] font-semibold tracking-[-0.04em] text-primary">Canal y cobro.</h2>
+                  <h2 class="mt-2 text-[28px] font-semibold tracking-[-0.04em] text-primary">Venta rápida.</h2>
                 </div>
                 <div class="flex flex-wrap gap-2">
                   ${state.canales.map((channel) => `
@@ -410,54 +448,66 @@
                 </div>
               </div>
 
-              <form class="mt-6 grid gap-gutter md:grid-cols-2" id="sales-form">
-                <label class="block rounded-2xl bg-[#fff7ea] p-4">
-                  <span class="text-label-caps text-on-surface-variant">Producto</span>
-                  <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-product">
-                    ${availableProducts.map((item) => `<option value="${item.productoId}">${productMap[item.productoId].nombre} · ${item.cantidad} u</option>`).join("")}
-                    ${availableProducts.length ? "" : '<option value="">Sin stock asignado</option>'}
-                  </select>
-                </label>
-                <label class="block rounded-2xl bg-[#f5f8ff] p-4">
-                  <span class="text-label-caps text-on-surface-variant">Cantidad</span>
-                  <input class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" id="sale-quantity" min="1" type="number" value="1"/>
-                </label>
-                <label class="block rounded-2xl bg-[#fff7ea] p-4">
-                  <span class="text-label-caps text-on-surface-variant">Medio de pago</span>
-                  <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-payment">
-                    ${salesApi.paymentMethods.map((method) => `<option value="${method}">${method}</option>`).join("")}
-                  </select>
-                </label>
-                <div class="rounded-2xl bg-[linear-gradient(180deg,_#6d4627,_#4f311c)] p-4 text-white shadow-soft">
-                  <p class="text-label-caps text-[#dbc7b3]">Monto estimado</p>
-                  <p class="mt-2 font-data-lg" id="sale-total">${selectedProduct ? salesApi.formatCurrency(selectedProduct.precioUnitario) : salesApi.formatCurrency(0)}</p>
-                  <p class="mt-2 text-body-sm text-[#dbc7b3]">ticket proyectado</p>
-                </div>
-
-                ${activeChannelId === "retiro" ? `
-                  <label class="block rounded-2xl bg-[#f5f8ff] p-4">
-                    <span class="text-label-caps text-on-surface-variant">Cliente comercial</span>
-                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-customer">
-                      ${state.clientesComerciales.map((customer) => `<option value="${customer.id}" ${customer.id === selectedCustomerId ? "selected" : ""}>${customer.nombre}</option>`).join("")}
+              <div class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_284px]">
+                <form class="grid gap-gutter md:grid-cols-2" id="sales-form">
+                  <label class="block rounded-2xl bg-[#fff7ea] p-4">
+                    <span class="text-label-caps text-on-surface-variant">Producto</span>
+                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-product">
+                      ${availableProducts.map((item) => `<option value="${item.productoId}">${productMap[item.productoId].nombre} · ${item.cantidad} u</option>`).join("")}
+                      ${availableProducts.length ? "" : '<option value="">Sin stock asignado</option>'}
                     </select>
+                  </label>
+                  <label class="block rounded-2xl bg-[#f5f8ff] p-4">
+                    <span class="text-label-caps text-on-surface-variant">Cantidad</span>
+                    <input class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" id="sale-quantity" min="1" type="number" value="1"/>
                   </label>
                   <label class="block rounded-2xl bg-[#fff7ea] p-4">
-                    <span class="text-label-caps text-on-surface-variant">Estatus de pago</span>
-                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-status">
-                      ${salesApi.commercialPaymentStatuses.map((status) => `<option value="${status}" ${status === selectedPaymentStatus ? "selected" : ""}>${status}</option>`).join("")}
+                    <span class="text-label-caps text-on-surface-variant">Medio de pago</span>
+                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-payment">
+                      ${salesApi.paymentMethods.map((method) => `<option value="${method}">${method}</option>`).join("")}
                     </select>
                   </label>
-                ` : `
-                  <div class="md:col-span-2 rounded-2xl border border-[#ead7b2] bg-[#fffaf2] p-4">
-                    <p class="text-label-caps text-[#8f775c]">Canales al contado</p>
-                    <p class="mt-2 text-body-md text-on-surface-variant">Pago inmediato y salida directa.</p>
+                  <div class="rounded-2xl bg-[linear-gradient(180deg,_#6d4627,_#4f311c)] p-4 text-white shadow-soft">
+                    <p class="text-label-caps text-[#dbc7b3]">Ticket</p>
+                    <p class="mt-2 font-data-lg" id="sale-total">${selectedProduct ? salesApi.formatCurrency(selectedProduct.precioUnitario) : salesApi.formatCurrency(0)}</p>
+                    <p class="mt-2 text-body-sm text-[#dbc7b3]">${productUnitPrice ? `${salesApi.formatCurrency(productUnitPrice)} por unidad` : "sin precio"}</p>
                   </div>
-                `}
 
-                <button class="md:col-span-2 rounded-2xl bg-[#6d4627] px-4 py-4 text-body-md font-semibold text-white transition-colors hover:bg-[#4f311c] disabled:cursor-not-allowed disabled:bg-outline" ${availableProducts.length ? "" : "disabled"} type="submit">
-                  Confirmar venta
-                </button>
-              </form>
+                  ${activeChannelId === "retiro" ? `
+                    <label class="block rounded-2xl bg-[#f5f8ff] p-4">
+                      <span class="text-label-caps text-on-surface-variant">Cliente comercial</span>
+                      <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-customer">
+                        ${state.clientesComerciales.map((customer) => `<option value="${customer.id}" ${customer.id === selectedCustomerId ? "selected" : ""}>${customer.nombre}</option>`).join("")}
+                      </select>
+                    </label>
+                    <label class="block rounded-2xl bg-[#fff7ea] p-4">
+                      <span class="text-label-caps text-on-surface-variant">Estatus</span>
+                      <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-status">
+                        ${salesApi.commercialPaymentStatuses.map((status) => `<option value="${status}" ${status === selectedPaymentStatus ? "selected" : ""}>${status}</option>`).join("")}
+                      </select>
+                    </label>
+                  ` : `
+                    <div class="md:col-span-2 rounded-2xl border border-[#ead7b2] bg-[#fffaf2] p-4">
+                      <p class="text-label-caps text-[#8f775c]">Canal al contado</p>
+                      <p class="mt-2 text-body-md text-on-surface-variant">Pago inmediato y salida directa.</p>
+                    </div>
+                  `}
+
+                  <button class="md:col-span-2 rounded-2xl bg-[#6d4627] px-4 py-4 text-body-md font-semibold text-white transition-colors hover:bg-[#4f311c] disabled:cursor-not-allowed disabled:bg-outline" ${availableProducts.length ? "" : "disabled"} type="submit">
+                    Confirmar venta
+                  </button>
+                </form>
+
+                <aside class="rounded-[26px] bg-[linear-gradient(180deg,_#7a4b27,_#5d351a)] p-4 text-white shadow-[0_18px_36px_rgba(93,53,26,0.24)]">
+                  <p class="text-label-caps text-[#e7d2bf]">Pulso del canal</p>
+                  <div class="mt-4 space-y-3">
+                    ${quickInsightCard("storefront", "Canal", activeChannel.nombre, `${activeChannelUnits} u disponibles`, "warm")}
+                    ${quickInsightCard("bakery_dining", "Producto", selectedProduct ? selectedProduct.nombre : "Sin stock", selectedProduct ? salesApi.formatCurrency(productUnitPrice) : "sin precio", "warm")}
+                    ${quickInsightCard("query_stats", "Canal líder", topChannel.label, `${salesApi.formatCurrency(topChannel.revenue)} vendidos`, "warm")}
+                    ${activeChannelId === "retiro" && selectedCustomer ? quickInsightCard("account_circle", "Cliente", selectedCustomer.nombre, `${salesApi.formatCurrency(selectedCustomer.saldo)} · ${selectedCustomerStatus.label.toLowerCase()}`, selectedCustomer.diasVencimiento >= 30 ? "alert-dark" : "warm") : quickInsightCard("payments", "Cobro", "Pago inmediato", "sin cuenta por cobrar", "warm")}
+                  </div>
+                </aside>
+              </div>
             </div>
 
             <div class="rounded-[30px] border border-[#dce4ff] bg-[linear-gradient(180deg,_#f8fbff,_#ffffff)] p-6 shadow-soft">
@@ -486,6 +536,11 @@
                 <div class="delta-track">
                   <div class="delta-fill ${delta.fillClass}" style="width:${Math.max(8, Math.min(100, Math.round(((metrics.realCollections || 0) / Math.max(1, metrics.expectedCollections || 1)) * 100)))}%"></div>
                 </div>
+              </div>
+              <div class="mt-5 grid gap-3 md:grid-cols-3">
+                ${miniStat("Esperado", salesApi.formatCurrency(metrics.expectedCollections), "soft")}
+                ${miniStat("Vencido", salesApi.formatCurrency(metrics.overdueReceivables), "alert")}
+                ${miniStat("Clientes con saldo", String(state.clientesComerciales.filter((item) => item.saldo > 0).length), "default")}
               </div>
             </div>
 
@@ -533,10 +588,17 @@
 
           <aside class="space-y-stack-md">
             <section class="rounded-[30px] border border-outline-variant bg-white p-6 shadow-soft">
-              <p class="text-label-caps text-on-surface-variant">Saldos por cliente</p>
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">Saldos por cliente</p>
+                  <h3 class="mt-2 text-[24px] font-semibold tracking-[-0.03em] text-primary">Cartera activa</h3>
+                </div>
+                <span class="rounded-full bg-[#f5f7ff] px-3 py-1 text-body-sm font-semibold text-[#3556c5]">${state.clientesComerciales.filter((item) => item.saldo > 0).length}</span>
+              </div>
               <div class="mt-5 space-y-3">
                 ${state.clientesComerciales.map((customer) => {
                   const status = salesApi.getCustomerStatus(customer);
+                  const ratio = Math.max(8, Math.min(100, Math.round((customer.saldo / Math.max(1, metrics.totalReceivables || 1)) * 100)));
                   return `
                     <article class="rounded-2xl bg-surface-container-low p-4">
                       <div class="flex items-start justify-between gap-3">
@@ -547,6 +609,9 @@
                         <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${status.toneClass}">${status.label}</span>
                       </div>
                       <p class="mt-3 font-data-md text-primary">${salesApi.formatCurrency(customer.saldo)}</p>
+                      <div class="mt-3 h-2 overflow-hidden rounded-full bg-[#e8eeff]">
+                        <div class="h-full rounded-full ${status.label === "Vencido" ? "bg-[#ff7a66]" : status.label === "Pendiente" ? "bg-[#ffb72b]" : "bg-[#39b980]"}" style="width:${ratio}%"></div>
+                      </div>
                     </article>
                   `;
                 }).join("")}
@@ -554,7 +619,13 @@
             </section>
 
             <section class="rounded-[30px] border border-[#6d4627] bg-[linear-gradient(180deg,_#6d4627,_#4f311c)] p-6 text-white shadow-soft">
-              <p class="text-label-caps text-[#dbc7b3]">Registrar devolución</p>
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-[#dbc7b3]">Registrar devolución</p>
+                  <h3 class="mt-2 text-[24px] font-semibold tracking-[-0.03em] text-white">Salida inversa</h3>
+                </div>
+                <span class="material-symbols-outlined rounded-2xl bg-white/10 p-2 text-[#f1d8c5]">assignment_return</span>
+              </div>
               <form class="mt-5 space-y-4" id="return-form">
                 <label class="block rounded-xl bg-white/10 p-4">
                   <span class="text-label-caps text-[#dbc7b3]">Producto</span>
@@ -747,6 +818,72 @@
             </div>
           </div>
           <p class="mt-2 text-body-sm text-on-surface-variant">${helper}</p>
+        </article>
+      `;
+    }
+
+    function headlineKpiCard(icon, label, value, helper, tone = "default") {
+      const toneClass = tone === "warm"
+        ? "border-[#f3ddba] bg-[#fff4df]"
+        : tone === "soft"
+          ? "border-[#dce4ff] bg-[#f7f9ff]"
+          : tone === "alert"
+            ? "border-error/10 bg-error-container/35"
+            : tone === "data"
+              ? "border-[#d9e6ff] bg-[#f4f8ff]"
+              : "border-outline-variant bg-white";
+      const iconClass = tone === "warm"
+        ? "bg-[#fff1d5] text-[#b46b00]"
+        : tone === "alert"
+          ? "bg-error-container text-on-error-container"
+          : "bg-[#edf2ff] text-[#2f57d3]";
+      return `
+        <article class="rounded-[26px] border ${toneClass} p-4 shadow-soft">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-label-caps text-on-surface-variant">${label}</p>
+              <p class="mt-3 font-data-lg text-primary">${value}</p>
+              <p class="mt-2 text-body-sm text-on-surface-variant">${helper}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl ${iconClass}">
+              <span class="material-symbols-outlined text-[18px]">${icon}</span>
+            </span>
+          </div>
+        </article>
+      `;
+    }
+
+    function quickInsightCard(icon, label, value, helper, tone = "warm") {
+      const toneClass = tone === "alert-dark"
+        ? "bg-[#8d3228] text-white"
+        : "bg-white/10 text-white";
+      const helperClass = tone === "alert-dark" ? "text-[#ffd7d2]" : "text-[#e7d2bf]";
+      return `
+        <article class="rounded-2xl ${toneClass} p-4">
+          <div class="flex items-start gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10">
+              <span class="material-symbols-outlined text-[18px]">${icon}</span>
+            </span>
+            <div class="min-w-0">
+              <p class="text-label-caps ${helperClass}">${label}</p>
+              <p class="mt-1 text-body-md font-semibold text-white">${value}</p>
+              <p class="mt-2 text-body-sm ${helperClass}">${helper}</p>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function miniStat(label, value, tone = "default") {
+      const toneClass = tone === "soft"
+        ? "bg-[#f5f8ff]"
+        : tone === "alert"
+          ? "bg-[#fff1ef]"
+          : "bg-surface-container-low";
+      return `
+        <article class="rounded-2xl ${toneClass} p-4">
+          <p class="text-label-caps text-on-surface-variant">${label}</p>
+          <p class="mt-2 font-data-md text-primary">${value}</p>
         </article>
       `;
     }
