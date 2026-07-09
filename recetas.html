@@ -111,7 +111,7 @@
   </style>
 </head>
 <body class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(255,222,173,0.3),_transparent_20%),radial-gradient(circle_at_top,_rgba(213,227,253,0.32),_transparent_28%),linear-gradient(180deg,_#fffaf2,_#f5efe4_58%,_#eef2f6)] text-on-surface antialiased md:flex">
-  <aside class="px-3 pt-3 md:h-screen md:w-[360px] md:shrink-0 md:p-6" id="sidebar"></aside>
+  <aside class="px-3 pt-3 md:h-screen md:w-[300px] md:shrink-0 md:p-4 lg:w-[320px] lg:p-5 xl:w-[360px] xl:p-6" id="sidebar"></aside>
   <main class="min-w-0 flex-1">
     <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:px-6 md:min-h-[88px] md:px-container-padding" id="topbar"></header>
     <div class="mx-auto w-full max-w-none space-y-stack-lg px-4 pb-6 pt-6 sm:px-6 md:p-container-padding md:pt-8" id="recetas-root"></div>
@@ -180,7 +180,7 @@
 
       const root = document.getElementById("recetas-root");
       root.innerHTML = `
-        <section class="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_320px]">
+        <section class="grid gap-4 2xl:grid-cols-[minmax(0,1.2fr)_320px]">
           <article class="rounded-[32px] border border-[#ead7b2] bg-[radial-gradient(circle_at_top_left,_rgba(255,222,173,0.35),_transparent_22%),linear-gradient(180deg,_#fffdfa,_#fff5e6)] p-6 shadow-[0_18px_36px_rgba(140,96,31,0.1)] md:p-7">
             <div class="flex flex-wrap items-center gap-2">
               <span class="inline-flex items-center gap-2 rounded-full border border-[#ffd489] bg-[#fff5df] px-3 py-1 text-body-sm font-medium text-[#b46b00]">
@@ -227,7 +227,7 @@
           </aside>
         </section>
 
-        <section class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
+        <section class="grid gap-4 2xl:grid-cols-2 min-[1900px]:grid-cols-3">
           ${state.productos.map((product) => {
             const recipeCost = product.recetaInsumos.reduce((sum, item) => {
               const ingredient = ingredientMap[item.insumoId];

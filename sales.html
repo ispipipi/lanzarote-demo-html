@@ -121,7 +121,7 @@
   </style>
 </head>
 <body class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(255,222,173,0.24),_transparent_22%),radial-gradient(circle_at_top,_rgba(213,227,253,0.38),_transparent_28%),linear-gradient(180deg,_#fffaf2,_#f5efe4_52%,_#eef2f6)] text-on-surface antialiased md:flex">
-  <aside class="px-3 pt-3 md:h-screen md:w-[360px] md:shrink-0 md:p-6" id="sidebar"></aside>
+  <aside class="px-3 pt-3 md:h-screen md:w-[300px] md:shrink-0 md:p-4 lg:w-[320px] lg:p-5 xl:w-[360px] xl:p-6" id="sidebar"></aside>
   <main class="min-w-0 flex-1">
     <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:px-6 md:min-h-[88px] md:px-container-padding" id="topbar"></header>
     <div class="mx-auto w-full max-w-none space-y-stack-lg px-4 pb-6 pt-6 sm:px-6 md:p-container-padding md:pt-8" id="sales-root"></div>
@@ -202,7 +202,7 @@
       const root = document.getElementById("sales-root");
       root.innerHTML = `
         ${!salesFocus ? `
-          <section class="grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_340px]">
+          <section class="grid gap-4 2xl:grid-cols-[minmax(0,1.15fr)_340px]">
             <article class="rounded-[32px] border border-[#ead7b2] bg-[radial-gradient(circle_at_top_left,_rgba(255,222,173,0.3),_transparent_24%),linear-gradient(180deg,_#fffdfa,_#fff5e6)] p-6 shadow-[0_18px_36px_rgba(140,96,31,0.1)] md:p-7">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="inline-flex items-center gap-2 rounded-full border border-[#ffd489] bg-[#fff5df] px-3 py-1 text-body-sm font-medium text-[#b46b00]">
@@ -284,7 +284,7 @@
                 Volver al dashboard
               </a>
             </div>
-            <div class="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1.1fr)_320px]">
+            <div class="mt-4 grid gap-3 2xl:grid-cols-[minmax(0,1.1fr)_320px]">
               <div class="rounded-[24px] border border-outline-variant bg-white p-5 shadow-soft">
                 <div class="grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center">
                   <div class="flex flex-col items-center justify-center">
@@ -352,7 +352,7 @@
                 Volver al dashboard
               </a>
             </div>
-            <div class="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1fr)_320px]">
+            <div class="mt-4 grid gap-3 2xl:grid-cols-[minmax(0,1fr)_320px]">
               <div class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
                 <div class="grid gap-3 md:grid-cols-2">
                   <div class="rounded-2xl bg-surface-container-low p-4">
@@ -424,14 +424,14 @@
           </section>
         ` : ""}
 
-        <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section class="grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
           ${headlineKpiCard("point_of_sale", "Caja del día", metrics.formattedSoldAmount, `${metrics.totalSoldUnits} u vendidas`, "soft")}
           ${headlineKpiCard("receipt_long", "Ticket medio", salesApi.formatCurrency(averageTicket), `${topChannel.label} lidera`, "warm")}
           ${headlineKpiCard("account_balance_wallet", "Cobranza", salesApi.formatCurrency(metrics.realCollections), `${metrics.effectiveCollectionsPct}% del esperado`, "data")}
           ${headlineKpiCard("warning", "Saldo vencido", salesApi.formatCurrency(metrics.overdueReceivables), metrics.overdueReceivables ? `${state.clientesComerciales.filter((item) => item.saldo > 0).length} clientes con saldo` : "sin desvíos", "alert")}
         </section>
 
-        <section class="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_360px]">
+        <section class="grid gap-4 2xl:grid-cols-[minmax(0,1.1fr)_360px]">
           <div class="space-y-stack-md">
             <div class="rounded-[30px] border border-[#ead7b2] bg-[radial-gradient(circle_at_top_left,_rgba(255,222,173,0.16),_transparent_24%),linear-gradient(180deg,_#ffffff,_#fffaf2)] p-6 shadow-soft">
               <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -448,7 +448,7 @@
                 </div>
               </div>
 
-              <div class="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_284px]">
+              <div class="mt-6 grid gap-4 min-[1700px]:grid-cols-[minmax(0,1fr)_284px]">
                 <form class="grid gap-gutter md:grid-cols-2" id="sales-form">
                   <label class="block rounded-2xl bg-[#fff7ea] p-4">
                     <span class="text-label-caps text-on-surface-variant">Producto</span>
