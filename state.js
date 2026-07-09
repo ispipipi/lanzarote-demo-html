@@ -2247,6 +2247,7 @@ function renderHeader(options) {
 }
 
 function applyViewportShellLayout(options = {}) {
+  const allowPageScroll = options.allowPageScroll !== false;
   document.body.classList.add("h-screen", "overflow-hidden");
 
   const sidebarHost = document.getElementById("sidebar");
@@ -2266,14 +2267,14 @@ function applyViewportShellLayout(options = {}) {
     if (contentRoot) {
       contentRoot.classList.add("flex-1", "min-h-0");
       contentRoot.classList.remove("overflow-hidden", "overflow-y-auto");
-      contentRoot.classList.add(options.allowPageScroll ? "overflow-y-auto" : "overflow-hidden");
+      contentRoot.classList.add(allowPageScroll ? "overflow-y-auto" : "overflow-hidden");
     }
   }
 }
 
 function mountShell(options) {
   ensureUiChrome();
-  applyViewportShellLayout({ allowPageScroll: Boolean(options.allowPageScroll) });
+  applyViewportShellLayout({ allowPageScroll: options.allowPageScroll });
   const sidebar = document.getElementById("sidebar");
   const header = document.getElementById("topbar");
   let openSubmenuPage = null;

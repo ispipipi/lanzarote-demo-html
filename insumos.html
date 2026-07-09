@@ -171,7 +171,7 @@
   <aside class="px-3 pt-3 md:h-screen md:w-[360px] md:shrink-0 md:p-6" id="sidebar"></aside>
   <main class="min-w-0 flex-1">
     <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:px-6 md:min-h-[88px] md:px-container-padding" id="topbar"></header>
-    <div class="mx-auto flex h-full w-full max-w-none min-h-0 flex-col px-4 pb-4 pt-4 sm:px-6 sm:pt-5 md:p-container-padding md:pt-5" id="insumos-root"></div>
+    <div class="mx-auto flex w-full max-w-none flex-col px-4 pb-4 pt-4 sm:px-6 sm:pt-5 md:p-container-padding md:pt-5" id="insumos-root"></div>
   </main>
   <script src="state.js?v=20260709-ui6"></script>
   <script>
@@ -1106,7 +1106,7 @@
 
       const root = document.getElementById("insumos-root");
       root.innerHTML = `
-        <section class="grid h-full min-h-0 gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
+        <section class="grid gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
           <aside class="flex min-h-0 flex-col rounded-[24px] border border-[#d9e0ef] bg-[radial-gradient(circle_at_top_left,_rgba(255,190,92,0.14),_transparent_18%),radial-gradient(circle_at_top_right,_rgba(35,65,174,0.08),_transparent_14%),linear-gradient(180deg,_#fffdf8,_#ffffff_58%,_#f7faff)] p-4 shadow-soft">
             <div>
               <div class="inline-flex items-center gap-2 rounded-full border border-[#ffe5bf] bg-[#fff5df] px-3 py-1 text-body-sm font-medium text-[#9a6503]">
@@ -1131,7 +1131,7 @@
               <span class="rounded-full bg-[#fff1d6] px-3 py-1.5 text-center text-[11px] font-medium text-[#9a6503]">${pendingReceiptCount ? `${pendingReceiptCount} recepciones por ${insumosApi.formatCurrency(pendingReceiptAmount)}` : `${nextSiiBatch.documentos.length} facturas por ${insumosApi.formatCurrency(siiPendingAmount)}`}</span>
             </div>
 
-            <div class="mt-4 grid min-h-0 flex-1 gap-2 overflow-y-auto pr-1">
+            <div class="mt-4 grid gap-2 pr-1">
               <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
                 <div class="flex items-center justify-between gap-3">
                   <div>
@@ -1201,7 +1201,7 @@
             </div>
           </aside>
 
-          <section class="flex min-h-0 flex-col overflow-hidden rounded-[30px] border border-[#d9e0ef] bg-white p-5 shadow-soft md:p-6">
+          <section class="flex flex-col rounded-[30px] border border-[#d9e0ef] bg-white p-5 shadow-soft md:p-6">
             <div class="flex flex-col gap-4 border-b border-[#ebf0fb] pb-4 md:flex-row md:items-end md:justify-between">
               <div>
                 <p class="text-label-caps text-[#7181a3]">Submódulo activo</p>
@@ -1214,7 +1214,7 @@
               </div>
             </div>
 
-            <div class="mt-5 flex-1 min-h-0 min-w-0 overflow-y-auto pr-2">
+            <div class="mt-5 min-w-0 pr-2">
               ${subviewContent[activeSubview.id]}
             </div>
           </section>

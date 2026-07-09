@@ -124,7 +124,7 @@
   <aside class="px-3 pt-3 sm:h-screen sm:w-[360px] sm:shrink-0 sm:p-6" id="sidebar"></aside>
   <main class="min-w-0 flex-1">
     <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:min-h-[88px] sm:px-container-padding" id="topbar"></header>
-    <div class="mx-auto flex h-full w-full max-w-none min-h-0 flex-col px-4 pb-4 pt-4 sm:p-container-padding sm:pt-5" id="production-root"></div>
+    <div class="mx-auto flex w-full max-w-none flex-col px-4 pb-4 pt-4 sm:p-container-padding sm:pt-5" id="production-root"></div>
   </main>
   <script src="state.js?v=20260709-ui6"></script>
   <script>
@@ -1471,7 +1471,7 @@
 
       const root = document.getElementById("production-root");
       root.innerHTML = `
-        <section class="grid h-full min-h-0 gap-4 xl:grid-cols-[272px_minmax(0,1fr)]">
+        <section class="grid gap-4 xl:grid-cols-[272px_minmax(0,1fr)]">
           <aside class="flex min-h-0 flex-col rounded-[24px] border border-[#ead7b2] bg-[radial-gradient(circle_at_top_left,_rgba(255,215,153,0.38),_transparent_24%),radial-gradient(circle_at_bottom_left,_rgba(255,244,221,0.9),_transparent_38%),linear-gradient(180deg,_#fffdfa,_#fff5e4)] p-3.5 shadow-[0_16px_36px_rgba(140,96,31,0.12)]">
             <div>
               <p class="inline-flex items-center gap-2 rounded-full border border-[#ffd489] bg-[#fff5df] px-3 py-1 text-body-sm font-medium text-[#b46b00]">
@@ -1536,7 +1536,7 @@
             </section>
           </aside>
 
-          <section class="flex min-h-0 flex-col overflow-hidden rounded-[28px] border border-[#ead7b2] bg-[linear-gradient(180deg,_#ffffff,_#fffdfa)] p-4 shadow-soft">
+          <section class="flex flex-col rounded-[28px] border border-[#ead7b2] bg-[linear-gradient(180deg,_#ffffff,_#fffdfa)] p-4 shadow-soft">
             <div class="border-b border-outline-variant pb-3">
               <div class="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
                 <div>
@@ -1551,7 +1551,7 @@
               </div>
             </div>
 
-            <div class="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
+            <div class="mt-4 pr-1">
               ${activeSubview.id === "recipes"
                 ? renderRecipesView(state, ingredientMap)
                 : activeSubview.id === "finished"
