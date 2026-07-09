@@ -199,7 +199,7 @@
 
       const root = document.getElementById("dashboard-root");
       root.innerHTML = `
-        <section class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+        <section class="grid gap-5 min-[1720px]:grid-cols-[minmax(0,1fr)_320px]">
           <div class="grid gap-5">
             <section class="rounded-[32px] border border-[#dce4ff] bg-[radial-gradient(circle_at_top_left,_rgba(84,109,217,0.18),_transparent_30%),linear-gradient(135deg,_#ffffff,_#f7f9ff)] p-5 shadow-[0_22px_48px_rgba(47,87,211,0.08)] md:p-6">
               <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
@@ -233,7 +233,7 @@
             </section>
 
             <section class="grid gap-4">
-              <div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
+              <div class="grid gap-4 xl:grid-cols-2 min-[1920px]:grid-cols-3">
                 ${sectionCard({
                   href: "sales.html?focus=plata",
                   icon: "paid",
@@ -333,9 +333,9 @@
                   </div>
                 </div>
 
-                <div class="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_320px]">
+                <div class="mt-4 grid gap-4 min-[1780px]:grid-cols-[minmax(0,1.2fr)_320px]">
                   <div class="pr-1">
-                    <div class="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
+                    <div class="grid gap-3 md:grid-cols-2 min-[1920px]:grid-cols-3">
                       ${processKpiCard("menu_book", "Rendimiento por receta", `${Math.round(topRecipeYield.reduce((sum, item) => sum + item.pct, 0) / Math.max(1, topRecipeYield.length))}%`, `${topRecipeYield[0]?.producto || "Sin lote"} lidera`, "blue", "production.html?subview=recipes")}
                       ${processKpiCard("nutrition", "Desviación de consumo", `${metrics.consumptionDeviationPct > 0 ? "+" : ""}${metrics.consumptionDeviationPct}%`, `${metrics.actualConsumption.toFixed(1)} kg vs estándar`, metrics.consumptionDeviationPct > 2 ? "amber" : "green")}
                       ${processKpiCard("delete", "Merma total", `${metrics.totalProcessWaste.toLocaleString("es-CL")} u`, `Prod ${metrics.totalWaste} · vitrina ${metrics.showcaseUnits}`, "red")}
@@ -351,7 +351,7 @@
                     </div>
                   </div>
 
-                  <div class="grid gap-3 xl:grid-rows-[auto_auto_1fr]">
+                  <div class="grid gap-3 min-[1780px]:grid-rows-[auto_auto_1fr]">
                     <a class="block rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#f5f8ff,_#ffffff)] p-4 shadow-soft transition-transform hover:-translate-y-[1px]" href="sales.html?focus=channels">
                       <div class="flex items-center justify-between gap-3">
                         <div>
@@ -435,7 +435,7 @@
             </section>
           </div>
 
-          <aside class="grid gap-4 xl:grid-rows-[auto_auto_1fr]">
+          <aside class="grid gap-4 min-[1720px]:grid-rows-[auto_auto_1fr]">
             <section class="overflow-hidden rounded-[30px] bg-[radial-gradient(circle_at_top_right,_rgba(145,176,255,0.22),_transparent_28%),linear-gradient(180deg,_#2f57d3,_#2444aa)] p-5 text-white shadow-[0_22px_48px_rgba(47,87,211,0.22)]">
               <div class="flex items-start justify-between gap-4">
                 <div>
