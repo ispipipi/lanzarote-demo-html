@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Lanzarote - Audit Trail</title>
+  <title>Panadator - Balance de masas</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -121,97 +121,72 @@
     const auditApi = window.LanzaroteState;
     const auditParams = new URLSearchParams(window.location.search);
     const auditFocus = auditParams.get("focus") || "";
-    let auditFilter = auditFocus === "closures" ? "alerta" : "all";
 
-    function buildTimeline(state) {
-      const productMap = auditApi.getProductMap(state);
-      const ingredientMap = auditApi.getIngredientMap(state);
-      const customerMap = auditApi.getCustomerMap(state);
-      const entries = [];
-
-      state.comprasInsumos.forEach((purchase) => {
-        entries.push({
-          id: purchase.id,
-          tipo: "insumos",
-          fecha: purchase.fecha,
-          titulo: `${ingredientMap[purchase.insumoId].nombre} comprado`,
-          detalle: `${purchase.proveedor} · ${purchase.cantidad.toFixed(1)} ${ingredientMap[purchase.insumoId].unidad}`,
-        });
-      });
-
-      state.turnos.forEach((turn) => {
-        entries.push({
-          id: turn.id,
-          tipo: "producción",
-          fecha: turn.fecha,
-          titulo: `${productMap[turn.productoId].nombre} registrado`,
-          detalle: `${turn.turno} · Real ${turn.cantidadReal} u · Merma ${turn.merma} u`,
-        });
-      });
-
-      state.pedidosDelivery.forEach((order) => {
-        entries.push({
-          id: order.id,
-          tipo: "delivery",
-          fecha: String(order.createdAt).slice(0, 10),
-          titulo: `${order.cliente} en ruta ${order.ruta}`,
-          detalle: `${productMap[order.productoId].nombre} · ${order.estado} · ${order.chofer}`,
-        });
-      });
-
-      state.ventas.forEach((sale) => {
-        entries.push({
-          id: sale.id,
-          tipo: "venta",
-          fecha: String(sale.timestamp).slice(0, 10),
-          titulo: `${productMap[sale.productoId].nombre} vendido`,
-          detalle: `${auditApi.formatCurrency(sale.monto)} · ${sale.clienteComercialId ? customerMap[sale.clienteComercialId].nombre : state.canales.find((item) => item.id === sale.canalId).nombre}`,
-        });
-      });
-
-      state.devoluciones.forEach((refund) => {
-        entries.push({
-          id: refund.id,
-          tipo: "devolución",
-          fecha: refund.fecha,
-          titulo: `${productMap[refund.productoId].nombre} devuelto`,
-          detalle: `${refund.cantidad} unidades · ${refund.motivo}`,
-        });
-      });
-
-      state.alertas.forEach((alert) => {
-        entries.push({
-          id: alert.id,
-          tipo: "alerta",
-          fecha: String(alert.timestamp).slice(0, 10),
-          titulo: alert.tipo,
-          detalle: alert.mensaje,
-        });
-      });
-
-      return entries.sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)));
+    function roundKg(value) {
+      return Math.round((Number(value) || 0) * 10) / 10;
     }
 
     function renderAudit() {
       const state = auditApi.getState();
       const metrics = auditApi.buildMetrics(state);
-      const timeline = buildTimeline(state).filter((entry) => auditFilter === "all" || entry.tipo === auditFilter);
+      const ingredientMap = auditApi.getIngredientMap(state);
+      const productMap = auditApi.getProductMap(state);
       const pendingLoadOrders = state.pedidosDelivery.filter((item) => !item.cargaCerrada);
       const daysWithoutTurnClose = state.turnos.some((turn) => turn.fecha === auditApi.DEMO_DATE) ? 0 : 1;
+      const receivedKg = roundKg(state.comprasInsumos.reduce((sum, purchase) => sum + (purchase.cantidad || 0), 0));
+      const stockKg = roundKg(state.insumos.reduce((sum, insumo) => sum + (insumo.stock || 0), 0));
+      const consumedKg = roundKg(metrics.actualConsumption || 0);
+      const grossUnits = state.turnos.reduce((sum, turn) => sum + (turn.cantidadReal || 0), 0);
+      const wasteUnits = metrics.totalWaste || 0;
+      const netUnits = metrics.totalProduced || 0;
+      const unitMassKg = grossUnits > 0 ? consumedKg / grossUnits : 0;
+      const wasteKg = roundKg(unitMassKg * wasteUnits);
+      const netMassKg = roundKg(Math.max(0, consumedKg - wasteKg));
+      const finishedAvailableUnits = state.stockTerminado.reduce((sum, stock) => sum + (stock.cantidadDisponible || 0), 0);
+      const channelUnits = state.canales.reduce((sum, channel) => sum + channel.stock.reduce((channelSum, item) => channelSum + item.cantidad, 0), 0);
+      const soldUnits = state.ventas.reduce((sum, sale) => sum + sale.cantidad, 0);
+      const availableMassKg = roundKg(unitMassKg * finishedAvailableUnits);
+      const channelMassKg = roundKg(unitMassKg * channelUnits);
+      const soldMassKg = roundKg(unitMassKg * soldUnits);
+      const balancedOutputKg = roundKg(availableMassKg + channelMassKg + soldMassKg);
+      const balanceGapKg = roundKg(Math.abs(netMassKg - balancedOutputKg));
+      const balancePct = netMassKg === 0 ? 100 : Math.max(0, Math.round(100 - (balanceGapKg / netMassKg) * 100));
+      const topInputs = [...state.comprasInsumos]
+        .reduce((accumulator, purchase) => {
+          const key = purchase.insumoId;
+          accumulator[key] = accumulator[key] || { id: key, label: ingredientMap[key]?.nombre || key, value: 0 };
+          accumulator[key].value += purchase.cantidad || 0;
+          return accumulator;
+        }, {})
+      ;
+      const inputRows = Object.values(topInputs).sort((a, b) => b.value - a.value).slice(0, 4);
+      const outputRows = state.productos
+        .map((product) => {
+          const productUnits = state.ventas.filter((sale) => sale.productoId === product.id).reduce((sum, sale) => sum + sale.cantidad, 0);
+          return {
+            id: product.id,
+            label: product.nombre,
+            units: productUnits,
+            mass: roundKg(unitMassKg * productUnits),
+          };
+        })
+        .filter((item) => item.units > 0)
+        .sort((a, b) => b.units - a.units)
+        .slice(0, 4);
 
       auditApi.mountShell({
         activePage: "",
         allowPageScroll: true,
-        title: "Audit Trail",
+        title: "Balance de masas",
         header: {
-          eyebrow: "AUDIT TRAIL",
-          badge: `${timeline.length} eventos visibles`,
-          badgeIcon: "query_stats",
+          eyebrow: "BALANCE DE MASAS",
+          badge: `${balancePct}% conciliado`,
+          badgeIcon: "scale",
           secondaryActions: [
             { id: "audit-refresh", icon: "autorenew", label: "Refrescar" },
-            { id: "audit-home", icon: "dashboard", label: "Dashboard" },
+            { id: "audit-inventory", icon: "inventory_2", label: "Inventarios" },
           ],
-          primaryAction: { id: "audit-reset-filter", icon: "filter_alt_off", label: "Limpiar filtro" },
+          primaryAction: { id: "audit-closures", icon: "assignment_late", label: "Ver cierres" },
         },
       });
 
@@ -238,58 +213,134 @@
           </section>
         ` : ""}
 
-        <section class="grid gap-gutter md:grid-cols-2 xl:grid-cols-4">
-          ${metricCard("Eventos", String(timeline.length), `filtro ${auditFilter}`)}
-          ${metricCard("Producción auditada", String(state.turnos.length), `${metrics.totalProduced.toLocaleString("es-CL")} u netas`)}
-          ${metricCard("Ventas auditadas", String(state.ventas.length), metrics.formattedSoldAmount)}
-          ${metricCard("SLA vigente", `${state.slaCumplimiento}%`, metrics.statusLabel)}
+        <section class="rounded-[30px] border border-[#ead7b2] bg-[radial-gradient(circle_at_top_left,_rgba(255,223,173,0.26),_transparent_24%),linear-gradient(180deg,_#fffdf8,_#fff6e8)] p-6 shadow-soft">
+          <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+            <div class="max-w-3xl">
+              <span class="inline-flex items-center gap-2 rounded-full border border-[#ffe5bf] bg-[#fff5df] px-3 py-1 text-body-sm font-medium text-[#9a6503]">
+                <span class="material-symbols-outlined text-[18px]">scale</span>
+                Conversión panadera
+              </span>
+              <h1 class="mt-4 text-[30px] font-bold leading-[1.02] tracking-[-0.05em] text-primary md:text-[40px]">De insumo a despacho, con merma visible y flujo balanceado.</h1>
+              <p class="mt-3 text-body-md text-on-surface-variant">Las masas recepcionadas pasan a producción, se descuentan mermas y el resto queda conciliado entre producto vivo y salida comercial.</p>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-3 xl:min-w-[520px]">
+              ${massHeroCard("Recepcionado", `${receivedKg.toFixed(1)} kg`, `${state.comprasInsumos.length} recepciones validadas`)}
+              ${massHeroCard("Consumido", `${consumedKg.toFixed(1)} kg`, `${grossUnits.toLocaleString("es-CL")} u procesadas`)}
+              ${massHeroCard("Balance neto", `${netMassKg.toFixed(1)} kg`, `${balancePct}% sin merma`)}
+            </div>
+          </div>
         </section>
 
-        <section class="rounded-xl border border-outline-variant bg-white p-6 shadow-soft">
+        <section class="grid gap-gutter md:grid-cols-2 xl:grid-cols-4">
+          ${metricCard("Insumos recepcionados", `${receivedKg.toFixed(1)} kg`, `${stockKg.toFixed(1)} kg siguen en bodega`)}
+          ${metricCard("A producción", `${consumedKg.toFixed(1)} kg`, `${grossUnits.toLocaleString("es-CL")} u trabajadas`)}
+          ${metricCard("Merma equivalente", `${wasteKg.toFixed(1)} kg`, `${wasteUnits.toLocaleString("es-CL")} u con pérdida`)}
+          ${metricCard("Gap de balance", `${balanceGapKg.toFixed(1)} kg`, balanceGapKg <= 0.5 ? "flujo conciliado" : "revisar salidas")}
+        </section>
+
+        <section class="grid gap-4 2xl:grid-cols-[minmax(0,1.2fr)_320px]">
+          <article class="rounded-[30px] border border-outline-variant bg-white p-6 shadow-soft">
+            <div class="flex flex-col gap-4 border-b border-outline-variant pb-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p class="text-label-caps text-on-surface-variant">Flujo principal</p>
+                <h2 class="mt-2 text-headline-md text-primary">Balance visual de las masas</h2>
+              </div>
+              <span class="rounded-full ${balancePct >= 96 ? "bg-[#edf7ef] text-[#1f7a46]" : "bg-[#fff5df] text-[#9a6503]"} px-4 py-2 text-body-sm font-semibold">${balancePct}% conciliado</span>
+            </div>
+
+            <div class="mt-5 grid gap-4">
+              <section class="rounded-[24px] border border-[#ead7b2] bg-[linear-gradient(180deg,_#fffdfa,_#fff5e6)] p-4">
+                <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)_72px_minmax(0,1fr)] lg:items-center">
+                  ${flowBlock("Entradas", "Insumos validados", `${receivedKg.toFixed(1)} kg`, `${stockKg.toFixed(1)} kg aún en bodega`, "bg-[#fff1d5] text-[#9a6503]")}
+                  ${flowArrow()}
+                  ${flowBlock("Proceso", "Masas a producción", `${consumedKg.toFixed(1)} kg`, `${grossUnits.toLocaleString("es-CL")} u procesadas`, "bg-[#e8eeff] text-[#2341ae]")}
+                  ${flowArrow()}
+                  ${flowBlock("Neto", "Producto bueno", `${netMassKg.toFixed(1)} kg`, `${netUnits.toLocaleString("es-CL")} u sin merma`, "bg-[#edf7ef] text-[#1f7a46]")}
+                </div>
+              </section>
+
+              <section class="grid gap-4 xl:grid-cols-[220px_minmax(0,1fr)]">
+                <article class="rounded-[24px] border border-[#ffd8d2] bg-[#fff4f2] p-4">
+                  <p class="text-label-caps text-[#d14b3f]">Merma</p>
+                  <p class="mt-2 font-data-lg text-[#9f3026]">${wasteKg.toFixed(1)} kg</p>
+                  <p class="mt-2 text-body-sm text-[#9f3026]">${wasteUnits.toLocaleString("es-CL")} u fuera del balance neto.</p>
+                </article>
+                <article class="rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#f8fbff,_#ffffff)] p-4">
+                  <p class="text-label-caps text-on-surface-variant">Destino del producto bueno</p>
+                  <div class="mt-4 grid gap-3 md:grid-cols-3">
+                    ${massSplitCard("Disponible", `${availableMassKg.toFixed(1)} kg`, `${finishedAvailableUnits.toLocaleString("es-CL")} u en terminado`, "bg-[#edf2ff] text-[#2341ae]")}
+                    ${massSplitCard("En canal", `${channelMassKg.toFixed(1)} kg`, `${channelUnits.toLocaleString("es-CL")} u en mesón/retiro`, "bg-[#fff5df] text-[#9a6503]")}
+                    ${massSplitCard("Despachado", `${soldMassKg.toFixed(1)} kg`, `${soldUnits.toLocaleString("es-CL")} u vendidas`, "bg-[#edf7ef] text-[#1f7a46]")}
+                  </div>
+                  <div class="mt-4 h-3 overflow-hidden rounded-full bg-[#e8eeff]">
+                    <div class="h-full bg-[#2341ae]" style="width:${Math.max(8, Math.min(100, netMassKg > 0 ? Math.round((availableMassKg / netMassKg) * 100) : 0))}%"></div>
+                  </div>
+                  <div class="mt-2 flex flex-wrap gap-3 text-body-sm text-on-surface-variant">
+                    <span>Disponible ${netMassKg > 0 ? Math.round((availableMassKg / netMassKg) * 100) : 0}%</span>
+                    <span>Canal ${netMassKg > 0 ? Math.round((channelMassKg / netMassKg) * 100) : 0}%</span>
+                    <span>Despachado ${netMassKg > 0 ? Math.round((soldMassKg / netMassKg) * 100) : 0}%</span>
+                  </div>
+                </article>
+              </section>
+            </div>
+          </article>
+
+          <aside class="space-y-4">
+            <section class="rounded-[28px] bg-[linear-gradient(180deg,_#2f57d3,_#2444aa)] p-5 text-white shadow-[0_22px_48px_rgba(47,87,211,0.22)]">
+              <p class="text-label-caps text-[#c8d6ff]">Balance final</p>
+              <h2 class="mt-2 text-[24px] font-semibold tracking-[-0.03em]">Conciliación</h2>
+              <p class="mt-3 font-data-lg">${balancedOutputKg.toFixed(1)} kg</p>
+              <p class="mt-2 text-body-sm text-[#d7e0ff]">Producto bueno repartido entre stock, canales y despacho.</p>
+              <div class="mt-4 grid grid-cols-2 gap-3">
+                <div class="rounded-2xl bg-white/10 p-3">
+                  <p class="text-label-caps text-[#d7e0ff]">Gap</p>
+                  <p class="mt-1 text-[22px] font-bold leading-none">${balanceGapKg.toFixed(1)} kg</p>
+                </div>
+                <div class="rounded-2xl bg-white/10 p-3">
+                  <p class="text-label-caps text-[#d7e0ff]">SLA</p>
+                  <p class="mt-1 text-[22px] font-bold leading-none">${state.slaCumplimiento}%</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="rounded-[28px] border border-outline-variant bg-white p-5 shadow-soft">
+              <p class="text-label-caps text-on-surface-variant">Entradas más pesadas</p>
+              <div class="mt-4 space-y-3">
+                ${inputRows.map((item) => miniMassRow(item.label, `${roundKg(item.value).toFixed(1)} kg`, "#ffb72b")).join("") || '<p class="rounded-2xl bg-surface-container-low p-4 text-body-sm text-on-surface-variant">Sin ingresos aún.</p>'}
+              </div>
+            </section>
+
+            <section class="rounded-[28px] border border-outline-variant bg-white p-5 shadow-soft">
+              <p class="text-label-caps text-on-surface-variant">Salidas comerciales</p>
+              <div class="mt-4 space-y-3">
+                ${outputRows.map((item) => miniMassRow(item.label, `${item.mass.toFixed(1)} kg · ${item.units} u`, "#39b980")).join("") || '<p class="rounded-2xl bg-surface-container-low p-4 text-body-sm text-on-surface-variant">Sin despacho/venda aún.</p>'}
+              </div>
+            </section>
+          </aside>
+        </section>
+
+        ${auditFocus === "closures" ? "" : `
+        <section class="rounded-[28px] border border-outline-variant bg-white p-6 shadow-soft">
           <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <p class="text-label-caps text-on-surface-variant">Filtros</p>
-              <h2 class="mt-2 text-headline-md text-primary">Timeline</h2>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              ${["all", "insumos", "producción", "delivery", "venta", "devolución", "alerta"].map((filter) => `
-                <button class="audit-filter rounded-full px-4 py-2 text-body-sm font-semibold ${auditFilter === filter ? "bg-primary text-white" : "bg-surface-container-low text-on-surface-variant"}" data-filter="${filter}" type="button">
-                  ${filter}
-                </button>
-              `).join("")}
+              <p class="text-label-caps text-on-surface-variant">Lectura operativa</p>
+              <h2 class="mt-2 text-headline-md text-primary">Qué vigilar</h2>
             </div>
           </div>
-
-          <div class="mt-6 space-y-3">
-            ${timeline.map((entry) => `
-              <article class="rounded-xl border border-outline-variant bg-surface-container-low p-4">
-                <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-                  <div>
-                    <p class="text-label-caps text-on-surface-variant">${entry.tipo}</p>
-                    <h3 class="mt-2 text-body-md font-semibold text-primary">${auditApi.escapeHtml(entry.titulo)}</h3>
-                    <p class="mt-2 text-body-md text-on-surface-variant">${auditApi.escapeHtml(entry.detalle)}</p>
-                  </div>
-                  <span class="font-data-md text-primary">${entry.fecha}</span>
-                </div>
-              </article>
-            `).join("") || '<p class="rounded-xl bg-surface-container-low p-4 text-body-md text-on-surface-variant">Sin eventos.</p>'}
+          <div class="mt-5 grid gap-4 md:grid-cols-3">
+            ${metricCard("Recepciones pendientes", String(state.recepcionesPendientes.length), state.recepcionesPendientes.length ? "aún no ingresan al balance" : "sin pendientes")}
+            ${metricCard("Órdenes activas", String(state.ordenesProduccion.filter((order) => order.estado === "Activa").length), "siguen consumiendo masa")}
+            ${metricCard("Rutas sin cierre", String(pendingLoadOrders.length), "pueden abrir gap en salida")}
           </div>
-        </section>
+        </section>`}
       `;
 
       document.getElementById("audit-refresh").addEventListener("click", renderAudit);
-      document.getElementById("audit-home").addEventListener("click", () => {
-        window.location.href = "index.html";
+      document.getElementById("audit-inventory").addEventListener("click", () => {
+        window.location.href = "insumos.html";
       });
-      document.getElementById("audit-reset-filter").addEventListener("click", () => {
-        auditFilter = "all";
-        renderAudit();
-      });
-      document.querySelectorAll(".audit-filter").forEach((button) => {
-        button.addEventListener("click", (event) => {
-          auditFilter = event.currentTarget.dataset.filter;
-          renderAudit();
-        });
+      document.getElementById("audit-closures").addEventListener("click", () => {
+        window.location.href = "dashboard.html?focus=closures";
       });
     }
 
@@ -299,6 +350,59 @@
           <p class="text-label-caps text-on-surface-variant">${label}</p>
           <p class="mt-3 font-data-lg text-primary">${value}</p>
           <p class="mt-2 text-body-sm text-on-surface-variant">${helper}</p>
+        </article>
+      `;
+    }
+
+    function massHeroCard(label, value, helper) {
+      return `
+        <article class="rounded-[24px] border border-[#eadfcb] bg-white/92 px-4 py-4 shadow-soft">
+          <p class="text-label-caps text-on-surface-variant">${label}</p>
+          <p class="mt-2 font-data-lg text-primary">${value}</p>
+          <p class="mt-2 text-body-sm text-on-surface-variant">${helper}</p>
+        </article>
+      `;
+    }
+
+    function flowArrow() {
+      return `
+        <div class="hidden lg:flex items-center justify-center">
+          <span class="material-symbols-outlined rounded-full bg-[#edf2ff] p-3 text-[#2341ae]">east</span>
+        </div>
+      `;
+    }
+
+    function flowBlock(kicker, label, value, helper, toneClass) {
+      return `
+        <article class="rounded-[24px] border border-outline-variant bg-white p-4 shadow-soft">
+          <span class="inline-flex rounded-full px-3 py-1 text-body-sm font-semibold ${toneClass}">${kicker}</span>
+          <h3 class="mt-3 text-[20px] font-semibold tracking-[-0.03em] text-primary">${label}</h3>
+          <p class="mt-3 font-data-lg text-primary">${value}</p>
+          <p class="mt-2 text-body-sm text-on-surface-variant">${helper}</p>
+        </article>
+      `;
+    }
+
+    function massSplitCard(label, value, helper, toneClass) {
+      return `
+        <article class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
+          <span class="inline-flex rounded-full px-3 py-1 text-body-sm font-semibold ${toneClass}">${label}</span>
+          <p class="mt-3 font-data-lg text-primary">${value}</p>
+          <p class="mt-2 text-body-sm text-on-surface-variant">${helper}</p>
+        </article>
+      `;
+    }
+
+    function miniMassRow(label, value, barColor) {
+      return `
+        <article class="rounded-2xl bg-surface-container-low p-4">
+          <div class="flex items-center justify-between gap-3">
+            <span class="text-body-md font-semibold text-primary">${label}</span>
+            <span class="font-data-md text-primary">${value}</span>
+          </div>
+          <div class="mt-3 h-2 overflow-hidden rounded-full bg-white">
+            <div class="h-full rounded-full" style="width:100%; background:${barColor}"></div>
+          </div>
         </article>
       `;
     }

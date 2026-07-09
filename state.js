@@ -2152,9 +2152,9 @@ function renderSidebar(activePage, sidebarSubmenu, openSubmenuPage) {
       <div class="mt-auto hidden gap-2 border-t border-[#e3e9fb] pt-6 md:grid">
         <a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-[#5d6781] transition-colors hover:bg-[#f3f6ff] hover:text-[#2646b7]" href="dashboard.html">
           <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f5f7ff]">
-            <span class="material-symbols-outlined text-[20px]">query_stats</span>
+            <span class="material-symbols-outlined text-[20px]">scale</span>
           </span>
-          <span class="text-body-md">Audit Trail</span>
+          <span class="text-body-md">Balance de masas</span>
         </a>
         <button class="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[#5d6781] transition-colors hover:bg-[#f3f6ff] hover:text-[#2646b7]" id="sidebar-reset-demo" type="button">
           <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f5f7ff]">
