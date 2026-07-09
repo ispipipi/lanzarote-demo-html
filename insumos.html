@@ -488,7 +488,7 @@
         syncFinished = true;
         clearSiiSyncTimers();
         insumosApi.closeModal();
-        insumosApi.showToast("Sincronización SII lista. Las compras quedaron pendientes de recepción física.", "success");
+        insumosApi.showToast("Sincronización SII lista. Las compras quedaron registradas en inventario.", "success");
         purchasePage = 0;
         renderInsumos();
       };
@@ -520,6 +520,7 @@
               fecha: document.fecha,
               documento: document.documento,
               origen: "SII",
+              autoRecibir: true,
             });
           });
 
@@ -1310,7 +1311,7 @@
         capacityTarget.textContent = `${Math.max(0, projectedCapacity)}%`;
 
         if (projectedStock > ingredient.capacidad) {
-          messageTarget.textContent = "La compra quedará pendiente y conviene fraccionarla al momento de recibir.";
+          messageTarget.textContent = "El ingreso quedará registrado de inmediato; conviene fraccionar físicamente la descarga para no saturar bodega.";
           return;
         }
 
@@ -1324,7 +1325,7 @@
           return;
         }
 
-        messageTarget.textContent = "Si la recepción queda conforme, el insumo quedará operativo para producción inmediata.";
+        messageTarget.textContent = "El insumo quedará operativo de inmediato para producción y balance.";
       }
 
       if (!priceInput.value) {
@@ -1382,8 +1383,9 @@
           precioUnitario,
           fecha: document.getElementById("purchase-date").value || today,
           documento: document.getElementById("purchase-doc").value.trim(),
+          autoRecibir: true,
         });
-        insumosApi.showToast("Compra registrada. Falta validar la recepción física para subir stock.", "success");
+        insumosApi.showToast("Compra registrada y stock actualizado.", "success");
         purchasePage = 0;
         renderInsumos();
       });
