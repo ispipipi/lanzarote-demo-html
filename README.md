@@ -6,6 +6,7 @@ Demo operacional de panaderia construida como HTML estatico multiarchivo, usando
 
 - `index.html`: dashboard principal
 - `dashboard.html`: alias simple al dashboard
+- `insumos.html`: compras, recepción y control de inventario
 - `production.html`: registro de produccion por turno
 - `distribution.html`: asignacion de stock terminado a canales
 - `sales.html`: registro de ventas por canal
@@ -25,9 +26,14 @@ Luego abre:
 ## Flujo
 
 1. Registrar un turno en `production.html`
-2. Asignar stock en `distribution.html`
-3. Registrar ventas en `sales.html`
-4. Revisar KPIs y alertas en `index.html`
+2. Registrar una compra en `insumos.html`
+3. Validar la recepción física y dar alta a inventario
+4. Abrir turno y crear una orden en `production.html`
+5. Registrar el consumo real por orden
+6. Cerrar la orden para dar alta al producto terminado
+7. Asignar stock en `distribution.html`
+8. Registrar ventas en `sales.html`
+9. Revisar KPIs y alertas en `index.html`
 
 ## Notas
 

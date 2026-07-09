@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Lanzarote - Configuración</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e0e3e5",
+            "on-error": "#ffffff",
+            "primary": "#000000",
+            "on-tertiary-fixed-variant": "#38485d",
+            "tertiary-container": "#0b1c30",
+            "secondary-container": "#d5e3fd",
+            "on-surface-variant": "#45464d",
+            "secondary-fixed": "#d5e3fd",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "secondary": "#515f74",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "surface-container-lowest": "#ffffff",
+            "background": "#f7f9fb",
+            "on-secondary-container": "#57657b",
+            "on-secondary-fixed": "#0d1c2f",
+            "on-secondary-fixed-variant": "#3a485c",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "inverse-surface": "#2d3133",
+            "surface-dim": "#d8dadc",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#131b2e",
+            "surface": "#f7f9fb",
+            "surface-container-low": "#f2f4f6",
+            "on-surface": "#191c1e",
+            "on-background": "#191c1e",
+            "on-tertiary-fixed": "#0b1c30",
+            "inverse-on-surface": "#eff1f3",
+            "on-primary-container": "#7c839b",
+            "error-container": "#ffdad6",
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#3f465c",
+            "tertiary": "#000000",
+            "inverse-primary": "#bec6e0",
+            "surface-container-high": "#e6e8ea",
+            "surface-tint": "#565e74",
+            "on-tertiary-container": "#75859d",
+            "secondary-fixed-dim": "#b9c7e0",
+            "tertiary-fixed": "#d3e4fe",
+            "primary-container": "#131b2e",
+            "outline-variant": "#c6c6cd"
+          },
+          borderRadius: {
+            "sm": "0.125rem",
+            "DEFAULT": "0.25rem",
+            "md": "0.375rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "unit": "4px",
+            "container-padding": "24px",
+            "gutter": "16px",
+            "stack-sm": "8px",
+            "stack-md": "16px",
+            "stack-lg": "32px"
+          },
+          fontFamily: {
+            "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "label-caps": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "data-lg": ["JetBrains Mono", "monospace"],
+            "data-md": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "display-lg": ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+            "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "data-lg": ["20px", { lineHeight: "24px", fontWeight: "600" }],
+            "data-md": ["14px", { lineHeight: "20px", fontWeight: "500" }]
+          },
+          boxShadow: {
+            "soft": "0 8px 24px rgba(15, 23, 42, 0.08)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(213,227,253,0.45),_transparent_28%),linear-gradient(180deg,_#f7f9fb,_#eef2f6)] text-on-surface antialiased md:flex">
+  <aside class="px-3 pt-3 md:h-screen md:w-[300px] md:shrink-0 md:p-6" id="sidebar"></aside>
+  <main class="min-w-0 flex-1">
+    <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:px-6 md:min-h-[88px] md:px-container-padding" id="topbar"></header>
+    <div class="mx-auto flex h-full w-full max-w-none min-h-0 flex-col px-4 pb-4 pt-4 sm:px-6 sm:pt-5 md:p-container-padding md:pt-5" id="config-root"></div>
+  </main>
+  <script src="state.js?v=20260709-ui6"></script>
+  <script>
+    const configApi = window.LanzaroteState;
+    const configParams = new URLSearchParams(window.location.search);
+    let configSubview = configParams.get("subview") || "products";
+    let configDetailMap = {};
+
+    const channelByProduct = {
+      marraqueta: "Mesón + retiro",
+      hallulla: "Mesón + retiro",
+      baguette: "Retiro + vitrina",
+      croissant: "Mesón + delivery",
+      campagne: "Retiro + delivery",
+    };
+
+    const familyByProduct = {
+      marraqueta: "Pan corriente",
+      hallulla: "Pan corriente",
+      baguette: "Pan especial",
+      croissant: "Viennoiserie",
+      campagne: "Pan premium",
+    };
+
+    const supplierCatalog = {
+      "Molinos del Sur S.A.": {
+        documento: "76.554.120-1",
+        contacto: "Camila Soto · compras@molinossur.cl",
+        condiciones: "Pago 15 días · despacho AM",
+      },
+      "Distribuidora Central": {
+        documento: "77.104.882-3",
+        contacto: "Rafael Díaz · central@distcentral.cl",
+        condiciones: "Pago contado · reposición 24h",
+      },
+      "Importaciones Bio": {
+        documento: "76.882.004-9",
+        contacto: "Natalia Vera · bio@importbio.cl",
+        condiciones: "Pago 30 días · lote refrigerado",
+      },
+    };
+
+    const customerChannels = {
+      aromos: "Mesón",
+      rincon: "Delivery comercial",
+      forestalsur: "Retiro comercial",
+      teresa: "Retiro comercial",
+      alerces: "Delivery comercial",
+    };
+
+    const routeCatalog = [
+      { id: "ruta-centro", zona: "Centro - Costanera", frecuencia: "Lun a sáb AM", clientes: ["Café Rincón del Centro", "Minimarket Los Aromos"] },
+      { id: "ruta-oriente", zona: "Hotelera Oriente", frecuencia: "Diario PM", clientes: ["Hotel Boutique Los Alerces"] },
+      { id: "ruta-industrial", zona: "Industrial Norte", frecuencia: "Lun a vie AM", clientes: ["Casino Empresa ForestalSur", "Colegio Santa Teresa"] },
+    ];
+
+    const vehicleCatalog = [
+      { id: "veh-1", nombre: "Camioneta Partner", patente: "LG-21-KT", estado: "Operativa", responsable: "Rafael Muñoz" },
+      { id: "veh-2", nombre: "Camión liviano", patente: "JQ-88-PL", estado: "En ruta", responsable: "Valentina Rojas" },
+      { id: "veh-3", nombre: "Furgón frío", patente: "RS-14-CP", estado: "Backup", responsable: "Equipo logística" },
+    ];
+
+    const carrierCatalog = [
+      { id: "carrier-1", nombre: "Rafael Muñoz", ruta: "Centro - Costanera", permisos: "Licencia A4 · manipulación" },
+      { id: "carrier-2", nombre: "Valentina Rojas", ruta: "Hotelera Oriente", permisos: "Licencia A4 · cadena frío" },
+      { id: "carrier-3", nombre: "Luis Barrera", ruta: "Industrial Norte", permisos: "Licencia A2 · respaldo" },
+    ];
+
+    const paymentCatalog = [
+      { id: "pay-1", nombre: "Efectivo", uso: "Mesón", estado: "Activo" },
+      { id: "pay-2", nombre: "POS mesón", uso: "Mesón", estado: "Activo" },
+      { id: "pay-3", nombre: "POS móvil", uso: "Delivery / retiro", estado: "Activo" },
+      { id: "pay-4", nombre: "Transferencia", uso: "Clientes comerciales", estado: "Activo" },
+    ];
+
+    const userCatalog = [
+      { id: "usr-1", usuario: "Carla Pérez", rol: "Administrador", permisos: "Total", local: "Casa Matriz", turno: "Todo el día", estado: "Activo" },
+      { id: "usr-2", usuario: "Matías León", rol: "Jefe de producción", permisos: "Producción + recetas", local: "Planta", turno: "Mañana", estado: "Activo" },
+      { id: "usr-3", usuario: "Valentina Rojas", rol: "Logística", permisos: "Distribución", local: "Despacho", turno: "Tarde", estado: "Activo" },
+      { id: "usr-4", usuario: "Paula Soto", rol: "Caja", permisos: "Ventas mesón", local: "Sala", turno: "Mañana", estado: "Activo" },
+    ];
+
+    const subviewMeta = {
+      products: { label: "Productos", helper: "SKU y venta", icon: "bakery_dining", title: "Productos", subtitle: "Código, familia, unidad, precio y canal." },
+      ingredients: { label: "Insumos", helper: "Abastecimiento", icon: "inventory_2", title: "Insumos", subtitle: "Unidad, proveedor y mínimo operativo." },
+      recipes: { label: "Recetas", helper: "Consumo base", icon: "menu_book", title: "Recetas", subtitle: "Estandar, rendimiento y tolerancias." },
+      suppliers: { label: "Proveedores", helper: "Compra", icon: "storefront", title: "Proveedores", subtitle: "Documento, contacto y condición." },
+      lots: { label: "Lotes", helper: "Recepción", icon: "deployed_code", title: "Lotes", subtitle: "Ingreso, proveedor y estado." },
+      customers: { label: "Clientes", helper: "Comerciales", icon: "groups", title: "Clientes comerciales", subtitle: "Saldo, pago y canal." },
+      channels: { label: "Canales", helper: "Salida", icon: "point_of_sale", title: "Canales", subtitle: "Mesón, retiro, delivery y futuro tótem." },
+      routes: { label: "Rutas", helper: "Cobertura", icon: "route", title: "Rutas", subtitle: "Zona, frecuencia y clientes asociados." },
+      vehicles: { label: "Vehículos", helper: "Flota", icon: "airport_shuttle", title: "Vehículos", subtitle: "Patente, estado y responsable." },
+      carriers: { label: "Transportistas", helper: "Permisos", icon: "local_shipping", title: "Transportistas", subtitle: "Ruta asignada y permisos." },
+      payments: { label: "Pagos", helper: "Cobro", icon: "credit_card", title: "Medios de pago", subtitle: "Mesón, móvil y transferencia." },
+      users: { label: "Usuarios", helper: "Roles", icon: "shield_person", title: "Usuarios y roles", subtitle: "Permisos, local, turno y estado." },
+    };
+
+    function syncConfigSubviewUrl(nextSubview) {
+      const params = new URLSearchParams(window.location.search);
+      params.set("subview", nextSubview);
+      window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
+      configSubview = nextSubview;
+    }
+
+    function compact(value) {
+      return configApi.escapeHtml(String(value || "—"));
+    }
+
+    function summaryCard(icon, label, value, helper, tone = "default") {
+      const palette = {
+        default: "border-outline-variant bg-white",
+        soft: "border-[#dce4ff] bg-[#f4f7ff]",
+        warm: "border-[#ffd489] bg-[#fff5df]",
+        dark: "border-white/10 bg-white/10 text-white",
+      }[tone];
+
+      return `
+        <article class="rounded-[18px] border ${palette} px-3 py-2.5 shadow-soft">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-label-caps ${tone === "dark" ? "text-primary-fixed-dim" : "text-on-surface-variant"}">${compact(label)}</p>
+              <p class="mt-1 font-data-md ${tone === "dark" ? "text-white" : "text-primary"}">${compact(value)}</p>
+            </div>
+            <span class="material-symbols-outlined ${tone === "dark" ? "text-white/80" : "text-[#3556c5]"}">${compact(icon)}</span>
+          </div>
+          <p class="mt-1.5 text-[10px] leading-4 ${tone === "dark" ? "text-primary-fixed-dim" : "text-on-surface-variant"}">${compact(helper)}</p>
+        </article>
+      `;
+    }
+
+    function detailPill(label, value) {
+      return `
+        <div class="rounded-2xl bg-surface-container-low px-3 py-2.5">
+          <p class="text-label-caps text-on-surface-variant">${compact(label)}</p>
+          <p class="mt-1 text-body-md text-primary">${compact(value)}</p>
+        </div>
+      `;
+    }
+
+    function cardTone(status) {
+      if (status === "Activo" || status === "Operativa" || status === "OK") {
+        return "bg-tertiary-fixed text-on-tertiary-fixed";
+      }
+      if (status === "En ruta" || status === "En ruta" || status === "En Ruta" || status === "Pendiente") {
+        return "bg-secondary-fixed text-on-secondary-fixed";
+      }
+      return "bg-[#fff5df] text-[#9c6400]";
+    }
+
+    function buildCatalog(state) {
+      const uniqueSuppliers = [...new Set(state.insumos.map((item) => item.proveedorHabitual).concat(state.comprasInsumos.map((item) => item.proveedor)))];
+      const lots = [...state.comprasInsumos]
+        .sort((a, b) => b.fecha.localeCompare(a.fecha))
+        .map((purchase, index) => {
+          const ingredient = state.insumos.find((item) => item.id === purchase.insumoId);
+          const remaining = Math.max(0, purchase.cantidad - ((index % 3) * purchase.cantidad * 0.18));
+          return {
+            id: purchase.id,
+            title: purchase.documento || `Lote ${index + 1}`,
+            kicker: ingredient ? ingredient.nombre : purchase.insumoId,
+            badge: remaining > purchase.cantidad * 0.6 ? "Disponible" : "Parcial",
+            icon: "deployed_code",
+            details: [
+              { label: "Insumo", value: ingredient ? ingredient.nombre : purchase.insumoId },
+              { label: "Proveedor", value: purchase.proveedor },
+              { label: "Recepción", value: purchase.fecha },
+              { label: "Cantidad inicial", value: `${purchase.cantidad} ${ingredient ? ingredient.unidad : "kg"}` },
+              { label: "Estado", value: remaining > purchase.cantidad * 0.6 ? "Disponible" : "Consumido parcial" },
+            ],
+            preview: [
+              { label: "Recepción", value: purchase.fecha },
+              { label: "Inicial", value: `${purchase.cantidad} ${ingredient ? ingredient.unidad : "kg"}` },
+              { label: "Estado", value: remaining > purchase.cantidad * 0.6 ? "Disponible" : "Parcial" },
+            ],
+          };
+        });
+
+      return {
+        products: state.productos.map((product) => ({
+          id: product.id,
+          title: product.nombre,
+          kicker: product.recetaId,
+          badge: "Activo",
+          icon: "bakery_dining",
+          details: [
+            { label: "Código", value: product.recetaId },
+            { label: "Nombre", value: product.nombre },
+            { label: "Familia", value: familyByProduct[product.id] || "Panadería" },
+            { label: "Unidad", value: product.unidad },
+            { label: "Precio", value: configApi.formatCurrency(product.precioUnitario) },
+            { label: "Canal", value: channelByProduct[product.id] || "Mesón" },
+            { label: "Estado", value: "Activo" },
+          ],
+          preview: [
+            { label: "Familia", value: familyByProduct[product.id] || "Panadería" },
+            { label: "Precio", value: configApi.formatCurrency(product.precioUnitario) },
+            { label: "Canal", value: channelByProduct[product.id] || "Mesón" },
+          ],
+        })),
+        ingredients: state.insumos.map((item) => ({
+          id: item.id,
+          title: item.nombre,
+          kicker: item.id.toUpperCase(),
+          badge: item.stock <= item.minimo ? "Crítico" : "Activo",
+          icon: "inventory_2",
+          details: [
+            { label: "Código", value: item.id.toUpperCase() },
+            { label: "Nombre", value: item.nombre },
+            { label: "Unidad", value: item.unidad },
+            { label: "Proveedor habitual", value: item.proveedorHabitual },
+            { label: "Stock mínimo", value: `${item.minimo} ${item.unidad}` },
+            { label: "Estado", value: item.stock <= item.minimo ? "Crítico" : "Activo" },
+          ],
+          preview: [
+            { label: "Unidad", value: item.unidad },
+            { label: "Proveedor", value: item.proveedorHabitual },
+            { label: "Mínimo", value: `${item.minimo} ${item.unidad}` },
+          ],
+        })),
+        recipes: state.productos.map((product) => ({
+          id: `${product.id}-recipe`,
+          title: product.nombre,
+          kicker: `${product.recetaInsumos.length} insumos`,
+          badge: `±${product.toleranciaPct}%`,
+          icon: "menu_book",
+          details: [
+            { label: "Producto", value: product.nombre },
+            { label: "Insumos", value: product.recetaInsumos.map((item) => state.insumos.find((insumo) => insumo.id === item.insumoId)?.nombre || item.insumoId).join(", ") },
+            { label: "Cantidades", value: product.recetaInsumos.map((item) => `${state.insumos.find((insumo) => insumo.id === item.insumoId)?.nombre || item.insumoId}: ${item.cantidad} kg`).join(" · ") },
+            { label: "Rendimiento esperado", value: `${product.rendimientoEsperado} ${product.unidad}` },
+            { label: "Tolerancias", value: `±${product.toleranciaPct}%` },
+          ],
+          preview: [
+            { label: "Rendimiento", value: `${product.rendimientoEsperado} ${product.unidad}` },
+            { label: "Tolerancia", value: `±${product.toleranciaPct}%` },
+            { label: "Carga", value: `${product.recetaInsumos.length} insumos` },
+          ],
+        })),
+        suppliers: uniqueSuppliers.map((name) => ({
+          id: name,
+          title: name,
+          kicker: supplierCatalog[name]?.documento || "Sin documento",
+          badge: "Activo",
+          icon: "storefront",
+          details: [
+            { label: "Nombre", value: name },
+            { label: "Documento", value: supplierCatalog[name]?.documento || "76.000.000-0" },
+            { label: "Contacto", value: supplierCatalog[name]?.contacto || "contacto@proveedor.cl" },
+            { label: "Condiciones", value: supplierCatalog[name]?.condiciones || "Pago 15 días" },
+          ],
+          preview: [
+            { label: "Documento", value: supplierCatalog[name]?.documento || "76.000.000-0" },
+            { label: "Contacto", value: supplierCatalog[name]?.contacto || "contacto@proveedor.cl" },
+            { label: "Condición", value: supplierCatalog[name]?.condiciones || "Pago 15 días" },
+          ],
+        })),
+        lots,
+        customers: state.clientesComerciales.map((customer) => ({
+          id: customer.id,
+          title: customer.nombre,
+          kicker: customer.saldo > 0 ? configApi.formatCurrency(customer.saldo) : "Sin saldo",
+          badge: customerChannels[customer.id] || "Comercial",
+          icon: "groups",
+          details: [
+            { label: "Cliente", value: customer.nombre },
+            { label: "Condición de pago", value: customer.saldo > 0 ? "Crédito" : "Contado" },
+            { label: "Saldo", value: configApi.formatCurrency(customer.saldo) },
+            { label: "Canal", value: customerChannels[customer.id] || "Retiro comercial" },
+          ],
+          preview: [
+            { label: "Pago", value: customer.saldo > 0 ? "Crédito" : "Contado" },
+            { label: "Saldo", value: configApi.formatCurrency(customer.saldo) },
+            { label: "Canal", value: customerChannels[customer.id] || "Retiro comercial" },
+          ],
+        })),
+        channels: [
+          ...state.canales.map((channel) => ({
+            id: channel.id,
+            title: channel.nombre,
+            kicker: `${channel.capacidadBase} u base`,
+            badge: "Activo",
+            icon: "point_of_sale",
+            details: [
+              { label: "Canal", value: channel.nombre },
+              { label: "Capacidad base", value: `${channel.capacidadBase} u` },
+              { label: "Uso actual", value: `${channel.capacidadPct}%` },
+              { label: "Estado", value: "Activo" },
+            ],
+            preview: [
+              { label: "Base", value: `${channel.capacidadBase} u` },
+              { label: "Uso", value: `${channel.capacidadPct}%` },
+              { label: "Estado", value: "Activo" },
+            ],
+          })),
+          {
+            id: "totem",
+            title: "Tótem futuro",
+            kicker: "Próxima fase",
+            badge: "Planificado",
+            icon: "tablet_mac",
+            details: [
+              { label: "Canal", value: "Tótem futuro" },
+              { label: "Capacidad base", value: "Sin definir" },
+              { label: "Uso actual", value: "0%" },
+              { label: "Estado", value: "Planificado" },
+            ],
+            preview: [
+              { label: "Base", value: "Sin definir" },
+              { label: "Uso", value: "0%" },
+              { label: "Estado", value: "Planificado" },
+            ],
+          },
+        ],
+        routes: routeCatalog.map((route) => ({
+          id: route.id,
+          title: route.zona,
+          kicker: `${route.clientes.length} clientes`,
+          badge: route.frecuencia,
+          icon: "route",
+          details: [
+            { label: "Zona", value: route.zona },
+            { label: "Frecuencia", value: route.frecuencia },
+            { label: "Clientes asociados", value: route.clientes.join(", ") },
+          ],
+          preview: [
+            { label: "Frecuencia", value: route.frecuencia },
+            { label: "Clientes", value: route.clientes.length },
+            { label: "Cobertura", value: route.zona },
+          ],
+        })),
+        vehicles: vehicleCatalog.map((item) => ({
+          id: item.id,
+          title: item.nombre,
+          kicker: item.patente,
+          badge: item.estado,
+          icon: "airport_shuttle",
+          details: [
+            { label: "Vehículo", value: item.nombre },
+            { label: "Patente", value: item.patente },
+            { label: "Estado", value: item.estado },
+            { label: "Responsable", value: item.responsable },
+          ],
+          preview: [
+            { label: "Patente", value: item.patente },
+            { label: "Estado", value: item.estado },
+            { label: "Responsable", value: item.responsable },
+          ],
+        })),
+        carriers: carrierCatalog.map((item) => ({
+          id: item.id,
+          title: item.nombre,
+          kicker: item.ruta,
+          badge: "Habilitado",
+          icon: "local_shipping",
+          details: [
+            { label: "Nombre", value: item.nombre },
+            { label: "Ruta asignada", value: item.ruta },
+            { label: "Permisos", value: item.permisos },
+          ],
+          preview: [
+            { label: "Ruta", value: item.ruta },
+            { label: "Permisos", value: item.permisos },
+            { label: "Estado", value: "Habilitado" },
+          ],
+        })),
+        payments: paymentCatalog.map((item) => ({
+          id: item.id,
+          title: item.nombre,
+          kicker: item.uso,
+          badge: item.estado,
+          icon: "credit_card",
+          details: [
+            { label: "Medio", value: item.nombre },
+            { label: "Uso", value: item.uso },
+            { label: "Estado", value: item.estado },
+          ],
+          preview: [
+            { label: "Uso", value: item.uso },
+            { label: "Estado", value: item.estado },
+            { label: "Cobro", value: item.nombre },
+          ],
+        })),
+        users: userCatalog.map((item) => ({
+          id: item.id,
+          title: item.usuario,
+          kicker: item.rol,
+          badge: item.estado,
+          icon: "shield_person",
+          details: [
+            { label: "Usuario", value: item.usuario },
+            { label: "Rol", value: item.rol },
+            { label: "Permisos", value: item.permisos },
+            { label: "Local", value: item.local },
+            { label: "Turno", value: item.turno },
+            { label: "Estado", value: item.estado },
+          ],
+          preview: [
+            { label: "Rol", value: item.rol },
+            { label: "Local", value: item.local },
+            { label: "Turno", value: item.turno },
+          ],
+        })),
+      };
+    }
+
+    function renderMasterCard(subviewKey, record) {
+      const detailId = `${subviewKey}::${record.id}`;
+      configDetailMap[detailId] = record;
+      return `
+        <button class="w-full rounded-[22px] border border-outline-variant bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 text-left shadow-soft transition-transform hover:-translate-y-[1px]" data-master-detail="${compact(detailId)}" type="button">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-[#edf2ff] px-2.5 py-1 text-body-sm font-semibold text-[#2f57d3]">${compact(record.kicker)}</span>
+                <span class="rounded-full px-2.5 py-1 text-body-sm font-semibold ${cardTone(record.badge)}">${compact(record.badge)}</span>
+              </div>
+              <h3 class="mt-2 text-[18px] font-semibold tracking-[-0.03em] text-primary">${compact(record.title)}</h3>
+            </div>
+            <span class="material-symbols-outlined text-[#3556c5]">${compact(record.icon)}</span>
+          </div>
+          <div class="mt-4 grid gap-2 sm:grid-cols-3">
+            ${record.preview.map((item) => detailPill(item.label, item.value)).join("")}
+          </div>
+        </button>
+      `;
+    }
+
+    function openDetail(detailId) {
+      const detail = configDetailMap[detailId];
+      if (!detail) {
+        return;
+      }
+      configApi.openModal({
+        kicker: detail.kicker,
+        title: detail.title,
+        body: `
+          <div class="grid gap-3 md:grid-cols-2">
+            ${detail.details.map((item) => `
+              <div class="rounded-2xl bg-surface-container-low p-4">
+                <p class="text-label-caps text-on-surface-variant">${compact(item.label)}</p>
+                <p class="mt-2 text-body-md text-primary">${compact(item.value)}</p>
+              </div>
+            `).join("")}
+          </div>
+        `,
+        actions: [{ id: "config-detail-close", label: "Cerrar" }],
+      });
+      document.getElementById("config-detail-close").addEventListener("click", configApi.closeModal);
+    }
+
+    function renderConfig() {
+      const state = configApi.getState();
+      const metrics = configApi.buildMetrics(state);
+      const catalog = buildCatalog(state);
+      const subviewItems = Object.entries(subviewMeta).map(([id, item]) => ({ id, ...item }));
+      const activeSubview = subviewItems.find((item) => item.id === configSubview) || subviewItems[0];
+      configSubview = activeSubview.id;
+      syncConfigSubviewUrl(configSubview);
+      configDetailMap = {};
+
+      const sidebarSubmenuItems = subviewItems.map((item) => ({
+        id: item.id,
+        label: item.label,
+        icon: item.icon,
+        helper: item.helper,
+        href: `config.html?subview=${item.id}`,
+      }));
+
+      const currentRecords = catalog[activeSubview.id] || [];
+      const totalMasters = Object.values(catalog).reduce((sum, items) => sum + items.length, 0);
+
+      configApi.mountShell({
+        activePage: "config",
+        title: "Configuración",
+        sidebarSubmenu: {
+          parentPage: "config",
+          activeId: activeSubview.id,
+          items: sidebarSubmenuItems,
+        },
+        header: {
+          eyebrow: "MAESTROS OPERACIONALES",
+          badge: activeSubview.label,
+          badgeIcon: activeSubview.icon,
+          secondaryActions: [
+            { id: "config-refresh", icon: "autorenew", label: "Refrescar" },
+            { id: "config-dashboard", icon: "dashboard", label: "Dashboard" },
+          ],
+          primaryAction: { id: "config-primary", icon: "add_circle", label: "Nuevo registro" },
+        },
+      });
+
+      const root = document.getElementById("config-root");
+      root.innerHTML = `
+        <section class="grid h-full min-h-0 gap-4 xl:grid-cols-[286px_minmax(0,1fr)]">
+          <aside class="flex min-h-0 flex-col rounded-[24px] border border-outline-variant bg-[radial-gradient(circle_at_top_left,_rgba(255,224,164,0.25),_transparent_24%),radial-gradient(circle_at_bottom_left,_rgba(213,227,253,0.85),_transparent_34%),linear-gradient(180deg,_#ffffff,_#f5f8ff)] p-3.5 shadow-soft">
+            <div>
+              <p class="inline-flex items-center gap-2 rounded-full border border-[#dce4ff] bg-[#f5f8ff] px-3 py-1 text-body-sm font-medium text-[#3556c5]">
+                <span class="material-symbols-outlined text-[18px]">tune</span>
+                Configuración base
+              </p>
+              <h1 class="mt-2.5 text-[22px] font-bold leading-[1.02] tracking-[-0.04em] text-primary">${compact(activeSubview.label)}</h1>
+              <p class="mt-1.5 text-[11px] leading-4 text-on-surface-variant">${compact(activeSubview.helper)}.</p>
+            </div>
+
+            <div class="mt-3 grid gap-2">
+              ${summaryCard("dataset", "Maestros", totalMasters, "registros disponibles", "soft")}
+              ${summaryCard("bakery_dining", "Productos", catalog.products.length, "con venta activa", "warm")}
+              ${summaryCard("inventory_2", "Insumos", catalog.ingredients.length, "con mínimo definido", "default")}
+              ${summaryCard("groups", "Clientes", catalog.customers.length, "comerciales vigentes", "soft")}
+              ${summaryCard("local_shipping", "Rutas", catalog.routes.length, "con cobertura asignada", "default")}
+              ${summaryCard("shield_person", "Usuarios", catalog.users.length, "con rol activo", "soft")}
+            </div>
+
+            <section class="mt-3 rounded-[22px] bg-primary-container p-3.5 text-white shadow-soft">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-label-caps text-primary-fixed-dim">Pulso maestro</p>
+                  <h3 class="mt-1 text-[18px] font-semibold tracking-[-0.03em]">Cobertura</h3>
+                </div>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-body-sm">${currentRecords.length} activos</span>
+              </div>
+              <div class="mt-3 space-y-2">
+                ${summaryCard("fact_check", "Recetas listas", `${catalog.recipes.length}/${catalog.products.length}`, "base productiva", "dark")}
+                ${summaryCard("account_balance", "Proveedores", catalog.suppliers.length, "con ficha activa", "dark")}
+                ${summaryCard("payments", "Cobranza", configApi.formatCurrency(metrics.totalReceivables), "saldo comercial", "dark")}
+              </div>
+            </section>
+
+            <section class="mt-3 rounded-[22px] border border-outline-variant bg-white p-3.5 shadow-soft">
+              <p class="text-label-caps text-on-surface-variant">Accesos rápidos</p>
+              <div class="mt-2.5 space-y-2">
+                ${subviewItems.slice(0, 5).map((item) => `
+                  <a class="flex items-center gap-3 rounded-2xl bg-surface-container-low px-3 py-2.5 text-body-sm text-on-surface transition-colors hover:bg-[#edf2ff] hover:text-[#2341ae]" href="config.html?subview=${item.id}">
+                    <span class="material-symbols-outlined text-[18px] text-[#3556c5]">${compact(item.icon)}</span>
+                    <span>${compact(item.label)}</span>
+                  </a>
+                `).join("")}
+              </div>
+            </section>
+          </aside>
+
+          <section class="flex min-h-0 flex-col overflow-hidden rounded-[28px] border border-outline-variant bg-white p-4 shadow-soft">
+            <div class="border-b border-outline-variant pb-3">
+              <div class="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">Submódulo activo</p>
+                  <h2 class="mt-1.5 text-[28px] font-semibold tracking-[-0.04em] text-primary">${compact(activeSubview.title)}</h2>
+                  <p class="mt-1 text-body-sm text-on-surface-variant">${compact(activeSubview.subtitle)}</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="rounded-full bg-surface-container-low px-3 py-2 text-body-sm font-semibold text-on-surface-variant">${currentRecords.length} registros</span>
+                  <span class="rounded-full bg-[#edf2ff] px-3 py-2 text-body-sm font-semibold text-[#2f57d3]">lectura operativa</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
+              <section class="grid gap-3 xl:grid-cols-2 2xl:grid-cols-3">
+                ${currentRecords.map((record) => renderMasterCard(activeSubview.id, record)).join("")}
+              </section>
+            </div>
+          </section>
+        </section>
+      `;
+
+      document.getElementById("config-refresh").addEventListener("click", renderConfig);
+      document.getElementById("config-dashboard").addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+      document.getElementById("config-primary").addEventListener("click", () => {
+        configApi.openModal({
+          kicker: activeSubview.label,
+          title: "Registro demo",
+          body: `
+            <div class="rounded-2xl bg-surface-container-low p-4">
+              <p class="text-body-md text-on-surface">Este módulo quedó preparado como maestro navegable. Si quieres, en el siguiente paso lo transformamos en formulario editable para ${compact(activeSubview.label.toLowerCase())}.</p>
+            </div>
+          `,
+          actions: [{ id: "config-create-close", label: "Cerrar" }],
+        });
+        document.getElementById("config-create-close").addEventListener("click", configApi.closeModal);
+      });
+
+      document.querySelectorAll("[data-master-detail]").forEach((button) => {
+        button.addEventListener("click", () => openDetail(button.dataset.masterDetail));
+      });
+    }
+
+    window.addEventListener("focus", renderConfig);
+    window.addEventListener("storage", renderConfig);
+    renderConfig();
+  </script>
+</body>
+</html>

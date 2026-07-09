@@ -1,561 +1,1573 @@
 <!DOCTYPE html>
-
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Lanzarote - Producción por Turno</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
-        .delta-track {
-            height: 6px;
-            background-color: #e5eeff;
-            border-radius: 3px;
-            position: relative;
-            overflow: hidden;
-        }
-        .delta-fill {
-            height: 100%;
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(203, 219, 245, 0.5);
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface": "#f8f9ff",
-                      "surface-tint": "#565e74",
-                      "surface-dim": "#cbdbf5",
-                      "surface-container": "#e5eeff",
-                      "background": "#f8f9ff",
-                      "on-tertiary": "#ffffff",
-                      "surface-container-lowest": "#ffffff",
-                      "primary-container": "#131b2e",
-                      "error": "#ba1a1a",
-                      "outline": "#76777d",
-                      "tertiary-container": "#002113",
-                      "secondary-fixed-dim": "#adc6ff",
-                      "primary-fixed-dim": "#bec6e0",
-                      "on-tertiary-container": "#009668",
-                      "inverse-on-surface": "#eaf1ff",
-                      "on-primary-container": "#7c839b",
-                      "on-background": "#0b1c30",
-                      "inverse-primary": "#bec6e0",
-                      "surface-container-high": "#dce9ff",
-                      "primary-fixed": "#dae2fd",
-                      "on-surface": "#0b1c30",
-                      "surface-container-low": "#eff4ff",
-                      "tertiary": "#000000",
-                      "on-tertiary-fixed": "#002113",
-                      "tertiary-fixed": "#6ffbbe",
-                      "on-primary-fixed-variant": "#3f465c",
-                      "on-error": "#ffffff",
-                      "surface-variant": "#d3e4fe",
-                      "tertiary-fixed-dim": "#4edea3",
-                      "primary": "#000000",
-                      "error-container": "#ffdad6",
-                      "on-secondary-fixed": "#001a42",
-                      "on-secondary": "#ffffff",
-                      "on-error-container": "#93000a",
-                      "secondary-fixed": "#d8e2ff",
-                      "on-primary": "#ffffff",
-                      "inverse-surface": "#213145",
-                      "secondary": "#0058be",
-                      "outline-variant": "#c6c6cd",
-                      "surface-container-highest": "#d3e4fe",
-                      "on-secondary-container": "#fefcff",
-                      "on-secondary-fixed-variant": "#004395",
-                      "on-tertiary-fixed-variant": "#005236",
-                      "secondary-container": "#2170e4",
-                      "on-primary-fixed": "#131b2e",
-                      "surface-bright": "#f8f9ff",
-                      "on-surface-variant": "#45464d"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "gutter": "24px",
-                      "card-padding": "20px",
-                      "unit": "4px",
-                      "margin-mobile": "16px",
-                      "margin-desktop": "32px"
-              },
-              "fontFamily": {
-                      "headline-md": ["Plus Jakarta Sans"],
-                      "mono-data": ["JetBrains Mono"],
-                      "label-caps": ["Inter"],
-                      "body-lg": ["Inter"],
-                      "body-sm": ["Inter"],
-                      "headline-lg": ["Plus Jakarta Sans"],
-                      "headline-lg-mobile": ["Plus Jakarta Sans"],
-                      "display-kpi": ["Plus Jakarta Sans"]
-              },
-              "fontSize": {
-                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
-                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "display-kpi": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
-              }
-            },
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Panadator - Producción</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e0e3e5",
+            "on-error": "#ffffff",
+            "primary": "#000000",
+            "on-tertiary-fixed-variant": "#38485d",
+            "tertiary-container": "#0b1c30",
+            "secondary-container": "#d5e3fd",
+            "on-surface-variant": "#45464d",
+            "secondary-fixed": "#d5e3fd",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "secondary": "#515f74",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "surface-container-lowest": "#ffffff",
+            "background": "#f7f9fb",
+            "on-secondary-container": "#57657b",
+            "on-secondary-fixed": "#0d1c2f",
+            "on-secondary-fixed-variant": "#3a485c",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "inverse-surface": "#2d3133",
+            "surface-dim": "#d8dadc",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#131b2e",
+            "surface": "#f7f9fb",
+            "surface-container-low": "#f2f4f6",
+            "on-surface": "#191c1e",
+            "on-background": "#191c1e",
+            "on-tertiary-fixed": "#0b1c30",
+            "inverse-on-surface": "#eff1f3",
+            "on-primary-container": "#7c839b",
+            "error-container": "#ffdad6",
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#3f465c",
+            "tertiary": "#000000",
+            "inverse-primary": "#bec6e0",
+            "surface-container-high": "#e6e8ea",
+            "surface-tint": "#565e74",
+            "on-tertiary-container": "#75859d",
+            "secondary-fixed-dim": "#b9c7e0",
+            "tertiary-fixed": "#d3e4fe",
+            "primary-container": "#131b2e",
+            "outline-variant": "#c6c6cd"
           },
+          borderRadius: {
+            "sm": "0.125rem",
+            "DEFAULT": "0.25rem",
+            "md": "0.375rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "unit": "4px",
+            "container-padding": "24px",
+            "gutter": "16px",
+            "stack-sm": "8px",
+            "stack-md": "16px",
+            "stack-lg": "32px"
+          },
+          fontFamily: {
+            "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "label-caps": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "data-lg": ["JetBrains Mono", "monospace"],
+            "data-md": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "display-lg": ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+            "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "data-lg": ["20px", { lineHeight: "24px", fontWeight: "600" }],
+            "data-md": ["14px", { lineHeight: "20px", fontWeight: "500" }]
+          },
+          boxShadow: {
+            "soft": "0 8px 24px rgba(15, 23, 42, 0.08)"
+          }
         }
-      </script>
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      vertical-align: middle;
+    }
+    .delta-track {
+      height: 6px;
+      background: #eceef0;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .delta-fill {
+      height: 100%;
+      transition: width 0.2s ease;
+    }
+  </style>
 </head>
-<body class="bg-surface font-body-sm text-on-surface min-h-screen flex">
-<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-gutter px-4 z-50" id="sidebar"></aside>
-<main class="flex-1 flex flex-col min-w-0">
-<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-40 bg-surface-bright shadow-sm border-b border-outline-variant" id="topbar"></header>
-<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-8" id="production-root"></div>
-</main>
-<div class="fixed inset-0 bg-primary-container/90 z-[100] hidden items-center justify-center p-8 backdrop-blur-md" id="success-overlay">
-<div class="max-w-md w-full bg-white rounded-2xl p-12 text-center">
-<div class="w-24 h-24 bg-tertiary-fixed rounded-full flex items-center justify-center mx-auto mb-6">
-<span class="material-symbols-outlined text-4xl text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg mb-2">Turno Cerrado</h2>
-<p class="text-on-surface-variant mb-8">El reporte de produccion fue guardado y el stock terminado ya quedo disponible para distribucion.</p>
-<button class="w-full bg-primary text-white py-4 rounded-xl font-bold font-headline-md" id="overlay-go-distribution" type="button">Ir a Distribution</button>
-</div>
-</div>
-<script src="state.js"></script>
-<script>
-        const productionApi = window.LanzaroteState;
-        let productionDraft = {};
-        let productionFilterMode = "all";
-        let productionLayoutMode = "expanded";
-        const productionPresets = {
-            estable: {
-                note: "Preset comercial: operacion estable lista para mostrar eficiencia.",
-                apply(product) {
-                    return {
-                        plan: product.rendimientoEsperado,
-                        real: Math.round(product.rendimientoEsperado * 0.99),
-                        merma: Math.max(2, Math.round(product.rendimientoEsperado * 0.015))
-                    };
-                }
-            },
-            tension: {
-                note: "Preset comercial: tension operativa con desviaciones visibles en tiempo real.",
-                apply(product, index) {
-                    const factors = [0.94, 1.07, 0.91, 1.04, 0.88];
-                    const real = Math.round(product.rendimientoEsperado * (factors[index] || 1));
-                    return {
-                        plan: product.rendimientoEsperado,
-                        real,
-                        merma: Math.max(3, Math.round(real * 0.04))
-                    };
-                }
-            },
-            premium: {
-                note: "Preset comercial: dia premium con sobreproduccion y merma controlada.",
-                apply(product) {
-                    const real = Math.round(product.rendimientoEsperado * 1.05);
-                    return {
-                        plan: product.rendimientoEsperado,
-                        real,
-                        merma: Math.max(2, Math.round(real * 0.01))
-                    };
-                }
-            }
+<body class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(255,222,173,0.38),_transparent_22%),radial-gradient(circle_at_top,_rgba(213,227,253,0.28),_transparent_30%),linear-gradient(180deg,_#fffaf1,_#f4efe5_52%,_#eef2f6)] text-on-surface antialiased sm:flex">
+  <aside class="px-3 pt-3 sm:h-screen sm:w-[300px] sm:shrink-0 sm:p-6" id="sidebar"></aside>
+  <main class="min-w-0 flex-1">
+    <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:min-h-[88px] sm:px-container-padding" id="topbar"></header>
+    <div class="mx-auto flex h-full w-full max-w-none min-h-0 flex-col px-4 pb-4 pt-4 sm:p-container-padding sm:pt-5" id="production-root"></div>
+  </main>
+  <script src="state.js?v=20260709-ui6"></script>
+  <script>
+    const productionApi = window.LanzaroteState;
+    const productionParams = new URLSearchParams(window.location.search);
+    let productionSubview = productionParams.get("subview") || "turns";
+    let productionDraft = {};
+    let productionConsumptionDrafts = {};
+    let recipeDrafts = {};
+    let productionSession = {};
+
+    function formatNumber(value, digits = 0) {
+      return Number(value || 0).toLocaleString("es-CL", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits,
+      });
+    }
+
+    function buildDraft(state) {
+      return state.productos.reduce((accumulator, product) => {
+        accumulator[product.id] = {
+          plan: product.rendimientoEsperado,
+          real: product.rendimientoEsperado,
+          merma: Math.max(2, Math.round(product.rendimientoEsperado * 0.02)),
         };
+        return accumulator;
+      }, {});
+    }
 
-        function buildDraft(state) {
-            return state.productos.reduce((accumulator, product) => {
-                accumulator[product.id] = {
-                    plan: product.rendimientoEsperado,
-                    real: product.rendimientoEsperado,
-                    merma: Math.max(2, Math.round(product.rendimientoEsperado * 0.02))
+    function buildRecipeDrafts(state) {
+      return state.productos.reduce((accumulator, product) => {
+        accumulator[product.id] = {
+          rendimiento: product.rendimientoEsperado,
+          tolerancia: product.toleranciaPct || 3,
+          ingredientes: product.recetaInsumos.reduce((ingredientAccumulator, ingredient) => {
+            ingredientAccumulator[ingredient.insumoId] = ingredient.cantidad;
+            return ingredientAccumulator;
+          }, {}),
+        };
+        return accumulator;
+      }, {});
+    }
+
+    function buildSessionDraft(state) {
+      return {
+        date: productionApi.getToday(),
+        shift: "Mañana",
+        manager: "Jefe de producción",
+        team: "Equipo hornos AM",
+        notes: "",
+        activeProduct: state.productos[0]?.id || "",
+        activeOrderId: "",
+      };
+    }
+
+    function ensureDraft(state) {
+      if (!Object.keys(productionDraft).length) {
+        productionDraft = buildDraft(state);
+      }
+      state.productos.forEach((product) => {
+        if (!productionDraft[product.id]) {
+          productionDraft[product.id] = {
+            plan: product.rendimientoEsperado,
+            real: product.rendimientoEsperado,
+            merma: Math.max(2, Math.round(product.rendimientoEsperado * 0.02)),
+          };
+        }
+      });
+    }
+
+    function buildConsumptionDraftForOrder(state, order) {
+      const product = state.productos.find((item) => item.id === order.productoId);
+      if (!product) {
+        return [];
+      }
+      const factor = product.rendimientoEsperado > 0 ? Number(order.cantidadPlan || 0) / product.rendimientoEsperado : 0;
+      return product.recetaInsumos.map((item) => ({
+        insumoId: item.insumoId,
+        cantidad: Math.round((item.cantidad * factor) * 100) / 100,
+      }));
+    }
+
+    function ensureRecipeDrafts(state) {
+      if (!Object.keys(recipeDrafts).length) {
+        recipeDrafts = buildRecipeDrafts(state);
+      }
+      state.productos.forEach((product) => {
+        if (!recipeDrafts[product.id]) {
+          recipeDrafts[product.id] = {
+            rendimiento: product.rendimientoEsperado,
+            tolerancia: product.toleranciaPct || 3,
+            ingredientes: product.recetaInsumos.reduce((accumulator, ingredient) => {
+              accumulator[ingredient.insumoId] = ingredient.cantidad;
+              return accumulator;
+            }, {}),
+          };
+        }
+      });
+    }
+
+    function ensureConsumptionDrafts(state) {
+      state.ordenesProduccion
+        .filter((order) => order.estado === "Activa")
+        .forEach((order) => {
+          if (!productionConsumptionDrafts[order.id]) {
+            productionConsumptionDrafts[order.id] = buildConsumptionDraftForOrder(state, order);
+          }
+        });
+    }
+
+    function ensureSessionDraft(state) {
+      if (!productionSession.activeProduct) {
+        productionSession = buildSessionDraft(state);
+      }
+      if (!state.productos.find((product) => product.id === productionSession.activeProduct)) {
+        productionSession.activeProduct = state.productos[0]?.id || "";
+      }
+      if (productionSession.activeOrderId && !state.ordenesProduccion.find((order) => order.id === productionSession.activeOrderId)) {
+        productionSession.activeOrderId = "";
+      }
+    }
+
+    function syncProductionSubviewUrl(nextSubview) {
+      const nextParams = new URLSearchParams(window.location.search);
+      nextParams.set("subview", nextSubview);
+      window.history.replaceState({}, "", `${window.location.pathname}?${nextParams.toString()}`);
+      productionSubview = nextSubview;
+    }
+
+    function getSubviewMeta() {
+      return {
+        recipes: {
+          id: "recipes",
+          label: "Recetas y reglas",
+          helper: "Fórmula activa",
+          title: "Recetas",
+          subtitle: "Costo, carga y tolerancia.",
+          eyebrow: "Formulación activa",
+          primaryLabel: "Guardar recetas",
+          primaryIcon: "rule_settings",
+        },
+        turns: {
+          id: "turns",
+          label: "Producción por turno",
+          helper: "Turno y consumo",
+          title: "Turno activo",
+          subtitle: "Orden, consumo y cierre.",
+          eyebrow: "Operación activa",
+          primaryLabel: "Cerrar orden",
+          primaryIcon: "task_alt",
+        },
+        finished: {
+          id: "finished",
+          label: "Producto terminado",
+          helper: "Stock final",
+          title: "Producto terminado",
+          subtitle: "Disponible, asignado y destino.",
+          eyebrow: "Salida productiva",
+          primaryLabel: "Ir a distribución",
+          primaryIcon: "local_shipping",
+        },
+      }[productionSubview] || {
+        id: "turns",
+        label: "Producción por turno",
+        helper: "Turno y consumo",
+        title: "Turno activo",
+        subtitle: "Orden, consumo y cierre.",
+        eyebrow: "Operación activa",
+        primaryLabel: "Cerrar turno",
+        primaryIcon: "task_alt",
+      };
+    }
+
+    function getToleranceState(product, expected, real) {
+      const deltaPct = expected <= 0 ? 0 : ((real - expected) / expected) * 100;
+      const tolerance = Number(product.toleranciaPct || 3);
+
+      if (deltaPct < -tolerance) {
+        return {
+          pct: deltaPct,
+          label: "Bajo rendimiento",
+          toneClass: "bg-error-container text-on-error-container",
+          barClass: "bg-error",
+        };
+      }
+
+      if (deltaPct > tolerance) {
+        return {
+          pct: deltaPct,
+          label: "Sobreconsumo / sobreproducción",
+          toneClass: "bg-secondary-fixed text-on-secondary-fixed",
+          barClass: "bg-secondary",
+        };
+      }
+
+      return {
+        pct: deltaPct,
+        label: "Dentro de tolerancia",
+        toneClass: "bg-tertiary-fixed text-on-tertiary-fixed",
+        barClass: "bg-on-tertiary-container",
+      };
+    }
+
+    function estimateRecipeCost(product, ingredientMap) {
+      return product.recetaInsumos.reduce((sum, ingredient) => {
+        const supply = ingredientMap[ingredient.insumoId];
+        return sum + (supply ? supply.precioReferencia * ingredient.cantidad : 0);
+      }, 0);
+    }
+
+    function buildFinishedRows(state) {
+      const productMap = productionApi.getProductMap(state);
+      const assignedByProduct = state.canales.reduce((accumulator, channel) => {
+        channel.stock.forEach((item) => {
+          accumulator[item.productoId] = (accumulator[item.productoId] || 0) + item.cantidad;
+        });
+        return accumulator;
+      }, {});
+
+      return state.stockTerminado
+        .map((item) => ({
+          ...item,
+          product: productMap[item.productoId],
+          reservadoCanales: assignedByProduct[item.productoId] || 0,
+          disponibleReal: Math.max(0, item.cantidadDisponible),
+        }))
+        .sort((a, b) => b.disponibleReal - a.disponibleReal);
+    }
+
+    function summaryCard(icon, label, value, helper, tone = "default") {
+      const palette = {
+        default: "border-outline-variant bg-white",
+        soft: "border-[#dce4ff] bg-[#f4f7ff]",
+        alert: "border-error/10 bg-error-container/50",
+        warm: "border-[#ffd489] bg-[#fff5df]",
+        dark: "border-white/10 bg-white/10 text-white",
+      }[tone];
+
+      return `
+        <article class="rounded-[18px] border ${palette} px-3 py-2.5 shadow-soft">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-label-caps ${tone === "dark" ? "text-primary-fixed-dim" : "text-on-surface-variant"}">${label}</p>
+              <p class="mt-1 font-data-md ${tone === "dark" ? "text-white" : "text-primary"}">${value}</p>
+            </div>
+            <span class="material-symbols-outlined ${tone === "dark" ? "text-white/80" : "text-[#3556c5]"}">${icon}</span>
+          </div>
+          <p class="mt-1.5 text-[10px] leading-4 ${tone === "dark" ? "text-primary-fixed-dim" : "text-on-surface-variant"}">${helper}</p>
+        </article>
+      `;
+    }
+
+    function recipeCard(product, ingredientMap) {
+      const draft = recipeDrafts[product.id];
+      const cost = estimateRecipeCost(product, ingredientMap);
+      const totalKg = product.recetaInsumos.reduce((sum, ingredient) => sum + Number(draft.ingredientes[ingredient.insumoId] || 0), 0);
+      const averageUnitCost = draft.rendimiento > 0 ? cost / draft.rendimiento : 0;
+      const toleranceTone = Number(draft.tolerancia || 0) <= 3
+        ? { label: "Precisa", chip: "bg-[#eef6ef] text-[#24704a]", bar: "bg-[#4fa875]" }
+        : Number(draft.tolerancia || 0) <= 4
+          ? { label: "Flexible", chip: "bg-[#edf2ff] text-[#2f57d3]", bar: "bg-[#6b87ee]" }
+          : { label: "Sensitiva", chip: "bg-[#fff2df] text-[#b46b00]", bar: "bg-[#f1b33f]" };
+
+      return `
+        <article class="rounded-[30px] border border-[#ead7b2] bg-[radial-gradient(circle_at_top_left,_rgba(255,222,173,0.16),_transparent_24%),linear-gradient(180deg,_#ffffff,_#fffaf2)] p-5 shadow-soft">
+          <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+            <div class="min-w-0">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-[#fff3dc] px-3 py-1 text-body-sm font-semibold text-[#b46b00]">${product.recetaId}</span>
+                <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${toleranceTone.chip}">${toleranceTone.label}</span>
+              </div>
+              <h3 class="mt-3 text-[24px] font-semibold tracking-[-0.03em] text-primary">${product.nombre}</h3>
+              <p class="mt-1.5 max-w-2xl text-body-sm text-on-surface-variant">${product.equipo}</p>
+            </div>
+            <div class="grid min-w-[210px] gap-2 sm:grid-cols-3 xl:grid-cols-1">
+              ${summaryCard("payments", "Costo unit.", `${productionApi.formatCurrency(averageUnitCost)}`, "referencia", "soft")}
+              ${summaryCard("scale", "Carga lote", `${formatNumber(totalKg, 1)} kg`, "mezcla base", "warm")}
+              ${summaryCard("rule", "Tolerancia", `±${formatNumber(draft.tolerancia)}%`, "permitida", "default")}
+            </div>
+          </div>
+
+          <div class="mt-5 rounded-[24px] border border-[#efe2c6] bg-[#fffdf8] p-4">
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-label-caps text-[#8f775c]">Fórmula editable</p>
+              <span class="rounded-full bg-white px-3 py-1 text-body-sm text-on-surface-variant shadow-soft">${product.recetaInsumos.length} insumos</span>
+            </div>
+            <div class="mt-4 grid gap-3 md:grid-cols-2">
+            ${product.recetaInsumos.map((ingredient) => {
+              const supply = ingredientMap[ingredient.insumoId];
+              const quantity = Number(draft.ingredientes[ingredient.insumoId] || 0);
+              const unitConsumption = draft.rendimiento > 0 ? Math.round((quantity * 1000) / draft.rendimiento) : 0;
+              const mixShare = totalKg > 0 ? Math.round((quantity / totalKg) * 100) : 0;
+              const ingredientUnitCost = draft.rendimiento > 0 && supply
+                ? (quantity * supply.precioReferencia) / draft.rendimiento
+                : 0;
+              return `
+                <div class="rounded-2xl border border-[#f1e7d2] bg-white p-4 shadow-soft">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="min-w-0">
+                      <p class="text-body-md font-semibold text-primary">${productionApi.escapeHtml(supply.nombre)}</p>
+                      <p class="mt-1 text-body-sm text-on-surface-variant">${formatNumber(supply.stock, 1)} ${supply.unidad} disponibles</p>
+                    </div>
+                    <span class="rounded-full bg-[#f7f8fb] px-3 py-1 font-data-md text-primary">${unitConsumption} g/u</span>
+                  </div>
+                  <div class="mt-3 grid gap-2 sm:grid-cols-[132px_minmax(0,1fr)]">
+                    <label class="rounded-xl bg-[#fff7ea] px-3 py-2">
+                      <span class="text-label-caps text-on-surface-variant">kg/lote</span>
+                      <input class="mt-1 w-full rounded-lg border border-outline-variant bg-white px-2 py-1 font-data-md text-primary" data-recipe-ingredient="${ingredient.insumoId}" data-product="${product.id}" min="0" step="0.1" type="number" value="${quantity}"/>
+                    </label>
+                    <div class="rounded-xl bg-surface-container-low px-3 py-2">
+                      <div class="flex items-center justify-between text-body-sm">
+                        <span class="text-on-surface-variant">Peso en mezcla</span>
+                        <span class="font-data-md text-primary">${mixShare}%</span>
+                      </div>
+                      <div class="mt-2 h-2 overflow-hidden rounded-full bg-[#f2e8d8]">
+                        <div class="h-full ${toleranceTone.bar}" style="width:${Math.max(8, mixShare)}%"></div>
+                      </div>
+                      <p class="mt-2 text-body-sm text-on-surface-variant">Costo ${productionApi.formatCurrency(ingredientUnitCost)}</p>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-3 md:grid-cols-3">
+            <label class="rounded-2xl bg-[#fff7ea] p-4">
+              <span class="text-label-caps text-on-surface-variant">Rendimiento esperado</span>
+              <input class="mt-2 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" data-recipe-field="rendimiento" data-product="${product.id}" min="1" type="number" value="${draft.rendimiento}"/>
+            </label>
+            <label class="rounded-2xl bg-[#f4f7ff] p-4">
+              <span class="text-label-caps text-on-surface-variant">Tolerancia permitida</span>
+              <input class="mt-2 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" data-recipe-field="tolerancia" data-product="${product.id}" min="1" type="number" value="${draft.tolerancia}"/>
+            </label>
+            <div class="rounded-2xl bg-surface-container-low p-4">
+              <p class="text-label-caps text-on-surface-variant">Costo lote</p>
+              <p class="mt-2 font-data-md text-primary">${productionApi.formatCurrency(cost)}</p>
+              <p class="mt-2 text-body-sm text-on-surface-variant">referencia actual</p>
+            </div>
+          </div>
+
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <p class="text-body-sm text-on-surface-variant">Lista para producción.</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <button class="rounded-full border border-[#dce4ff] bg-[#f5f8ff] px-4 py-2 text-body-sm font-semibold text-[#2f57d3]" data-open-recipe-modal="${product.id}" type="button">Ver flujo</button>
+              <button class="rounded-full bg-primary px-4 py-2 text-body-sm font-semibold text-white shadow-[0_12px_24px_rgba(19,27,46,0.18)]" data-save-recipe="${product.id}" type="button">Guardar receta activa</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function turnPlanCard(product) {
+      const draft = productionDraft[product.id];
+      const yieldState = getToleranceState(product, Number(draft.plan || 0), Number(draft.real || 0));
+      const progress = Math.max(8, Math.min(100, Math.round((Number(draft.real || 0) / Math.max(1, Number(draft.plan || 1))) * 100)));
+      return `
+        <article class="rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#ffffff,_#f9fbff)] p-4 shadow-soft">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-[#edf2ff] px-2.5 py-1 text-body-sm font-semibold text-[#2f57d3]">${product.recetaId}</span>
+                <span class="rounded-full ${yieldState.toneClass} px-2.5 py-1 text-body-sm font-semibold">${yieldState.label}</span>
+              </div>
+              <h3 class="mt-2 text-[20px] font-semibold tracking-[-0.03em] text-primary">${product.nombre}</h3>
+              <p class="mt-1 text-body-sm text-on-surface-variant">${product.equipo} · tolerancia ±${product.toleranciaPct || 3}%</p>
+            </div>
+            <button class="rounded-full border border-[#dce4ff] bg-white px-3 py-2 text-body-sm font-semibold text-[#2f57d3]" data-focus-product="${product.id}" type="button">Ver control</button>
+          </div>
+
+          <div class="mt-4 grid gap-3 md:grid-cols-3">
+            <label class="rounded-2xl bg-surface-container-low p-3">
+              <span class="text-label-caps text-on-surface-variant">Plan</span>
+              <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" data-field="plan" data-product="${product.id}" min="0" type="number" value="${draft.plan}"/>
+            </label>
+            <label class="rounded-2xl bg-surface-container-low p-3">
+              <span class="text-label-caps text-on-surface-variant">Real</span>
+              <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" data-field="real" data-product="${product.id}" min="0" type="number" value="${draft.real}"/>
+            </label>
+            <label class="rounded-2xl bg-surface-container-low p-3">
+              <span class="text-label-caps text-on-surface-variant">Merma</span>
+              <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" data-field="merma" data-product="${product.id}" min="0" type="number" value="${draft.merma}"/>
+            </label>
+          </div>
+
+          <div class="mt-4">
+            <div class="mb-2 flex items-center justify-between text-body-sm">
+              <span class="text-on-surface-variant">Cumplimiento del lote</span>
+              <span class="${yieldState.pct < 0 ? "text-error" : yieldState.pct > 0 ? "text-secondary" : "text-on-surface-variant"}">${yieldState.pct > 0 ? "+" : ""}${yieldState.pct.toFixed(1)}%</span>
+            </div>
+            <div class="delta-track">
+              <div class="delta-fill ${yieldState.barClass}" style="width:${progress}%"></div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderRecipesView(state, ingredientMap) {
+      const totalLinks = state.productos.reduce((sum, product) => sum + product.recetaInsumos.length, 0);
+      return `
+        <div class="space-y-4">
+          <section class="rounded-[30px] border border-[#ead7b2] bg-[radial-gradient(circle_at_top_left,_rgba(255,222,173,0.22),_transparent_24%),linear-gradient(180deg,_#fffdfa,_#fff5e6)] p-5 shadow-soft">
+            <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+              <div>
+                <p class="inline-flex items-center gap-2 rounded-full border border-[#ffd489] bg-[#fff5df] px-3 py-1 text-body-sm font-medium text-[#b46b00]">
+                  <span class="material-symbols-outlined text-[18px]">menu_book</span>
+                  Fórmula operativa
+                </p>
+                <h3 class="mt-3 text-[34px] font-semibold tracking-[-0.05em] text-primary">Reglas de receta listas para el turno.</h3>
+                <p class="mt-2 max-w-3xl text-body-md text-on-surface-variant">Costo, carga, gramos por unidad y tolerancia editable.</p>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-[#edf2ff] px-3 py-2 text-body-sm font-semibold text-[#2f57d3]">${state.productos.length} productos activos</span>
+                <span class="rounded-full bg-[#fff5df] px-3 py-2 text-body-sm font-semibold text-[#b46b00]">${totalLinks} vínculos receta</span>
+              </div>
+            </div>
+          </section>
+          <section class="grid gap-4 2xl:grid-cols-2">
+            ${state.productos.map((product) => recipeCard(product, ingredientMap)).join("")}
+          </section>
+        </div>
+      `;
+    }
+
+    function renderTurnsView(state, ingredientMap, todayTurns) {
+      const visibleOrders = state.ordenesProduccion.filter(
+        (order) => order.estado === "Activa" && order.fecha === (productionSession.date || productionApi.getToday()) && order.turno === (productionSession.shift || "Mañana"),
+      );
+      const selectedOrder = visibleOrders.find((order) => order.id === productionSession.activeOrderId) || visibleOrders[0] || null;
+      if (selectedOrder) {
+        productionSession.activeOrderId = selectedOrder.id;
+        productionSession.activeProduct = selectedOrder.productoId;
+        syncDraftFromOrder(selectedOrder);
+      }
+      const activeProduct = state.productos.find((product) => product.id === (selectedOrder?.productoId || productionSession.activeProduct)) || state.productos[0];
+      const activeDraft = productionDraft[activeProduct.id] || {
+        plan: selectedOrder?.cantidadPlan || activeProduct.rendimientoEsperado,
+        real: selectedOrder?.cantidadPlan || activeProduct.rendimientoEsperado,
+        merma: Math.max(2, Math.round((selectedOrder?.cantidadPlan || activeProduct.rendimientoEsperado) * 0.02)),
+      };
+      const comparisonPlan = Number(selectedOrder?.cantidadPlan || activeDraft.plan || 0);
+      const activeYieldState = getToleranceState(activeProduct, comparisonPlan, Number(activeDraft.real || 0));
+      const activeConsumption = selectedOrder
+        ? syncConsumptionDraftFromOrder(state, selectedOrder)
+        : productionApi.estimateIngredientsForProduction(state, {
+            productoId: activeProduct.id,
+            cantidadReal: Number(activeDraft.real || 0),
+          });
+      const stockChecks = activeConsumption.map((item) => {
+        const ingredient = ingredientMap[item.insumoId];
+        const ratio = item.cantidad > 0 ? Math.min(100, Math.round((item.cantidad / Math.max(item.cantidad, ingredient.stock || 1)) * 100)) : 0;
+        return { ...item, ingredient, ratio, sufficient: ingredient.stock >= item.cantidad };
+      });
+
+      return `
+        <div class="space-y-4">
+          <section class="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_300px]">
+            <article class="rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4 shadow-soft">
+              <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div class="min-w-0">
+                  <p class="text-label-caps text-[#2f57d3]">6.4 Producción por turno</p>
+                  <h3 class="mt-1.5 text-[24px] font-semibold tracking-[-0.04em] text-primary">Inicio de turno y orden activa.</h3>
+                  <p class="mt-1 max-w-3xl text-body-sm text-on-surface-variant">Primero se abre el turno, después se crea una orden real por producto.</p>
+                </div>
+                <div class="grid gap-2 sm:grid-cols-3 lg:grid-cols-1">
+                  ${summaryCard("event_available", "Turnos hoy", `${todayTurns.length}`, "cierres en la fecha operativa", "soft")}
+                  ${summaryCard("assignment", "Órdenes activas", `${visibleOrders.length}`, visibleOrders.length ? "para este turno" : "sin orden abierta", "warm")}
+                  ${summaryCard("warning", "Alertas", `${todayTurns.filter((turn) => {
+                    const product = state.productos.find((item) => item.id === turn.productoId);
+                    return Math.abs(turn.desviacionPct) > Number(product?.toleranciaPct || 3);
+                  }).length}`, "desvíos sobre tolerancia", "alert")}
+                </div>
+              </div>
+
+              <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+                <label class="rounded-2xl bg-surface-container-low p-3 xl:col-span-1">
+                  <span class="text-label-caps text-on-surface-variant">Fecha operativa</span>
+                  <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 text-body-md text-primary" data-session-field="date" type="date" value="${productionSession.date}"/>
+                </label>
+                <label class="rounded-2xl bg-surface-container-low p-3 xl:col-span-1">
+                  <span class="text-label-caps text-on-surface-variant">Turno</span>
+                  <select class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 text-body-md text-primary" data-session-field="shift">
+                    <option value="Mañana" ${productionSession.shift === "Mañana" ? "selected" : ""}>Mañana</option>
+                    <option value="Tarde" ${productionSession.shift === "Tarde" ? "selected" : ""}>Tarde</option>
+                  </select>
+                </label>
+                <label class="rounded-2xl bg-surface-container-low p-3 xl:col-span-1">
+                  <span class="text-label-caps text-on-surface-variant">Responsable</span>
+                  <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 text-body-md text-primary" data-session-field="manager" type="text" value="${productionApi.escapeHtml(productionSession.manager)}"/>
+                </label>
+                <label class="rounded-2xl bg-surface-container-low p-3 xl:col-span-1">
+                  <span class="text-label-caps text-on-surface-variant">Equipo</span>
+                  <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 text-body-md text-primary" data-session-field="team" type="text" value="${productionApi.escapeHtml(productionSession.team)}"/>
+                </label>
+                <label class="rounded-2xl bg-surface-container-low p-3 xl:col-span-1">
+                  <span class="text-label-caps text-on-surface-variant">Producto foco</span>
+                  <select class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 text-body-md text-primary" data-session-field="activeProduct">
+                    ${state.productos.map((product) => `<option value="${product.id}" ${productionSession.activeProduct === product.id ? "selected" : ""}>${product.nombre}</option>`).join("")}
+                  </select>
+                </label>
+              </div>
+
+              <label class="mt-3 block rounded-2xl bg-surface-container-low p-3">
+                <span class="text-label-caps text-on-surface-variant">Notas del turno</span>
+                <textarea class="mt-1.5 h-16 w-full resize-none rounded-xl border border-outline-variant bg-white px-3 py-2 text-body-md text-primary" data-session-field="notes" placeholder="Incidencias, ajuste de horno, responsables de lote.">${productionApi.escapeHtml(productionSession.notes)}</textarea>
+              </label>
+
+              <div class="mt-3 grid gap-3 md:grid-cols-[minmax(0,1fr)_220px]">
+                <div class="rounded-2xl bg-surface-container-low p-3">
+                  <p class="text-label-caps text-on-surface-variant">Plan de la orden</p>
+                  <div class="mt-2 grid gap-3 sm:grid-cols-2">
+                    <label class="rounded-xl bg-white px-3 py-3">
+                      <span class="text-label-caps text-on-surface-variant">Cantidad planificada</span>
+                      <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3 py-2 font-data-md text-primary" data-field="plan" data-product="${activeProduct.id}" min="0" type="number" value="${selectedOrder ? selectedOrder.cantidadPlan : activeDraft.plan}"/>
+                    </label>
+                    <div class="rounded-xl bg-white px-3 py-3">
+                      <p class="text-label-caps text-on-surface-variant">Estado</p>
+                      <p class="mt-2 text-body-md font-semibold text-primary">${selectedOrder ? `Orden ${selectedOrder.id}` : "Sin orden creada"}</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="rounded-2xl bg-primary px-4 py-4 text-body-md font-semibold text-white shadow-[0_12px_24px_rgba(19,27,46,0.18)]" id="production-create-order" type="button">
+                  Crear orden
+                </button>
+              </div>
+            </article>
+
+            <article class="rounded-[24px] border border-outline-variant bg-primary-container p-4 text-white shadow-soft">
+              <p class="text-label-caps text-primary-fixed-dim">Orden seleccionada</p>
+              <h3 class="mt-1.5 text-[22px] font-semibold tracking-[-0.03em]">${selectedOrder ? activeProduct.nombre : "Sin orden activa"}</h3>
+              <p class="mt-1 text-body-sm text-primary-fixed-dim">${selectedOrder ? `${selectedOrder.turno} · ${selectedOrder.responsable}` : "Crea una orden para habilitar consumo y cierre."}</p>
+            <div class="mt-3 grid gap-2 sm:grid-cols-3 xl:grid-cols-1">
+                ${summaryCard("target", "Plan vs real", `${formatNumber(activeDraft.real)} / ${formatNumber(comparisonPlan)} u`, activeYieldState.label, "dark")}
+                ${summaryCard("trending_down", "Merma", `${formatNumber(activeDraft.merma)} u`, "rebaja del lote", "dark")}
+                ${summaryCard("nutrition", "Consumo real", `${formatNumber(activeConsumption.reduce((sum, item) => sum + Number(item.cantidad || 0), 0), 1)} kg`, selectedOrder ? selectedOrder.id : "sin orden", "dark")}
+              </div>
+              <div class="mt-3 rounded-2xl bg-white/10 p-3">
+                <div class="mb-2 flex items-center justify-between text-body-sm">
+                  <span class="text-primary-fixed-dim">Desviación actual</span>
+                  <span class="font-semibold text-white">${activeYieldState.pct > 0 ? "+" : ""}${activeYieldState.pct.toFixed(1)}%</span>
+                </div>
+                <div class="delta-track bg-white/10">
+                  <div class="delta-fill ${activeYieldState.barClass}" style="width:${Math.max(8, Math.min(100, Math.round((Number(activeDraft.real || 0) / Math.max(1, comparisonPlan || 1)) * 100)))}%"></div>
+                </div>
+              </div>
+              <div class="mt-3 space-y-2">
+                ${stockChecks.map((item) => `
+                  <div class="rounded-2xl bg-white/10 p-2.5">
+                    <div class="flex items-center justify-between gap-3">
+                      <span class="text-body-sm text-white">${productionApi.escapeHtml(item.ingredient.nombre)}</span>
+                      <span class="font-data-md text-white">${formatNumber(item.cantidad, 1)} / ${formatNumber(item.ingredient.stock, 1)} kg</span>
+                    </div>
+                    <div class="mt-2 delta-track bg-white/10">
+                      <div class="delta-fill ${item.sufficient ? "bg-on-tertiary-container" : "bg-error"}" style="width:${Math.max(10, item.ratio)}%"></div>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </article>
+          </section>
+
+          <section class="rounded-[24px] border border-outline-variant bg-white p-4 shadow-soft">
+            <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p class="text-label-caps text-on-surface-variant">Órdenes activas del turno</p>
+                <h3 class="mt-1.5 text-[22px] font-semibold tracking-[-0.03em] text-primary">Consumo y producto terminado</h3>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-[#edf2ff] px-3 py-2 text-body-sm font-semibold text-[#2f57d3]">${visibleOrders.length} órdenes visibles</span>
+                <button class="rounded-full bg-primary px-4 py-2 text-body-sm font-semibold text-white shadow-[0_12px_24px_rgba(19,27,46,0.18)]" id="production-finish-turn" type="button">Cerrar orden</button>
+              </div>
+            </div>
+            <div class="mt-3 grid gap-3 xl:grid-cols-2">
+              ${visibleOrders.map((order) => {
+                const product = state.productos.find((item) => item.id === order.productoId);
+                const draft = productionDraft[order.productoId] || {
+                  plan: order.cantidadPlan,
+                  real: order.cantidadPlan,
+                  merma: Math.max(2, Math.round(order.cantidadPlan * 0.02)),
                 };
-                return accumulator;
-            }, {});
-        }
-
-        function ensureDraft(state) {
-            if (!Object.keys(productionDraft).length) {
-                productionDraft = buildDraft(state);
-            }
-        }
-
-        function renderProduction() {
-            const state = productionApi.getState();
-            ensureDraft(state);
-            const visibleProducts = state.productos.filter((product) => {
-                if (productionFilterMode === "all") {
-                    return true;
-                }
-                const delta = productionApi.calcularDelta(productionDraft[product.id].plan, productionDraft[product.id].real);
-                return delta.estado === productionFilterMode;
-            });
-
-            productionApi.mountShell({
-                activePage: "production",
-                title: "Production",
-                header: {
-                    eyebrow: "REGISTRO DE PRODUCCION",
-                    badge: "Turno operativo activo",
-                    badgeIcon: "schedule",
-                    secondaryActions: [
-                        { id: "production-refresh", icon: "autorenew", label: "Refrescar" },
-                        { id: "production-dashboard", icon: "dashboard", label: "Dashboard" }
-                    ],
-                    primaryAction: { id: "production-clear-notes", icon: "notes", label: "Limpiar Notas" }
-                }
-            });
-
-            const root = document.getElementById("production-root");
-            root.innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
-                    ${topStat("PRODUCCION TOTAL", '<span id="total-production">0</span>', "+0.0% vs Plan")}
-                    ${topStat("MERMA ACTUAL", '<span id="waste-percent">0.0</span><small class="text-lg">%</small>', "Limite: 3%", "bg-error-container text-on-error-container")}
-                    ${topStat("RECETAS COMPLETADAS", `${state.productos.length}/${state.productos.length}`, "", "", "check_circle")}
-                    ${topStat("ESTADO DE HORNOS", '3 <small class="text-lg">ENCENDIDOS</small>', "Estables", "bg-secondary-fixed text-on-secondary-fixed-variant")}
-                </div>
-
-                <div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
-                    <div class="xl:col-span-8 space-y-4">
-                        <div class="flex justify-between items-center px-2">
-                            <div>
-                                <h3 class="font-headline-md text-headline-md">Lineas de Produccion Activas</h3>
-                                <p class="mt-1 text-xs uppercase tracking-widest text-on-surface-variant">Vista ${productionLayoutMode === "expanded" ? "completa" : "compacta"} · filtro ${productionFilterMode}</p>
-                            </div>
-                            <div class="flex gap-2">
-                                <button class="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors" id="production-filter-toggle" title="Cambiar filtro" type="button">
-                                    <span class="material-symbols-outlined">filter_list</span>
-                                </button>
-                                <button class="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors" id="production-layout-toggle" title="Cambiar vista" type="button">
-                                    <span class="material-symbols-outlined">grid_view</span>
-                                </button>
-                            </div>
-                        </div>
-                        ${visibleProducts.length
-                            ? visibleProducts.map((product) => productionCard(product, productionDraft[product.id])).join("")
-                            : `
-                                <div class="rounded-2xl border border-dashed border-outline-variant bg-white p-10 text-center shadow-sm">
-                                    <span class="material-symbols-outlined text-4xl text-on-surface-variant">filter_alt_off</span>
-                                    <h4 class="mt-3 font-headline-md text-primary">No hay lineas visibles con este filtro</h4>
-                                    <p class="mt-2 text-on-surface-variant">Cambia el filtro para volver a ver todas las recetas del turno.</p>
-                                </div>
-                            `}
-                    </div>
-                    <div class="xl:col-span-4 space-y-6">
-                        <div class="bg-primary-container text-on-primary text-white p-6 rounded-2xl shadow-xl sticky top-24">
-                            <div class="flex items-center gap-3 mb-6">
-                                <span class="material-symbols-outlined text-secondary-fixed-dim">analytics</span>
-                                <h3 class="font-headline-md">Balance de Turno</h3>
-                            </div>
-                            <div class="space-y-4 mb-6">
-                                <div class="flex justify-between items-center py-2 border-b border-on-primary-container">
-                                    <span class="text-on-primary-container">Total Estimado</span>
-                                    <span class="font-mono-data" id="summary-estimated">0 Un.</span>
-                                </div>
-                                <div class="flex justify-between items-center py-2 border-b border-on-primary-container">
-                                    <span class="text-on-primary-container">Total Real</span>
-                                    <span class="font-mono-data text-secondary-fixed-dim" id="summary-real">0 Un.</span>
-                                </div>
-                                <div class="flex justify-between items-center py-2 border-b border-on-primary-container">
-                                    <span class="text-on-primary-container">Merma Total</span>
-                                    <span class="font-mono-data text-error-container" id="summary-waste">0 Un.</span>
-                                </div>
-                                <div class="flex justify-between items-center py-2">
-                                    <span class="text-on-primary-container">Eficiencia General</span>
-                                    <span class="font-mono-data text-on-tertiary-container" id="summary-efficiency">0%</span>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 mb-6">
-                                <label class="rounded-xl bg-white/10 p-4">
-                                    <span class="text-xs text-on-primary-container mb-2 block font-label-caps">FECHA OPERATIVA</span>
-                                    <input class="w-full bg-transparent border-none p-0 text-sm text-white focus:ring-0" id="turn-date" type="date" value="${productionApi.getToday()}"/>
-                                </label>
-                                <label class="rounded-xl bg-white/10 p-4">
-                                    <span class="text-xs text-on-primary-container mb-2 block font-label-caps">TURNO</span>
-                                    <select class="w-full bg-transparent border-none p-0 text-sm text-white focus:ring-0" id="turn-selector">
-                                        <option class="text-primary" value="Manana">Manana</option>
-                                        <option class="text-primary" value="Tarde">Tarde</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="mb-6">
-                                <p class="mb-3 text-xs font-label-caps uppercase tracking-widest text-on-primary-container">PRESETS DE DEMO</p>
-                                <div class="grid grid-cols-3 gap-2">
-                                    <button class="rounded-lg bg-white/10 px-3 py-3 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-white/20" id="preset-estable" type="button">Estable</button>
-                                    <button class="rounded-lg bg-white/10 px-3 py-3 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-white/20" id="preset-tension" type="button">Tension</button>
-                                    <button class="rounded-lg bg-white/10 px-3 py-3 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-white/20" id="preset-premium" type="button">Premium</button>
-                                </div>
-                            </div>
-                            <div class="p-4 bg-white/10 rounded-xl mb-8">
-                                <p class="text-xs text-on-primary-container mb-2 font-label-caps">INCIDENCIAS DEL TURNO</p>
-                                <textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm placeholder:text-on-primary-container/50 resize-none h-20" id="turn-notes" placeholder="Anadir notas sobre desviaciones o fallos de equipo..."></textarea>
-                            </div>
-                            <button class="w-full bg-secondary text-white py-4 rounded-xl font-bold font-headline-md hover:bg-secondary-container transition-all active:scale-95 shadow-lg flex items-center justify-center gap-3" id="finalizar-turno" type="button">
-                                <span class="material-symbols-outlined">task_alt</span>
-                                Finalizar Turno
-                            </button>
-                            <p class="text-[10px] text-center mt-4 text-on-primary-container">Al finalizar se enviara el reporte al panel de distribucion.</p>
-                        </div>
-                        <div class="bg-surface-container-low p-6 rounded-2xl border border-outline-variant">
-                            <div class="flex items-center justify-between mb-4">
-                                <h4 class="font-label-caps text-on-surface-variant">ESTADO DE EQUIPOS</h4>
-                                <span class="material-symbols-outlined text-sm text-on-surface-variant">info</span>
-                            </div>
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-2 h-2 rounded-full bg-on-tertiary-container"></div>
-                                    <span class="text-sm flex-1">Horno A (De Piso)</span>
-                                    <span class="text-[10px] font-mono-data">220C</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-2 h-2 rounded-full bg-on-tertiary-container"></div>
-                                    <span class="text-sm flex-1">Horno B (Rotativo)</span>
-                                    <span class="text-[10px] font-mono-data">185C</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-2 h-2 rounded-full bg-error"></div>
-                                    <span class="text-sm flex-1">Amasadora Industrial</span>
-                                    <span class="text-[10px] font-mono-data">MANTE.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById("production-refresh").addEventListener("click", () => {
-                refreshComputed();
-                productionApi.showToast("Produccion recalculada con los valores actuales.", "info");
-            });
-            document.getElementById("production-dashboard").addEventListener("click", () => {
-                window.location.href = "index.html";
-            });
-            document.getElementById("production-clear-notes").addEventListener("click", () => {
-                document.getElementById("turn-notes").value = "";
-                productionApi.showToast("Notas del turno limpiadas.", "success");
-            });
-            document.getElementById("preset-estable").addEventListener("click", () => applyPreset("estable"));
-            document.getElementById("preset-tension").addEventListener("click", () => applyPreset("tension"));
-            document.getElementById("preset-premium").addEventListener("click", () => applyPreset("premium"));
-            document.getElementById("production-filter-toggle").addEventListener("click", cycleFilterMode);
-            document.getElementById("production-layout-toggle").addEventListener("click", toggleLayoutMode);
-            document.getElementById("finalizar-turno").addEventListener("click", finalizeTurn);
-            document.getElementById("overlay-go-distribution").addEventListener("click", () => {
-                window.location.href = "distribution.html";
-            });
-
-            attachInputHandlers();
-            refreshComputed();
-        }
-
-        function topStat(label, valueHtml, helper, helperClass, icon) {
-            if (icon) {
+                const yieldState = getToleranceState(product, order.cantidadPlan, Number(draft.real || 0));
+                const progress = Math.max(8, Math.min(100, Math.round((Number(draft.real || 0) / Math.max(1, order.cantidadPlan || 1)) * 100)));
                 return `
-                    <div class="bg-white p-card-padding border border-outline-variant rounded-xl shadow-sm">
-                        <p class="font-label-caps text-on-surface-variant mb-2">${label}</p>
-                        <div class="flex items-end justify-between">
-                            <span class="font-display-kpi text-on-surface">${valueHtml}</span>
-                            <span class="material-symbols-outlined text-on-primary-container">${icon}</span>
+                  <article class="rounded-[24px] border ${productionSession.activeOrderId === order.id ? "border-[#2f57d3] bg-[linear-gradient(180deg,_#f8fbff,_#ffffff)]" : "border-outline-variant bg-[linear-gradient(180deg,_#ffffff,_#f9fbff)]"} p-4 shadow-soft">
+                    <div class="flex flex-wrap items-start justify-between gap-3">
+                      <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-2">
+                          <span class="rounded-full bg-[#edf2ff] px-2.5 py-1 text-body-sm font-semibold text-[#2f57d3]">${order.id}</span>
+                          <span class="rounded-full ${yieldState.toneClass} px-2.5 py-1 text-body-sm font-semibold">${yieldState.label}</span>
                         </div>
+                        <h3 class="mt-2 text-[20px] font-semibold tracking-[-0.03em] text-primary">${product?.nombre || order.productoId}</h3>
+                        <p class="mt-1 text-body-sm text-on-surface-variant">${order.equipo} · ${order.responsable}</p>
+                      </div>
+                      <button class="rounded-full border border-[#dce4ff] bg-white px-3 py-2 text-body-sm font-semibold text-[#2f57d3]" data-focus-order="${order.id}" data-focus-product="${order.productoId}" type="button">Seleccionar</button>
                     </div>
+
+                    <div class="mt-4 grid gap-3 md:grid-cols-3">
+                      <div class="rounded-2xl bg-surface-container-low p-3">
+                        <span class="text-label-caps text-on-surface-variant">Plan</span>
+                        <p class="mt-1.5 font-data-md text-primary">${formatNumber(order.cantidadPlan)} u</p>
+                      </div>
+                      <label class="rounded-2xl bg-surface-container-low p-3">
+                        <span class="text-label-caps text-on-surface-variant">Real</span>
+                        <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" data-field="real" data-product="${order.productoId}" min="0" type="number" value="${draft.real}"/>
+                      </label>
+                      <label class="rounded-2xl bg-surface-container-low p-3">
+                        <span class="text-label-caps text-on-surface-variant">Merma</span>
+                        <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" data-field="merma" data-product="${order.productoId}" min="0" type="number" value="${draft.merma}"/>
+                      </label>
+                    </div>
+
+                    <div class="mt-4">
+                      <div class="mb-2 flex items-center justify-between text-body-sm">
+                        <span class="text-on-surface-variant">Cumplimiento de la orden</span>
+                        <span class="${yieldState.pct < 0 ? "text-error" : yieldState.pct > 0 ? "text-secondary" : "text-on-surface-variant"}">${yieldState.pct > 0 ? "+" : ""}${yieldState.pct.toFixed(1)}%</span>
+                      </div>
+                      <div class="delta-track">
+                        <div class="delta-fill ${yieldState.barClass}" style="width:${progress}%"></div>
+                      </div>
+                    </div>
+                  </article>
                 `;
-            }
-
-            return `
-                <div class="bg-white p-card-padding border border-outline-variant rounded-xl shadow-sm">
-                    <p class="font-label-caps text-on-surface-variant mb-2">${label}</p>
-                    <div class="flex items-end justify-between">
-                        <span class="font-display-kpi text-on-surface">${valueHtml}</span>
-                        <span class="px-2 py-1 rounded text-xs font-bold ${helperClass || "bg-tertiary-fixed text-on-tertiary-container"}">${helper}</span>
-                    </div>
+              }).join("") || `
+                <div class="rounded-2xl border border-dashed border-outline-variant bg-surface-container-low px-4 py-10 text-center xl:col-span-2">
+                  <p class="text-body-md font-semibold text-primary">Sin órdenes activas para este turno</p>
+                  <p class="mt-2 text-body-sm text-on-surface-variant">Define producto y plan, luego crea la orden para habilitar consumo y cierre.</p>
                 </div>
-            `;
-        }
+              `}
+            </div>
+          </section>
 
-        function productionCard(product, values) {
-            return `
-                <div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group" data-product-card="${product.id}">
-                    <div class="flex flex-col md:flex-row">
-                        <div class="w-full ${productionLayoutMode === "compact" ? "md:w-20 h-24" : "md:w-32 h-32"} md:h-auto overflow-hidden">
-                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${product.imagen}" alt="${productionApi.escapeHtml(product.nombre)}"/>
-                        </div>
-                        <div class="flex-1 p-card-padding">
-                            <div class="flex justify-between items-start mb-4 gap-6">
-                                <div>
-                                    <h4 class="font-headline-md">${product.nombre}</h4>
-                                    <p class="text-xs text-on-surface-variant">Receta ID: ${product.recetaId} • ${product.equipo}</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="font-label-caps text-on-surface-variant">RENDIMIENTO ESPERADO</span>
-                                    <p class="font-mono-data text-on-primary-container">${product.rendimientoEsperado.toLocaleString("es-CL")} Unidades</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                <div class="space-y-1">
-                                    <label class="font-label-caps text-[10px] text-on-surface-variant">TANDA / CANTIDAD</label>
-                                    <input class="w-full bg-surface-container-low border border-outline-variant rounded p-2 font-mono-data focus:ring-2 focus:ring-secondary outline-none product-input" data-field="real" data-product="${product.id}" data-expected="${product.rendimientoEsperado}" type="number" value="${values.real}"/>
-                                </div>
-                                <div class="space-y-1">
-                                    <label class="font-label-caps text-[10px] text-on-surface-variant">MERMA (UNIDADES)</label>
-                                    <input class="w-full bg-surface-container-low border border-outline-variant rounded p-2 font-mono-data focus:ring-2 focus:ring-secondary outline-none merma-input" data-field="merma" data-product="${product.id}" type="number" value="${values.merma}"/>
-                                </div>
-                                <div class="flex items-center justify-center">
-                                    <div class="w-full">
-                                        <div class="mb-1 flex justify-between text-[10px] font-label-caps">
-                                            <span>DESVIACION</span>
-                                            <span class="status-text">0.0% (Optimo)</span>
-                                        </div>
-                                        <div class="delta-track">
-                                            <div class="delta-fill bg-on-tertiary-container"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm ${productionLayoutMode === "compact" ? "hidden" : ""}">
-                                <div class="rounded-xl bg-surface-container-low p-4">
-                                    <p class="text-xs font-label-caps text-on-surface-variant">Plan Diario</p>
-                                    <p class="mt-2 font-mono-data text-primary">${values.plan.toLocaleString("es-CL")} uds</p>
-                                </div>
-                                <div class="rounded-xl bg-surface-container-low p-4">
-                                    <p class="text-xs font-label-caps text-on-surface-variant">Salida Neta</p>
-                                    <p class="mt-2 font-mono-data text-primary net-output">${Math.max(0, values.real - values.merma).toLocaleString("es-CL")} uds</p>
-                                </div>
-                                <div class="rounded-xl bg-surface-container-low p-4">
-                                    <p class="text-xs font-label-caps text-on-surface-variant">Nota Operativa</p>
-                                    <p class="mt-2 text-on-surface-variant">${product.descripcion}</p>
-                                </div>
-                            </div>
-                        </div>
+          <section class="rounded-[24px] border border-outline-variant bg-white p-4 shadow-soft">
+            <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p class="text-label-caps text-on-surface-variant">Consumo real por orden</p>
+                <h3 class="mt-1.5 text-[22px] font-semibold tracking-[-0.03em] text-primary">Rebaja de inventario</h3>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-[#edf2ff] px-3 py-2 text-body-sm font-semibold text-[#2f57d3]">${selectedOrder ? selectedOrder.id : "Sin orden"}</span>
+                <button class="rounded-full border border-[#dce4ff] bg-white px-4 py-2 text-body-sm font-semibold text-[#2f57d3]" id="production-reset-consumption" type="button" ${selectedOrder ? "" : "disabled"}>Usar receta</button>
+              </div>
+            </div>
+            <div class="mt-4 grid gap-3 md:grid-cols-2">
+              ${selectedOrder ? stockChecks.map((item) => `
+                <article class="rounded-2xl border border-outline-variant bg-surface-container-low p-4">
+                  <div class="flex items-center justify-between gap-3">
+                    <div>
+                      <p class="text-body-md font-semibold text-primary">${productionApi.escapeHtml(item.ingredient.nombre)}</p>
+                      <p class="mt-1 text-body-sm text-on-surface-variant">${formatNumber(item.ingredient.stock, 1)} ${item.ingredient.unidad} disponibles</p>
                     </div>
+                    <span class="rounded-full ${item.sufficient ? "bg-tertiary-fixed text-on-tertiary-fixed" : "bg-error-container text-on-error-container"} px-3 py-1 text-body-sm font-semibold">${item.sufficient ? "OK" : "Sin stock"}</span>
+                  </div>
+                  <div class="mt-3 grid gap-3 sm:grid-cols-2">
+                    <label class="rounded-xl bg-white p-3">
+                      <span class="text-label-caps text-on-surface-variant">Consumo real</span>
+                      <input class="mt-1.5 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3 py-2 font-data-md text-primary" data-consumption-order="${selectedOrder.id}" data-consumption-insumo="${item.insumoId}" min="0" step="0.1" type="number" value="${item.cantidad}"/>
+                    </label>
+                    <div class="rounded-xl bg-white p-3">
+                      <p class="text-label-caps text-on-surface-variant">Cobertura</p>
+                      <p class="mt-1.5 font-data-md text-primary">${item.ingredient.stock >= item.cantidad ? "Conforme" : `Faltan ${formatNumber(item.cantidad - item.ingredient.stock, 1)} kg`}</p>
+                    </div>
+                  </div>
+                </article>
+              `).join("") : `
+                <div class="rounded-2xl border border-dashed border-outline-variant bg-surface-container-low px-4 py-10 text-center md:col-span-2">
+                  <p class="text-body-md font-semibold text-primary">Selecciona una orden activa</p>
+                  <p class="mt-2 text-body-sm text-on-surface-variant">Aquí se registrará el consumo real antes de rebajar inventario y dar alta al producto terminado.</p>
                 </div>
-            `;
-        }
+              `}
+            </div>
+          </section>
 
-        function attachInputHandlers() {
-            document.querySelectorAll(".product-input, .merma-input").forEach((input) => {
-                input.addEventListener("input", (event) => {
-                    const productId = event.target.dataset.product;
-                    const field = event.target.dataset.field;
-                    const rawValue = Math.max(0, Number(event.target.value || 0));
-                    productionDraft[productId][field] = rawValue;
-                    refreshComputed();
-                });
-            });
-        }
+          <section class="rounded-[24px] border border-outline-variant bg-white p-4 shadow-soft">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-label-caps text-on-surface-variant">Cierres del día</p>
+                <h3 class="mt-1.5 text-[20px] font-semibold tracking-[-0.03em] text-primary">Historial reciente</h3>
+              </div>
+              <span class="rounded-full bg-surface-container-low px-3 py-2 text-body-sm font-semibold text-on-surface-variant">${todayTurns.length ? `${todayTurns.length} registros` : "Sin cierres aún"}</span>
+            </div>
+            <div class="mt-3 space-y-2.5">
+              ${(todayTurns.length ? [...todayTurns].reverse() : [...state.turnos].slice(-4).reverse()).map((turn) => {
+                const product = state.productos.find((item) => item.id === turn.productoId);
+                const stateDelta = getToleranceState(product, turn.cantidadPlan, turn.cantidadReal);
+                return `
+                  <article class="rounded-2xl border border-outline-variant bg-surface-container-low p-3.5">
+                    <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                      <div>
+                        <div class="flex flex-wrap items-center gap-2">
+                          <span class="rounded-full bg-white px-3 py-1 text-body-sm font-semibold text-[#2f57d3]">${turn.turno}</span>
+                          <span class="rounded-full ${stateDelta.toneClass} px-3 py-1 text-body-sm font-semibold">${stateDelta.label}</span>
+                        </div>
+                        <h4 class="mt-2 text-[18px] font-semibold text-primary">${product?.nombre || turn.productoId}</h4>
+                        <p class="mt-1 text-body-sm text-on-surface-variant">${turn.notas || "Sin observaciones."}</p>
+                      </div>
+                      <div class="grid gap-2 sm:grid-cols-3 lg:min-w-[320px]">
+                        ${summaryCard("straighten", "Plan", `${formatNumber(turn.cantidadPlan)} u`, "meta lote", "soft")}
+                        ${summaryCard("bakery_dining", "Real", `${formatNumber(turn.cantidadReal)} u`, "producido", "warm")}
+                        ${summaryCard("delete", "Merma", `${formatNumber(turn.merma)} u`, "pérdida", "alert")}
+                      </div>
+                    </div>
+                  </article>
+                `;
+              }).join("")}
+            </div>
+          </section>
+        </div>
+      `;
+    }
 
-        function refreshComputed() {
-            const state = productionApi.getState();
-            let totalReal = 0;
-            let totalPlan = 0;
-            let totalWaste = 0;
+    function renderFinishedView(state, finishedRows, metrics) {
+      const channels = state.canales.map((channel) => ({
+        ...channel,
+        total: channel.stock.reduce((sum, item) => sum + item.cantidad, 0),
+      }));
+      const latestTurns = [...state.turnos].slice(-6).reverse();
 
-            state.productos.forEach((product) => {
-                const current = productionDraft[product.id];
-                const card = document.querySelector(`[data-product-card="${product.id}"]`);
-                const delta = productionApi.calcularDelta(current.plan, current.real);
-                const fillWidth = current.plan === 0 ? 100 : Math.min(Math.max((current.real / current.plan) * 100, 0), 100);
+      return `
+        <div class="space-y-4">
+          <section class="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_340px]">
+            <article class="rounded-[28px] border border-outline-variant bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-5 shadow-soft">
+              <p class="text-label-caps text-[#2f57d3]">6.5 Producto terminado</p>
+                <h3 class="mt-2 text-[30px] font-semibold tracking-[-0.04em] text-primary">Stock terminado y destino.</h3>
+                <p class="mt-2 max-w-3xl text-body-md text-on-surface-variant">Disponible, asignado y pendiente.</p>
+              <div class="mt-5 grid gap-3 md:grid-cols-3">
+                ${summaryCard("inventory", "Disponible", `${formatNumber(metrics.availableUnits)} u`, "stock listo para salida", "soft")}
+                ${summaryCard("outbox", "Asignado", `${formatNumber(metrics.assignedUnits)} u`, "reservado a canales", "warm")}
+                ${summaryCard("delete", "Merma acumulada", `${formatNumber(metrics.totalWaste)} u`, "histórico de producción", "alert")}
+              </div>
+            </article>
 
-                totalReal += Number(current.real || 0);
-                totalPlan += Number(current.plan || 0);
-                totalWaste += Number(current.merma || 0);
+            <article class="rounded-[28px] border border-outline-variant bg-primary-container p-5 text-white shadow-soft">
+              <p class="text-label-caps text-primary-fixed-dim">Destinos habilitados</p>
+              <h3 class="mt-2 text-[24px] font-semibold tracking-[-0.03em]">Destinos</h3>
+              <div class="mt-4 space-y-2">
+                ${[
+                  { icon: "storefront", label: "Mesón", value: channels.find((channel) => channel.id === "meson")?.total || 0 },
+                  { icon: "store", label: "Retiro comercial", value: channels.find((channel) => channel.id === "retiro")?.total || 0 },
+                  { icon: "local_shipping", label: "Delivery", value: channels.find((channel) => channel.id === "delivery")?.total || 0 },
+                  { icon: "warning", label: "Sobrante", value: metrics.availableUnits },
+                  { icon: "delete", label: "Merma", value: metrics.totalWaste },
+                  { icon: "undo", label: "Devolución", value: state.devoluciones.reduce((sum, item) => sum + item.cantidad, 0) },
+                ].map((item) => `
+                  <div class="flex items-center justify-between rounded-2xl bg-white/10 px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <span class="material-symbols-outlined text-white/80">${item.icon}</span>
+                      <span class="text-body-md text-white">${item.label}</span>
+                    </div>
+                    <span class="font-data-md text-white">${formatNumber(item.value)} u</span>
+                  </div>
+                `).join("")}
+              </div>
+              <button class="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-body-md font-semibold text-primary" id="go-distribution-direct" type="button">
+                <span class="material-symbols-outlined">route</span>
+                Abrir asignación en distribución
+              </button>
+            </article>
+          </section>
 
-                const statusText = card.querySelector(".status-text");
-                const deltaFill = card.querySelector(".delta-fill");
-                const netOutput = card.querySelector(".net-output");
+          <section class="grid gap-4 2xl:grid-cols-[minmax(0,1.35fr)_360px]">
+            <article class="rounded-[28px] border border-outline-variant bg-white p-5 shadow-soft">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">Stock terminado</p>
+                  <h3 class="mt-2 text-[26px] font-semibold tracking-[-0.03em] text-primary">Lotes disponibles</h3>
+                </div>
+                <span class="rounded-full bg-[#edf2ff] px-3 py-2 text-body-sm font-semibold text-[#2f57d3]">${finishedRows.length} productos</span>
+              </div>
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                ${finishedRows.map((row) => `
+                  <article class="rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#ffffff,_#f8fbff)] p-4">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <p class="text-label-caps text-on-surface-variant">${row.product.recetaId}</p>
+                        <h4 class="mt-2 text-[20px] font-semibold text-primary">${row.product.nombre}</h4>
+                        <p class="mt-1 text-body-sm text-on-surface-variant">${row.product.equipo}</p>
+                      </div>
+                      <span class="rounded-full ${row.disponibleReal > 0 ? "bg-tertiary-fixed text-on-tertiary-fixed" : "bg-surface-container text-on-surface-variant"} px-3 py-1 text-body-sm font-semibold">${row.disponibleReal > 0 ? "Disponible" : "Sin saldo"}</span>
+                    </div>
+                    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+                      ${summaryCard("inventory", "Disponible", `${formatNumber(row.cantidadDisponible)} u`, "stock terminado", "soft")}
+                      ${summaryCard("bookmarks", "Asignado", `${formatNumber(row.cantidadAsignada)} u`, "ya comprometido", "warm")}
+                      ${summaryCard("move_to_inbox", "En canales", `${formatNumber(row.reservadoCanales)} u`, "mesón, retiro o delivery", "default")}
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                      ${channels.map((channel) => `
+                        <span class="rounded-full bg-surface-container-low px-3 py-1 text-body-sm text-on-surface-variant">${channel.nombre}: ${formatNumber(channel.stock.find((item) => item.productoId === row.productoId)?.cantidad || 0)} u</span>
+                      `).join("")}
+                    </div>
+                  </article>
+                `).join("")}
+              </div>
+            </article>
 
-                statusText.textContent = `${delta.pct > 0 ? "+" : ""}${delta.pct.toFixed(1)}% (${delta.label})`;
-                statusText.className = `status-text ${delta.colorClass}`;
-                deltaFill.className = `delta-fill ${delta.fillClass}`;
-                deltaFill.style.width = `${fillWidth}%`;
-                netOutput.textContent = `${Math.max(0, current.real - current.merma).toLocaleString("es-CL")} uds`;
-            });
+            <article class="rounded-[28px] border border-outline-variant bg-white p-5 shadow-soft">
+              <p class="text-label-caps text-on-surface-variant">Últimas tandas dadas de alta</p>
+              <h3 class="mt-2 text-[24px] font-semibold tracking-[-0.03em] text-primary">Últimas altas</h3>
+              <div class="mt-4 space-y-3">
+                ${latestTurns.map((turn) => {
+                  const product = state.productos.find((item) => item.id === turn.productoId);
+                  const output = Math.max(0, turn.cantidadReal - turn.merma);
+                  return `
+                    <article class="rounded-2xl bg-surface-container-low p-4">
+                      <div class="flex items-center justify-between gap-3">
+                        <div>
+                          <p class="text-label-caps text-on-surface-variant">${turn.turno} · ${turn.fecha}</p>
+                          <h4 class="mt-1 text-body-md font-semibold text-primary">${product?.nombre || turn.productoId}</h4>
+                        </div>
+                        <span class="rounded-full bg-white px-3 py-1 text-body-sm font-semibold text-[#2f57d3]">${formatNumber(output)} u</span>
+                      </div>
+                      <p class="mt-2 text-body-sm text-on-surface-variant">${turn.notas || "Sin observaciones."}</p>
+                    </article>
+                  `;
+                }).join("")}
+              </div>
+            </article>
+          </section>
+        </div>
+      `;
+    }
 
-            const efficiency = totalPlan === 0 ? 100 : ((totalReal / totalPlan) * 100);
-            const wastePct = totalReal === 0 ? 0 : ((totalWaste / totalReal) * 100);
+    function updateRecipeField(productId, field, value) {
+      const current = recipeDrafts[productId];
+      recipeDrafts = {
+        ...recipeDrafts,
+        [productId]: {
+          ...current,
+          [field]: Math.max(0, Number(value) || 0),
+        },
+      };
+    }
 
-            document.getElementById("total-production").textContent = totalReal.toLocaleString("es-CL");
-            document.getElementById("waste-percent").textContent = wastePct.toFixed(1);
-            document.getElementById("summary-estimated").textContent = `${totalPlan.toLocaleString("es-CL")} Un.`;
-            document.getElementById("summary-real").textContent = `${totalReal.toLocaleString("es-CL")} Un.`;
-            document.getElementById("summary-waste").textContent = `${totalWaste.toLocaleString("es-CL")} Un.`;
-            document.getElementById("summary-efficiency").textContent = `${efficiency.toFixed(1)}%`;
-        }
+    function updateRecipeIngredient(productId, insumoId, value) {
+      const current = recipeDrafts[productId];
+      recipeDrafts = {
+        ...recipeDrafts,
+        [productId]: {
+          ...current,
+          ingredientes: {
+            ...current.ingredientes,
+            [insumoId]: Math.max(0, Number(value) || 0),
+          },
+        },
+      };
+    }
 
-        function applyPreset(presetName) {
-            const preset = productionPresets[presetName];
-            const state = productionApi.getState();
-            state.productos.forEach((product, index) => {
-                productionDraft[product.id] = preset.apply(product, index);
-            });
-            renderProduction();
-            document.getElementById("turn-notes").value = preset.note;
-            productionApi.showToast(`Preset ${presetName} aplicado para la presentacion.`, "success");
-        }
+    function saveRecipe(productId) {
+      const state = productionApi.getState();
+      const nextState = {
+        ...state,
+        productos: state.productos.map((product) => {
+          if (product.id !== productId) {
+            return product;
+          }
+          const draft = recipeDrafts[productId];
+          return {
+            ...product,
+            rendimientoEsperado: Math.max(1, Number(draft.rendimiento) || product.rendimientoEsperado),
+            toleranciaPct: Math.max(1, Number(draft.tolerancia) || product.toleranciaPct || 3),
+            recetaInsumos: product.recetaInsumos.map((ingredient) => ({
+              ...ingredient,
+              cantidad: Math.max(0.1, Number(draft.ingredientes[ingredient.insumoId]) || ingredient.cantidad),
+            })),
+          };
+        }),
+      };
 
-        function cycleFilterMode() {
-            const order = ["all", "alerta", "optimo", "excedente"];
-            const currentIndex = order.indexOf(productionFilterMode);
-            productionFilterMode = order[(currentIndex + 1) % order.length];
-            productionApi.showToast(`Filtro cambiado a ${productionFilterMode}.`, "info");
-            renderProduction();
-        }
+      productionApi.setState(nextState);
+      const freshState = productionApi.getState();
+      productionDraft = buildDraft(freshState);
+      recipeDrafts = buildRecipeDrafts(freshState);
+      productionApi.showToast("Receta activa actualizada.", "success");
+      renderProduction();
+    }
 
-        function toggleLayoutMode() {
-            productionLayoutMode = productionLayoutMode === "expanded" ? "compact" : "expanded";
-            productionApi.showToast(`Vista ${productionLayoutMode === "expanded" ? "completa" : "compacta"} activada.`, "success");
-            renderProduction();
-        }
+    function saveAllRecipes() {
+      const state = productionApi.getState();
+      const nextState = {
+        ...state,
+        productos: state.productos.map((product) => {
+          const draft = recipeDrafts[product.id];
+          return {
+            ...product,
+            rendimientoEsperado: Math.max(1, Number(draft.rendimiento) || product.rendimientoEsperado),
+            toleranciaPct: Math.max(1, Number(draft.tolerancia) || product.toleranciaPct || 3),
+            recetaInsumos: product.recetaInsumos.map((ingredient) => ({
+              ...ingredient,
+              cantidad: Math.max(0.1, Number(draft.ingredientes[ingredient.insumoId]) || ingredient.cantidad),
+            })),
+          };
+        }),
+      };
+      productionApi.setState(nextState);
+      const freshState = productionApi.getState();
+      productionDraft = buildDraft(freshState);
+      recipeDrafts = buildRecipeDrafts(freshState);
+      productionApi.showToast("Todas las recetas quedaron guardadas.", "success");
+      renderProduction();
+    }
 
-        function finalizeTurn() {
-            const state = productionApi.getState();
-            const fecha = document.getElementById("turn-date").value || productionApi.getToday();
-            const turno = document.getElementById("turn-selector").value;
-            const notas = document.getElementById("turn-notes").value.trim();
-            const button = document.getElementById("finalizar-turno");
+    function openRecipeFlow(product) {
+      const ingredientMap = productionApi.getIngredientMap(productionApi.getState());
+      productionApi.openModal({
+        kicker: product.recetaId,
+        title: `${product.nombre} · flujo de receta`,
+        body: `
+          <div class="space-y-4">
+            <p class="text-body-md text-on-surface">Resumen de receta activa.</p>
+            <div class="grid gap-3 md:grid-cols-5">
+              ${[
+                "Definir producto",
+                "Asociar insumos",
+                "Cantidades estándar",
+                "Rendimiento esperado",
+                "Guardar receta activa",
+              ].map((step, index) => `
+                <div class="rounded-2xl border border-outline-variant bg-surface-container-low p-4">
+                  <p class="text-label-caps text-on-surface-variant">Paso ${index + 1}</p>
+                  <p class="mt-2 text-body-md font-semibold text-primary">${step}</p>
+                </div>
+              `).join("")}
+            </div>
+            <div class="rounded-2xl border border-outline-variant bg-white p-4">
+              <p class="text-label-caps text-on-surface-variant">Insumos de la regla</p>
+              <div class="mt-3 space-y-2">
+                ${product.recetaInsumos.map((ingredient) => `
+                  <div class="flex items-center justify-between rounded-xl bg-surface-container-low px-3 py-2">
+                    <span class="text-body-md text-on-surface">${productionApi.escapeHtml(ingredientMap[ingredient.insumoId].nombre)}</span>
+                    <span class="font-data-md text-primary">${formatNumber(ingredient.cantidad, 1)} kg/lote</span>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+        `,
+        actions: [
+          { id: "close-recipe-flow", label: "Cerrar" },
+          {
+            id: "save-recipe-from-flow",
+            label: "Guardar receta activa",
+            className: "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-container",
+          },
+        ],
+      });
+      document.getElementById("close-recipe-flow").addEventListener("click", productionApi.closeModal);
+      document.getElementById("save-recipe-from-flow").addEventListener("click", () => {
+        saveRecipe(product.id);
+        productionApi.closeModal();
+      });
+    }
 
-            button.disabled = true;
-            button.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Procesando...';
+    function syncDraftFromOrder(order) {
+      if (!order) {
+        return;
+      }
+      const current = productionDraft[order.productoId] || {
+        plan: order.cantidadPlan,
+        real: order.cantidadPlan,
+        merma: Math.max(2, Math.round(order.cantidadPlan * 0.02)),
+      };
+      productionDraft[order.productoId] = {
+        ...current,
+        plan: order.cantidadPlan,
+      };
+    }
 
-            const payload = state.productos.map((product) => ({
-                fecha,
-                turno,
-                productoId: product.id,
-                cantidadPlan: productionDraft[product.id].plan,
-                cantidadReal: productionDraft[product.id].real,
-                merma: productionDraft[product.id].merma,
-                notas
-            }));
+    function syncConsumptionDraftFromOrder(state, order) {
+      if (!order) {
+        return [];
+      }
+      if (!productionConsumptionDrafts[order.id]) {
+        productionConsumptionDrafts[order.id] = buildConsumptionDraftForOrder(state, order);
+      }
+      return productionConsumptionDrafts[order.id];
+    }
 
-            window.setTimeout(() => {
-                productionApi.registrarProduccionBatch(payload);
-                productionApi.showToast("Turno registrado y stock enviado a distribucion.", "success");
-                document.getElementById("success-overlay").classList.remove("hidden");
-                document.getElementById("success-overlay").classList.add("flex");
-                button.disabled = false;
-                button.innerHTML = '<span class="material-symbols-outlined">task_alt</span> Finalizar Turno';
-                productionDraft = buildDraft(productionApi.getState());
-            }, 700);
-        }
+    function resetConsumptionDraft(order, state) {
+      if (!order) {
+        return;
+      }
+      productionConsumptionDrafts[order.id] = buildConsumptionDraftForOrder(state, order);
+    }
 
-        window.addEventListener("focus", refreshComputed);
-        window.addEventListener("storage", renderProduction);
+    function updateConsumptionDraft(orderId, insumoId, value) {
+      const current = productionConsumptionDrafts[orderId] || [];
+      productionConsumptionDrafts[orderId] = current.map((item) =>
+        item.insumoId === insumoId
+          ? { ...item, cantidad: Math.max(0, Number(value) || 0) }
+          : item,
+      );
+    }
+
+    function createProductionOrder() {
+      const state = productionApi.getState();
+      const productId = productionSession.activeProduct;
+      const draft = productionDraft[productId];
+      const plan = Number(draft?.plan || 0);
+      if (!productId || plan <= 0) {
+        productionApi.showToast("Define producto y cantidad planificada antes de crear la orden.", "warn");
+        return;
+      }
+
+      const beforeCount = state.ordenesProduccion.length;
+      productionApi.crearOrdenProduccion({
+        productoId: productId,
+        cantidadPlan: plan,
+        fecha: productionSession.date || productionApi.getToday(),
+        turno: productionSession.shift || "Mañana",
+        responsable: productionSession.manager || "Jefe de producción",
+        equipo: productionSession.team || "Equipo principal",
+        notas: productionSession.notes || "",
+      });
+      const nextState = productionApi.getState();
+      if (nextState.ordenesProduccion.length === beforeCount) {
+        productionApi.showToast("Ya existe una orden activa para este producto en ese turno.", "warn");
+        return;
+      }
+
+      const createdOrder = [...nextState.ordenesProduccion]
+        .reverse()
+        .find((order) =>
+          order.estado === "Activa" &&
+          order.productoId === productId &&
+          order.fecha === (productionSession.date || productionApi.getToday()) &&
+          order.turno === (productionSession.shift || "Mañana"),
+        );
+
+      resetConsumptionDraft(createdOrder, nextState);
+      productionSession = {
+        ...productionSession,
+        activeOrderId: createdOrder?.id || "",
+      };
+      syncDraftFromOrder(createdOrder);
+      productionApi.showToast("Orden de producción creada.", "success");
+      renderProduction();
+    }
+
+    function finalizeTurn() {
+      const freshState = productionApi.getState();
+      const activeOrder = freshState.ordenesProduccion.find((order) => order.id === productionSession.activeOrderId && order.estado === "Activa");
+      if (!activeOrder) {
+        productionApi.showToast("Primero crea o selecciona una orden activa para cerrar producción.", "warn");
+        return;
+      }
+
+      const draft = productionDraft[activeOrder.productoId] || {};
+      const consumptionDraft = (productionConsumptionDrafts[activeOrder.id] || [])
+        .map((item) => ({
+          insumoId: item.insumoId,
+          cantidad: Number(item.cantidad || 0),
+        }))
+        .filter((item) => item.cantidad > 0);
+      const entry = {
+        orderId: activeOrder.id,
+        productoId: activeOrder.productoId,
+        cantidadPlan: Number(activeOrder.cantidadPlan || draft.plan || 0),
+        cantidadReal: Number(draft.real || 0),
+        merma: Number(draft.merma || 0),
+        fecha: activeOrder.fecha || productionSession.date || productionApi.getToday(),
+        turno: activeOrder.turno || productionSession.shift || "Mañana",
+        responsable: activeOrder.responsable || productionSession.manager || "Jefe de producción",
+        equipo: activeOrder.equipo || productionSession.team || "Equipo principal",
+        consumoInsumos: consumptionDraft,
+        notas: [
+          `Orden: ${activeOrder.id}`,
+          `Responsable: ${activeOrder.responsable || productionSession.manager || "Jefe de producción"}`,
+          `Equipo: ${activeOrder.equipo || productionSession.team || "Equipo principal"}`,
+          activeOrder.notas || productionSession.notes || "",
+        ].filter(Boolean).join(" · "),
+      };
+
+      if (entry.cantidadReal <= 0) {
+        productionApi.showToast("Registra producción real antes de cerrar la orden.", "warn");
+        return;
+      }
+
+      const checks = productionApi.canFinalizeProductionEntries([entry], freshState);
+      const missing = checks.filter((item) => !item.suficiente);
+
+      if (missing.length) {
+        const ingredientMap = productionApi.getIngredientMap(freshState);
+        productionApi.openModal({
+          kicker: "Inventario insuficiente",
+          title: "No alcanza el stock para cerrar el turno",
+          body: `
+            <div class="space-y-3">
+              <p class="text-body-md text-on-surface">Primero hay que resolver estos insumos para registrar el consumo real y la producción terminada.</p>
+              ${missing.map((item) => `
+                <div class="rounded-2xl bg-error-container p-4 text-on-error-container">
+                  <p class="font-semibold">${productionApi.escapeHtml(ingredientMap[item.insumoId].nombre)}</p>
+                  <p class="mt-1 text-body-sm">Se requieren ${formatNumber(item.cantidad, 1)} kg y solo hay ${formatNumber(item.disponible, 1)} kg disponibles.</p>
+                </div>
+              `).join("")}
+            </div>
+          `,
+          actions: [{ id: "close-turn-missing", label: "Entendido" }],
+        });
+        document.getElementById("close-turn-missing").addEventListener("click", productionApi.closeModal);
+        return;
+      }
+
+      productionApi.registrarProduccionBatch([entry]);
+      const updatedState = productionApi.getState();
+      productionDraft = buildDraft(updatedState);
+      recipeDrafts = buildRecipeDrafts(updatedState);
+      productionSession = {
+        ...productionSession,
+        notes: "",
+        activeOrderId: "",
+      };
+
+      const totalOutput = Math.max(0, entry.cantidadReal - entry.merma);
+      productionApi.openModal({
+        kicker: "Turno guardado",
+        title: "Producción cerrada y stock terminado actualizado",
+        body: `
+          <div class="space-y-4">
+            <div class="rounded-2xl bg-surface-container-low p-4">
+              <p class="text-label-caps text-on-surface-variant">Resumen del cierre</p>
+              <p class="mt-2 text-headline-md text-primary">${productionSession.shift} · ${productionSession.date}</p>
+              <p class="mt-2 text-body-md text-on-surface-variant">${formatNumber(totalOutput)} unidades dadas de alta.</p>
+            </div>
+            <div class="grid gap-3 md:grid-cols-3">
+              <div class="rounded-2xl border border-outline-variant p-4">
+                <p class="text-label-caps text-on-surface-variant">Orden</p>
+                <p class="mt-2 font-data-md text-primary">${activeOrder.id}</p>
+              </div>
+              <div class="rounded-2xl border border-outline-variant p-4">
+                <p class="text-label-caps text-on-surface-variant">Merma</p>
+                <p class="mt-2 font-data-md text-primary">${formatNumber(entry.merma)} u</p>
+              </div>
+              <div class="rounded-2xl border border-outline-variant p-4">
+                <p class="text-label-caps text-on-surface-variant">Estado</p>
+                <p class="mt-2 font-data-md text-primary">Listo para asignar</p>
+              </div>
+            </div>
+          </div>
+        `,
+        actions: [
+          { id: "close-turn-success", label: "Seguir en producción" },
+          {
+            id: "go-finished-stock",
+            label: "Ver producto terminado",
+            className: "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-container",
+          },
+        ],
+      });
+      document.getElementById("close-turn-success").addEventListener("click", () => {
+        productionApi.closeModal();
         renderProduction();
-    </script>
-</body></html>
+      });
+      document.getElementById("go-finished-stock").addEventListener("click", () => {
+        productionApi.closeModal();
+        syncProductionSubviewUrl("finished");
+        renderProduction();
+      });
+    }
+
+    function bindProductionEvents(state, activeSubview) {
+      document.getElementById("production-refresh").addEventListener("click", renderProduction);
+      document.getElementById("production-dashboard").addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+
+      const primaryAction = document.getElementById("production-primary-action");
+      if (primaryAction) {
+        primaryAction.addEventListener("click", () => {
+          if (activeSubview.id === "recipes") {
+            saveAllRecipes();
+            return;
+          }
+          if (activeSubview.id === "finished") {
+            window.location.href = "distribution.html";
+            return;
+          }
+          finalizeTurn();
+        });
+      }
+
+      document.querySelectorAll("[data-field]").forEach((input) => {
+        input.addEventListener("change", (event) => {
+          const { product, field } = event.target.dataset;
+          productionDraft[product][field] = event.target.value;
+          renderProduction();
+        });
+      });
+
+      document.querySelectorAll("[data-session-field]").forEach((input) => {
+        input.addEventListener("change", (event) => {
+          const field = event.target.dataset.sessionField;
+          productionSession = {
+            ...productionSession,
+            [field]: event.target.value,
+          };
+          if (["activeProduct", "date", "shift"].includes(field)) {
+            productionSession.activeOrderId = "";
+          }
+          if (field === "activeProduct" || field === "date" || field === "shift") {
+            renderProduction();
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-focus-product]").forEach((button) => {
+        button.addEventListener("click", () => {
+          productionSession = {
+            ...productionSession,
+            activeProduct: button.dataset.focusProduct,
+            activeOrderId: "",
+          };
+          syncProductionSubviewUrl("turns");
+          renderProduction();
+        });
+      });
+
+      document.querySelectorAll("[data-focus-order]").forEach((button) => {
+        button.addEventListener("click", () => {
+          productionSession = {
+            ...productionSession,
+            activeOrderId: button.dataset.focusOrder,
+            activeProduct: button.dataset.focusProduct,
+          };
+          renderProduction();
+        });
+      });
+
+      document.querySelectorAll("[data-consumption-order]").forEach((input) => {
+        input.addEventListener("change", (event) => {
+          const orderId = event.target.dataset.consumptionOrder;
+          const insumoId = event.target.dataset.consumptionInsumo;
+          updateConsumptionDraft(orderId, insumoId, event.target.value);
+          renderProduction();
+        });
+      });
+
+      document.querySelectorAll("[data-recipe-field]").forEach((input) => {
+        input.addEventListener("change", (event) => {
+          updateRecipeField(event.target.dataset.product, event.target.dataset.recipeField, event.target.value);
+          renderProduction();
+        });
+      });
+
+      document.querySelectorAll("[data-recipe-ingredient]").forEach((input) => {
+        input.addEventListener("change", (event) => {
+          updateRecipeIngredient(event.target.dataset.product, event.target.dataset.recipeIngredient, event.target.value);
+          renderProduction();
+        });
+      });
+
+      document.querySelectorAll("[data-save-recipe]").forEach((button) => {
+        button.addEventListener("click", () => {
+          saveRecipe(button.dataset.saveRecipe);
+        });
+      });
+
+      document.querySelectorAll("[data-open-recipe-modal]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const product = state.productos.find((item) => item.id === button.dataset.openRecipeModal);
+          if (product) {
+            openRecipeFlow(product);
+          }
+        });
+      });
+
+      const finishTurnButton = document.getElementById("production-finish-turn");
+      if (finishTurnButton) {
+        finishTurnButton.addEventListener("click", finalizeTurn);
+      }
+
+      const createOrderButton = document.getElementById("production-create-order");
+      if (createOrderButton) {
+        createOrderButton.addEventListener("click", createProductionOrder);
+      }
+
+      const resetConsumptionButton = document.getElementById("production-reset-consumption");
+      if (resetConsumptionButton) {
+        resetConsumptionButton.addEventListener("click", () => {
+          const selectedOrder = state.ordenesProduccion.find((order) => order.id === productionSession.activeOrderId);
+          if (!selectedOrder) {
+            productionApi.showToast("Selecciona una orden activa para recalcular consumo.", "warn");
+            return;
+          }
+          resetConsumptionDraft(selectedOrder, state);
+          productionApi.showToast("Consumo teórico recargado desde la receta.", "info");
+          renderProduction();
+        });
+      }
+
+      const goDistributionDirect = document.getElementById("go-distribution-direct");
+      if (goDistributionDirect) {
+        goDistributionDirect.addEventListener("click", () => {
+          window.location.href = "distribution.html";
+        });
+      }
+    }
+
+    function renderProduction() {
+      const state = productionApi.getState();
+      const metrics = productionApi.buildMetrics(state);
+      const ingredientMap = productionApi.getIngredientMap(state);
+      ensureDraft(state);
+      ensureRecipeDrafts(state);
+      ensureConsumptionDrafts(state);
+      ensureSessionDraft(state);
+
+      const activeSubview = getSubviewMeta();
+      const todayTurns = state.turnos.filter((turn) => turn.fecha === (productionSession.date || productionApi.getToday()));
+      const finishedRows = buildFinishedRows(state);
+      const recipeReadyCount = state.productos.filter((product) => product.recetaInsumos.length > 0).length;
+      const toleranceAlerts = state.turnos.filter((turn) => {
+        const product = state.productos.find((item) => item.id === turn.productoId);
+        return Math.abs(turn.desviacionPct) > Number(product?.toleranciaPct || 3);
+      });
+      const totalTodayWaste = todayTurns.reduce((sum, turn) => sum + turn.merma, 0);
+      const totalTodayOutput = todayTurns.reduce((sum, turn) => sum + Math.max(0, turn.cantidadReal - turn.merma), 0);
+
+      const sidebarSubmenuItems = [
+        { id: "recipes", href: "production.html?subview=recipes", label: "Recetas", helper: "Fórmula", icon: "menu_book" },
+        { id: "turns", href: "production.html?subview=turns", label: "Turnos", helper: "Lote vivo", icon: "schedule" },
+        { id: "finished", href: "production.html?subview=finished", label: "Terminados", helper: "Salida", icon: "inventory" },
+      ];
+
+      productionApi.mountShell({
+        activePage: "production",
+        title: "Producción",
+        sidebarSubmenu: {
+          parentPage: "production",
+          activeId: activeSubview.id,
+          items: sidebarSubmenuItems,
+        },
+        header: {
+          eyebrow: "PANADATOR · PRODUCCIÓN",
+          badge: activeSubview.label,
+          badgeIcon: "bakery_dining",
+          secondaryActions: [
+            { id: "production-refresh", icon: "autorenew", label: "Refrescar" },
+            { id: "production-dashboard", icon: "dashboard", label: "Dashboard" },
+          ],
+          primaryAction: { id: "production-primary-action", icon: activeSubview.primaryIcon, label: activeSubview.primaryLabel },
+        },
+      });
+
+      const root = document.getElementById("production-root");
+      root.innerHTML = `
+        <section class="grid h-full min-h-0 gap-4 xl:grid-cols-[272px_minmax(0,1fr)]">
+          <aside class="flex min-h-0 flex-col rounded-[24px] border border-[#ead7b2] bg-[radial-gradient(circle_at_top_left,_rgba(255,215,153,0.38),_transparent_24%),radial-gradient(circle_at_bottom_left,_rgba(255,244,221,0.9),_transparent_38%),linear-gradient(180deg,_#fffdfa,_#fff5e4)] p-3.5 shadow-[0_16px_36px_rgba(140,96,31,0.12)]">
+            <div>
+              <p class="inline-flex items-center gap-2 rounded-full border border-[#ffd489] bg-[#fff5df] px-3 py-1 text-body-sm font-medium text-[#b46b00]">
+                <span class="material-symbols-outlined text-[18px]">bakery_dining</span>
+                Panadator
+              </p>
+              <h1 class="mt-2.5 text-[22px] font-bold leading-[1.02] tracking-[-0.04em] text-primary">${activeSubview.label}</h1>
+              <p class="mt-1.5 text-[11px] leading-4 text-[#8f775c]">Suite panadera.</p>
+            </div>
+
+            <div class="mt-3 grid gap-2">
+              ${summaryCard("menu_book", "Recetas activas", `${recipeReadyCount}/${state.productos.length}`, "productos con receta estándar", "soft")}
+              ${summaryCard("schedule", "Turnos del día", `${todayTurns.length}`, "cierres en la fecha operativa", "default")}
+              ${summaryCard("straighten", "Producción del día", `${formatNumber(totalTodayOutput)} u`, "dadas de alta", "warm")}
+              ${summaryCard("delete", "Merma del día", `${formatNumber(totalTodayWaste)} u`, "impacto del turno", "alert")}
+              ${summaryCard("inventory", "Terminados", `${formatNumber(metrics.availableUnits)} u`, "listos para salida", "soft")}
+              ${summaryCard("warning", "Desvíos", `${toleranceAlerts.length}`, toleranceAlerts.length ? "sobre tolerancia" : "sin alertas críticas", toleranceAlerts.length ? "alert" : "default")}
+            </div>
+
+            <section class="mt-3 rounded-[22px] bg-[linear-gradient(180deg,#6d4627,#4f311c)] p-3.5 text-white shadow-[0_18px_36px_rgba(79,49,28,0.24)]">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-label-caps text-[#d8c1a6]">Pulso del horno</p>
+                  <h3 class="mt-1 text-[18px] font-semibold tracking-[-0.03em]">Resumen</h3>
+                </div>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-body-sm">${metrics.productionAccuracy}% ritmo</span>
+              </div>
+              <div class="mt-3 space-y-2">
+                ${[
+                  { label: "Rendimiento esperado", value: `${metrics.productionAccuracy}%`, pct: metrics.productionAccuracy, bar: "bg-on-tertiary-container" },
+                  { label: "Conciliación stock", value: `${metrics.conciliationPct}%`, pct: metrics.conciliationPct, bar: "bg-secondary" },
+                  { label: "SLA operativo", value: `${state.slaCumplimiento}%`, pct: state.slaCumplimiento, bar: "bg-[#ffb72b]" },
+                ].map((item) => `
+                  <div class="rounded-2xl bg-white/10 p-2.5">
+                    <div class="flex items-center justify-between gap-3">
+                      <span class="text-body-sm text-[#e8d8c5]">${item.label}</span>
+                      <span class="font-data-md text-white">${item.value}</span>
+                    </div>
+                    <div class="mt-2 delta-track bg-white/10">
+                      <div class="delta-fill ${item.bar}" style="width:${Math.max(8, item.pct)}%"></div>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </section>
+
+            <section class="mt-3 rounded-[22px] border border-[#ead7b2] bg-[linear-gradient(180deg,_#fffdfa,_#fff8ee)] p-3.5 shadow-soft">
+              <p class="text-label-caps text-[#8f775c]">Flujo base</p>
+              <div class="mt-2.5 space-y-2">
+                ${[
+                  "Definir receta",
+                  "Crear orden de turno",
+                  "Registrar consumo real",
+                  "Dar de alta producto terminado",
+                ].map((step, index) => `
+                  <div class="flex items-center gap-3 rounded-2xl bg-[#fff4df] px-3 py-2.5">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white font-data-md text-[#b46b00]">${index + 1}</span>
+                    <span class="text-body-sm text-on-surface">${step}</span>
+                  </div>
+                `).join("")}
+              </div>
+            </section>
+          </aside>
+
+          <section class="flex min-h-0 flex-col overflow-hidden rounded-[28px] border border-[#ead7b2] bg-[linear-gradient(180deg,_#ffffff,_#fffdfa)] p-4 shadow-soft">
+            <div class="border-b border-outline-variant pb-3">
+              <div class="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">${activeSubview.eyebrow}</p>
+                  <h2 class="mt-1.5 text-[28px] font-semibold tracking-[-0.04em] text-primary">${activeSubview.title}</h2>
+                  <p class="mt-1 max-w-3xl text-body-sm text-on-surface-variant">${activeSubview.subtitle}</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="rounded-full bg-surface-container-low px-3 py-2 text-body-sm font-semibold text-on-surface-variant">${state.productos.length} productos</span>
+                  <span class="rounded-full bg-[#edf2ff] px-3 py-2 text-body-sm font-semibold text-[#2f57d3]">${todayTurns.length} turnos visibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
+              ${activeSubview.id === "recipes"
+                ? renderRecipesView(state, ingredientMap)
+                : activeSubview.id === "finished"
+                  ? renderFinishedView(state, finishedRows, metrics)
+                  : renderTurnsView(state, ingredientMap, todayTurns)}
+            </div>
+          </section>
+        </section>
+      `;
+
+      bindProductionEvents(state, activeSubview);
+    }
+
+    window.addEventListener("focus", renderProduction);
+    window.addEventListener("storage", renderProduction);
+    renderProduction();
+  </script>
+</body>
+</html>

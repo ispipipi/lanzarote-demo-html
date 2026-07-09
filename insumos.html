@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Lanzarote - Inventarios</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e0e3e5",
+            "on-error": "#ffffff",
+            "primary": "#000000",
+            "on-tertiary-fixed-variant": "#38485d",
+            "tertiary-container": "#0b1c30",
+            "secondary-container": "#d5e3fd",
+            "on-surface-variant": "#45464d",
+            "secondary-fixed": "#d5e3fd",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "secondary": "#515f74",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "surface-container-lowest": "#ffffff",
+            "background": "#f7f9fb",
+            "on-secondary-container": "#57657b",
+            "on-secondary-fixed": "#0d1c2f",
+            "on-secondary-fixed-variant": "#3a485c",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "inverse-surface": "#2d3133",
+            "surface-dim": "#d8dadc",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#131b2e",
+            "surface": "#f7f9fb",
+            "surface-container-low": "#f2f4f6",
+            "on-surface": "#191c1e",
+            "on-background": "#191c1e",
+            "on-tertiary-fixed": "#0b1c30",
+            "inverse-on-surface": "#eff1f3",
+            "on-primary-container": "#7c839b",
+            "error-container": "#ffdad6",
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#3f465c",
+            "tertiary": "#000000",
+            "inverse-primary": "#bec6e0",
+            "surface-container-high": "#e6e8ea",
+            "surface-tint": "#565e74",
+            "on-tertiary-container": "#75859d",
+            "secondary-fixed-dim": "#b9c7e0",
+            "tertiary-fixed": "#d3e4fe",
+            "primary-container": "#131b2e",
+            "outline-variant": "#c6c6cd"
+          },
+          borderRadius: {
+            "sm": "0.125rem",
+            "DEFAULT": "0.25rem",
+            "md": "0.375rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "unit": "4px",
+            "container-padding": "24px",
+            "gutter": "16px",
+            "stack-sm": "8px",
+            "stack-md": "16px",
+            "stack-lg": "32px"
+          },
+          fontFamily: {
+            "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "label-caps": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "data-lg": ["JetBrains Mono", "monospace"],
+            "data-md": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "display-lg": ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+            "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "data-lg": ["20px", { lineHeight: "24px", fontWeight: "600" }],
+            "data-md": ["14px", { lineHeight: "20px", fontWeight: "500" }]
+          },
+          boxShadow: {
+            "soft": "0 8px 24px rgba(15, 23, 42, 0.08)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      vertical-align: middle;
+    }
+    .sii-demo-player {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid rgba(191, 211, 255, 0.28);
+      background:
+        radial-gradient(circle at top right, rgba(92, 123, 255, 0.22), transparent 28%),
+        linear-gradient(180deg, #13213d 0%, #15284b 48%, #1e3564 100%);
+      box-shadow: 0 24px 54px rgba(19, 33, 61, 0.24);
+    }
+    .sii-demo-player::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.06) 48%, transparent 100%);
+      background-size: 100% 18px;
+      opacity: 0.35;
+      animation: siiScan 4.2s linear infinite;
+      pointer-events: none;
+    }
+    .sii-orbit {
+      position: absolute;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      animation: siiPulse 3.6s ease-in-out infinite;
+    }
+    .sii-progress-fill {
+      background: linear-gradient(90deg, #ffb72b 0%, #7fb3ff 62%, #ffffff 100%);
+      background-size: 200% 100%;
+      animation: siiProgress 3.4s linear infinite;
+    }
+    .sii-log-row {
+      opacity: 0;
+      transform: translateY(6px);
+      animation: siiLog 4.6s ease-in-out infinite;
+    }
+    .sii-log-row.delay-1 { animation-delay: 0.5s; }
+    .sii-log-row.delay-2 { animation-delay: 1s; }
+    .sii-log-row.delay-3 { animation-delay: 1.5s; }
+    @keyframes siiScan {
+      0% { transform: translateY(-20%); }
+      100% { transform: translateY(120%); }
+    }
+    @keyframes siiPulse {
+      0%, 100% { transform: scale(0.96); opacity: 0.55; }
+      50% { transform: scale(1.04); opacity: 1; }
+    }
+    @keyframes siiProgress {
+      0% { width: 18%; background-position: 0% 50%; }
+      50% { width: 72%; background-position: 50% 50%; }
+      100% { width: 96%; background-position: 100% 50%; }
+    }
+    @keyframes siiLog {
+      0%, 12% { opacity: 0; transform: translateY(6px); }
+      18%, 78% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-2px); }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(213,227,253,0.45),_transparent_28%),linear-gradient(180deg,_#f7f9fb,_#eef2f6)] text-on-surface antialiased md:flex">
+  <aside class="px-3 pt-3 md:h-screen md:w-[300px] md:shrink-0 md:p-6" id="sidebar"></aside>
+  <main class="min-w-0 flex-1">
+    <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:px-6 md:min-h-[88px] md:px-container-padding" id="topbar"></header>
+    <div class="mx-auto flex h-full w-full max-w-none min-h-0 flex-col px-4 pb-4 pt-4 sm:px-6 sm:pt-5 md:p-container-padding md:pt-5" id="insumos-root"></div>
+  </main>
+  <script src="state.js?v=20260709-ui6"></script>
+  <script>
+    const insumosApi = window.LanzaroteState;
+    const inventorySearchParams = new URLSearchParams(window.location.search);
+    let purchaseFilter = "";
+    let purchasePage = 0;
+    let siiCursor = 0;
+    let inventorySubview = inventorySearchParams.get("subview") || "purchase";
+    let siiSyncTimers = [];
+    const pageSize = 4;
+    const suppliers = ["Molinos del Sur S.A.", "Distribuidora Central", "Importaciones Bio"];
+    const siiSyncBatches = [
+      {
+        periodo: "Julio 2026",
+        empresa: "Panadator",
+        rut: "76.458.210-4",
+        sucursal: "Casa Matriz",
+        documentos: [
+          {
+            proveedor: "Molinos del Sur S.A.",
+            fecha: "2026-07-08",
+            documento: "FAC-10844",
+            folio: "10844",
+            items: [
+              { insumoId: "harina", cantidad: 180, precioUnitario: 930 },
+              { insumoId: "levadura", cantidad: 6, precioUnitario: 5650 },
+            ],
+          },
+          {
+            proveedor: "Distribuidora Central",
+            fecha: "2026-07-08",
+            documento: "FAC-22101",
+            folio: "22101",
+            items: [
+              { insumoId: "azucar", cantidad: 32, precioUnitario: 1200 },
+              { insumoId: "sal", cantidad: 10, precioUnitario: 640 },
+            ],
+          },
+        ],
+      },
+      {
+        periodo: "Julio 2026",
+        empresa: "Panadator",
+        rut: "76.458.210-4",
+        sucursal: "Bodega Central",
+        documentos: [
+          {
+            proveedor: "Importaciones Bio",
+            fecha: "2026-07-08",
+            documento: "FAC-88214",
+            folio: "88214",
+            items: [
+              { insumoId: "levadura", cantidad: 9, precioUnitario: 5580 },
+            ],
+          },
+          {
+            proveedor: "Distribuidora Central",
+            fecha: "2026-07-07",
+            documento: "FAC-22088",
+            folio: "22088",
+            items: [
+              { insumoId: "sal", cantidad: 16, precioUnitario: 630 },
+            ],
+          },
+        ],
+      },
+    ];
+
+    function getIngredientVisual(id) {
+      const visuals = {
+        harina: { icon: "grain", accent: "bg-[#fff1d6] text-[#9a6503]" },
+        levadura: { icon: "bakery_dining", accent: "bg-[#eef3ff] text-[#2341ae]" },
+        azucar: { icon: "cookie", accent: "bg-[#ffe6ef] text-[#b14b76]" },
+        sal: { icon: "nutrition", accent: "bg-[#e8f4ff] text-[#18618f]" },
+      };
+      return visuals[id] || { icon: "inventory_2", accent: "bg-[#eef3ff] text-[#3556c5]" };
+    }
+
+    function getInventoryHealth(criticalCount, warningCount, averageCoverage) {
+      if (criticalCount > 0) {
+        return {
+          title: "Atención inmediata",
+          summary: `${criticalCount} insumos están bajo el umbral crítico.`,
+          chip: "Crítico",
+          chipClass: "bg-[#ffe0db] text-[#a63c31]",
+          cardClass: "border-[#ffd8d2] bg-[linear-gradient(180deg,_#fff8f6,_#fff1ec)]",
+          iconWrapClass: "bg-[#ffe0db] text-[#d14b3f]",
+          icon: "emergency_home",
+        };
+      }
+      if (warningCount > 0 || averageCoverage < 60) {
+        return {
+          title: "Reposición durante el turno",
+          summary: `${warningCount} insumos conviene reponer antes del próximo lote.`,
+          chip: "Reposición",
+          chipClass: "bg-[#edf2ff] text-[#2341ae]",
+          cardClass: "border-[#dce4ff] bg-[linear-gradient(180deg,_#ffffff,_#f5f8ff)]",
+          iconWrapClass: "bg-[#edf2ff] text-[#3556c5]",
+          icon: "inventory_2",
+        };
+      }
+      return {
+        title: "Inventario controlado",
+        summary: "La bodega tiene cobertura sana para seguir produciendo.",
+        chip: "Óptimo",
+        chipClass: "bg-[#e4f5ea] text-[#1f7a46]",
+        cardClass: "border-[#d8f0df] bg-[linear-gradient(180deg,_#fbfffc,_#f2fbf5)]",
+        iconWrapClass: "bg-[#e7f6eb] text-[#1f7a46]",
+        icon: "verified",
+      };
+    }
+
+    function syncInventorySubviewUrl(nextSubview) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("subview", nextSubview);
+      window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+
+    function focusPurchaseForm() {
+      if (inventorySubview !== "purchase") {
+        inventorySubview = "purchase";
+        syncInventorySubviewUrl("purchase");
+        renderInsumos();
+      }
+      const panel = document.getElementById("purchase-panel");
+      if (panel) {
+        panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      window.setTimeout(() => {
+        document.getElementById("purchase-quantity")?.focus();
+      }, 180);
+    }
+
+    function clearSiiSyncTimers() {
+      siiSyncTimers.forEach((timer) => window.clearTimeout(timer));
+      siiSyncTimers = [];
+    }
+
+    function openReceptionDifferenceModal(receipt, ingredientMap) {
+      const ingredient = ingredientMap[receipt.insumoId];
+      insumosApi.openModal({
+        kicker: receipt.documento || "Recepción física",
+        title: `${ingredient?.nombre || receipt.insumoId} · recepción con diferencia`,
+        body: `
+          <div class="space-y-4">
+            <div class="rounded-2xl bg-surface-container-low p-4">
+              <p class="text-label-caps text-on-surface-variant">Compra registrada</p>
+              <p class="mt-2 text-body-md font-semibold text-primary">${insumosApi.escapeHtml(receipt.proveedor)}</p>
+              <p class="mt-2 text-body-sm text-on-surface-variant">Solicitado: ${receipt.cantidadSolicitada.toFixed(1)} ${ingredient?.unidad || "kg"} · ${insumosApi.formatCurrency(receipt.totalSolicitado || 0)}</p>
+            </div>
+            <label class="block rounded-2xl border border-outline-variant bg-white p-4">
+              <span class="text-label-caps text-on-surface-variant">Cantidad recibida</span>
+              <input class="mt-2 w-full rounded-xl border border-outline-variant bg-surface-container-low px-3 py-2 font-data-md text-primary" id="receipt-diff-qty" max="${receipt.cantidadSolicitada}" min="0" step="0.1" type="number" value="${receipt.cantidadSolicitada > 0 ? Math.max(0, receipt.cantidadSolicitada - 1).toFixed(1) : "0.0"}"/>
+            </label>
+            <label class="block rounded-2xl border border-outline-variant bg-white p-4">
+              <span class="text-label-caps text-on-surface-variant">Evidencia o diferencia</span>
+              <textarea class="mt-2 h-24 w-full resize-none rounded-xl border border-outline-variant bg-surface-container-low px-3 py-2 text-body-md text-primary" id="receipt-diff-evidence" placeholder="Ej. faltaron 4 kg, saco roto, folio con diferencia de despacho."></textarea>
+            </label>
+            <label class="block rounded-2xl border border-outline-variant bg-white p-4">
+              <span class="text-label-caps text-on-surface-variant">Observación interna</span>
+              <textarea class="mt-2 h-20 w-full resize-none rounded-xl border border-outline-variant bg-surface-container-low px-3 py-2 text-body-md text-primary" id="receipt-diff-note" placeholder="Comentario para compras o bodega."></textarea>
+            </label>
+          </div>
+        `,
+        actions: [
+          { id: "receipt-diff-cancel", label: "Cancelar" },
+          {
+            id: "receipt-diff-save",
+            label: "Guardar recepción",
+            className: "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-container",
+          },
+        ],
+      });
+
+      document.getElementById("receipt-diff-cancel").addEventListener("click", insumosApi.closeModal);
+      document.getElementById("receipt-diff-save").addEventListener("click", () => {
+        const requested = Number(receipt.cantidadSolicitada || 0);
+        const received = Number(document.getElementById("receipt-diff-qty").value || 0);
+        const evidence = document.getElementById("receipt-diff-evidence").value.trim();
+        const note = document.getElementById("receipt-diff-note").value.trim();
+
+        if (received < 0 || received >= requested) {
+          insumosApi.showToast("Para usar esta opción, la recepción debe quedar por debajo de lo solicitado.", "warn");
+          return;
+        }
+        if (!evidence) {
+          insumosApi.showToast("Agrega la evidencia o la diferencia observada antes de guardar.", "warn");
+          return;
+        }
+
+        insumosApi.registrarRecepcionInsumo({
+          id: receipt.id,
+          recepcionEstado: "Con diferencia",
+          cantidadRecibida: received,
+          evidencia: evidence,
+          observacion: note,
+        });
+        insumosApi.closeModal();
+        insumosApi.showToast("Recepción validada con diferencia y stock actualizado por lo recibido.", "success");
+        renderInsumos();
+      });
+    }
+
+    function openSiiSyncModal(state, ingredientMap) {
+      const batch = siiSyncBatches[siiCursor % siiSyncBatches.length];
+      siiCursor += 1;
+      const totalDocs = batch.documentos.length;
+      const totalLines = batch.documentos.reduce((sum, document) => sum + document.items.length, 0);
+      const totalAmount = batch.documentos.reduce(
+        (sum, document) => sum + document.items.reduce((docSum, item) => docSum + (item.cantidad * item.precioUnitario), 0),
+        0,
+      );
+      clearSiiSyncTimers();
+      const importDocuments = batch.documentos.map((document, index) => ({
+        ...document,
+        index,
+        total: document.items.reduce((sum, item) => sum + (item.cantidad * item.precioUnitario), 0),
+      }));
+      let importedDocs = 0;
+      let importedAmount = 0;
+      let syncFinished = false;
+
+      insumosApi.openModal({
+        kicker: "Sincronización SII",
+        title: "Sincronización automática desde SII",
+        body: `
+          <div class="space-y-4">
+            <section class="sii-demo-player p-4 text-white">
+              <div class="relative z-10">
+                <div class="flex items-center justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="relative flex h-12 w-12 items-center justify-center rounded-[16px] bg-white/10">
+                      <div class="sii-orbit inset-1"></div>
+                      <span class="text-[21px] font-bold tracking-[-0.04em] text-white">SII</span>
+                    </div>
+                    <div>
+                      <p class="text-label-caps text-[#c8d3f4]">Sincronización en curso</p>
+                      <h3 class="mt-1 text-body-md font-semibold text-white">Documentos de compra · ${batch.periodo}</h3>
+                    </div>
+                  </div>
+                  <span class="rounded-full bg-white/10 px-3 py-1 text-body-sm" id="sii-sync-status">Conectando</span>
+                </div>
+
+                <div class="mt-4 rounded-[20px] bg-[#0e1930] px-4 py-4">
+                  <div class="flex items-center justify-between gap-3 text-body-sm text-[#d5def9]">
+                    <span id="sii-sync-stage">Autenticando RUT ${batch.rut}</span>
+                    <span id="sii-sync-stage-count">0/${totalDocs}</span>
+                  </div>
+                  <div class="mt-3 h-2.5 overflow-hidden rounded-full bg-white/10">
+                    <div class="h-full rounded-full bg-[linear-gradient(90deg,_#ffb72b,_#7fb3ff,_#ffffff)] transition-all duration-500" id="sii-sync-progress" style="width:8%"></div>
+                  </div>
+                  <div class="mt-4 grid gap-2 sm:grid-cols-3">
+                    <div class="rounded-2xl bg-white/6 px-3 py-3">
+                      <p class="text-label-caps text-[#c8d3f4]">Facturas</p>
+                      <p class="mt-1 font-data-md text-white"><span id="sii-sync-doc-count">0</span>/${totalDocs}</p>
+                    </div>
+                    <div class="rounded-2xl bg-white/6 px-3 py-3">
+                      <p class="text-label-caps text-[#c8d3f4]">Monto importado</p>
+                      <p class="mt-1 font-data-md text-white" id="sii-sync-amount">${insumosApi.formatCurrency(0)}</p>
+                    </div>
+                    <div class="rounded-2xl bg-white/6 px-3 py-3">
+                      <p class="text-label-caps text-[#c8d3f4]">Destino</p>
+                      <p class="mt-1 text-body-sm font-semibold text-white">Recepción de inventario</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="rounded-[24px] border border-outline-variant bg-white p-4">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">Cola de importación</p>
+                  <p class="mt-1 text-body-md font-semibold text-primary">${batch.empresa} · ${batch.sucursal}</p>
+                </div>
+                <span class="rounded-full bg-[#fff7e6] px-3 py-1 text-body-sm font-semibold text-[#7c5200]">${totalLines} líneas detectadas</span>
+              </div>
+              <div class="mt-4 space-y-2" id="sii-sync-feed">
+                ${importDocuments.map((document) => `
+                  <article class="rounded-[18px] border border-outline-variant bg-surface-container-low px-3 py-3 transition-all" id="sii-sync-doc-${document.index}">
+                    <div class="flex items-center justify-between gap-3">
+                      <div>
+                        <p class="text-body-sm font-semibold text-primary">${document.proveedor}</p>
+                        <p class="mt-1 text-body-sm text-on-surface-variant">${document.documento} · ${document.fecha}</p>
+                      </div>
+                      <div class="text-right">
+                        <p class="font-data-md text-primary">${insumosApi.formatCurrency(document.total)}</p>
+                        <p class="mt-1 text-[11px] text-[#7a86a4]" id="sii-sync-doc-state-${document.index}">En espera</p>
+                      </div>
+                    </div>
+                  </article>
+                `).join("")}
+              </div>
+            </section>
+          </div>
+        `,
+        actions: [
+          { id: "sii-cancel", label: "Cancelar sincronización" },
+        ],
+      });
+
+      const progressEl = document.getElementById("sii-sync-progress");
+      const statusEl = document.getElementById("sii-sync-status");
+      const stageEl = document.getElementById("sii-sync-stage");
+      const stageCountEl = document.getElementById("sii-sync-stage-count");
+      const docCountEl = document.getElementById("sii-sync-doc-count");
+      const amountEl = document.getElementById("sii-sync-amount");
+
+      const finishSync = () => {
+        if (syncFinished) {
+          return;
+        }
+        syncFinished = true;
+        clearSiiSyncTimers();
+        insumosApi.closeModal();
+        insumosApi.showToast("Sincronización SII lista. Las compras quedaron pendientes de recepción física.", "success");
+        purchasePage = 0;
+        renderInsumos();
+      };
+
+      document.getElementById("sii-cancel").addEventListener("click", () => {
+        clearSiiSyncTimers();
+        insumosApi.closeModal();
+      });
+
+      if (statusEl) statusEl.textContent = "Autenticando";
+      if (stageEl) stageEl.textContent = `Autenticando RUT ${batch.rut}`;
+      if (stageCountEl) stageCountEl.textContent = `0/${totalDocs}`;
+      if (progressEl) progressEl.style.width = "12%";
+
+      siiSyncTimers.push(window.setTimeout(() => {
+        if (statusEl) statusEl.textContent = "Leyendo documentos";
+        if (stageEl) stageEl.textContent = "Consultando DTE recibidos del periodo";
+        if (progressEl) progressEl.style.width = "28%";
+      }, 500));
+
+      importDocuments.forEach((document, index) => {
+        siiSyncTimers.push(window.setTimeout(() => {
+          document.items.forEach((item) => {
+            insumosApi.registrarCompraInsumo({
+              proveedor: document.proveedor,
+              insumoId: item.insumoId,
+              cantidad: item.cantidad,
+              precioUnitario: item.precioUnitario,
+              fecha: document.fecha,
+              documento: document.documento,
+              origen: "SII",
+            });
+          });
+
+          importedDocs += 1;
+          importedAmount += document.total;
+
+          const progressPct = Math.min(96, 28 + Math.round((importedDocs / Math.max(1, totalDocs)) * 62));
+          const row = document.getElementById(`sii-sync-doc-${document.index}`);
+          const rowState = document.getElementById(`sii-sync-doc-state-${document.index}`);
+
+          if (row) {
+            row.className = "rounded-[18px] border border-[#d8f0df] bg-[linear-gradient(180deg,_#f7fff9,_#eefaf2)] px-3 py-3 transition-all";
+          }
+          if (rowState) {
+            rowState.textContent = "Importada";
+            rowState.className = "mt-1 text-[11px] text-[#1f7a46]";
+          }
+          if (docCountEl) docCountEl.textContent = String(importedDocs);
+          if (amountEl) amountEl.textContent = insumosApi.formatCurrency(importedAmount);
+          if (stageEl) stageEl.textContent = `Importando ${document.documento} a recepción`;
+          if (stageCountEl) stageCountEl.textContent = `${importedDocs}/${totalDocs}`;
+          if (statusEl) statusEl.textContent = importedDocs === totalDocs ? "Finalizando" : "Importando";
+          if (progressEl) progressEl.style.width = `${progressPct}%`;
+        }, 1300 + (index * 1100)));
+      });
+
+      siiSyncTimers.push(window.setTimeout(() => {
+        if (statusEl) statusEl.textContent = "Completado";
+        if (stageEl) stageEl.textContent = `Sincronización lista · ${insumosApi.formatCurrency(importedAmount)} pendientes de validar`;
+        if (progressEl) progressEl.style.width = "100%";
+      }, 1300 + (importDocuments.length * 1100)));
+
+      siiSyncTimers.push(window.setTimeout(() => {
+        finishSync();
+      }, 1900 + (importDocuments.length * 1100)));
+    }
+
+    function renderInsumos() {
+      const state = insumosApi.getState();
+      const metrics = insumosApi.buildMetrics(state);
+      const ingredientMap = insumosApi.getIngredientMap(state);
+      const productMap = insumosApi.getProductMap(state);
+      const today = insumosApi.getToday();
+      const inventoryValue = state.insumos.reduce((sum, ingredient) => sum + (ingredient.stock * ingredient.precioReferencia), 0);
+      const filtered = [...state.comprasInsumos]
+        .reverse()
+        .filter((purchase) => {
+          const ingredientName = ingredientMap[purchase.insumoId]?.nombre || purchase.insumoId;
+          const haystack = `${purchase.proveedor} ${ingredientName} ${purchase.documento}`.toLowerCase();
+          return haystack.includes(purchaseFilter.toLowerCase());
+        });
+      const recentOutputs = [...state.turnos].reverse().slice(0, 4);
+      const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+      purchasePage = Math.min(purchasePage, totalPages - 1);
+      const paginated = filtered.slice(purchasePage * pageSize, purchasePage * pageSize + pageSize);
+      const averageCoverage = Math.round(
+        state.insumos.reduce((sum, ingredient) => sum + Math.min(100, (ingredient.stock / Math.max(1, ingredient.capacidad)) * 100), 0) / Math.max(1, state.insumos.length),
+      );
+      const totalPurchasedQty = state.comprasInsumos.reduce((sum, purchase) => sum + purchase.cantidad, 0);
+      const totalConsumedQty = state.turnos.reduce(
+        (sum, turn) => sum + (turn.consumoInsumos || []).reduce((turnSum, item) => turnSum + item.cantidad, 0),
+        0,
+      );
+      const purchasesToday = state.comprasInsumos.filter((purchase) => purchase.fecha === today);
+      const purchaseQtyToday = purchasesToday.reduce((sum, purchase) => sum + purchase.cantidad, 0);
+      const purchaseAmountToday = purchasesToday.reduce((sum, purchase) => sum + purchase.total, 0);
+      const pendingReceipts = [...state.recepcionesPendientes].sort((a, b) =>
+        String(b.fechaCreacion || b.fechaDocumento || "").localeCompare(String(a.fechaCreacion || a.fechaDocumento || "")),
+      );
+      const pendingReceiptCount = pendingReceipts.length;
+      const pendingReceiptAmount = pendingReceipts.reduce((sum, item) => sum + (item.totalSolicitado || 0), 0);
+      const outputsToday = state.turnos.filter((turn) => turn.fecha === today);
+      const consumedToday = outputsToday.reduce(
+        (sum, turn) => sum + (turn.consumoInsumos || []).reduce((turnSum, item) => turnSum + item.cantidad, 0),
+        0,
+      );
+      const activeRecipes = state.productos.length;
+      const inventoryStatusRows = state.insumos
+        .map((ingredient) => {
+          const status = insumosApi.getInsumoStatus(ingredient);
+          const ratio = ingredient.minimo ? ingredient.stock / ingredient.minimo : 1;
+          return { ingredient, status, ratio };
+        })
+        .sort((a, b) => a.ratio - b.ratio);
+      const criticalIngredients = inventoryStatusRows.filter((item) => item.status.label === "Crítico");
+      const warningIngredients = inventoryStatusRows.filter((item) => item.status.label === "Reposición");
+      const optimalIngredients = inventoryStatusRows.filter((item) => item.status.label === "Óptimo");
+      const shortageQty = inventoryStatusRows.reduce((sum, item) => sum + Math.max(0, item.ingredient.minimo - item.ingredient.stock), 0);
+      const purchaseVsOutput = totalPurchasedQty === 0 ? 0 : Math.min(100, Math.round((totalConsumedQty / totalPurchasedQty) * 100));
+      const healthyShare = Math.round((optimalIngredients.length / Math.max(1, state.insumos.length)) * 100);
+      const nextSiiBatch = siiSyncBatches[siiCursor % siiSyncBatches.length];
+      const focusIngredients = inventoryStatusRows.slice(0, 4);
+      const siiPendingAmount = nextSiiBatch.documentos.reduce(
+        (sum, document) => sum + document.items.reduce((docSum, item) => docSum + (item.cantidad * item.precioUnitario), 0),
+        0,
+      );
+      const netFlowToday = purchaseQtyToday - consumedToday;
+      const maxRecentOutputConsumption = Math.max(
+        1,
+        ...recentOutputs.map((turn) => (turn.consumoInsumos || []).reduce((sum, item) => sum + item.cantidad, 0)),
+      );
+      const health = getInventoryHealth(criticalIngredients.length, warningIngredients.length, averageCoverage);
+      const subviewItems = [
+        { id: "purchase", label: "Compra rápida", icon: "shopping_bag", helper: "Ingresos" },
+        { id: "stock", label: "Stock crítico", icon: "inventory_2", helper: "Reposición" },
+        { id: "output", label: "Salida prod.", icon: "bakery_dining", helper: "Consumo" },
+        { id: "purchases", label: "Compras", icon: "receipt_long", helper: "Historial" },
+        { id: "recipes", label: "Recetas", icon: "menu_book", helper: "Unitario" },
+      ];
+      const activeSubview = subviewItems.find((item) => item.id === inventorySubview) || subviewItems[0];
+      inventorySubview = activeSubview.id;
+      syncInventorySubviewUrl(inventorySubview);
+      const sidebarSubmenuItems = subviewItems.map((item) => {
+        const url = new URL(window.location.href);
+        url.searchParams.set("subview", item.id);
+        return {
+          ...item,
+          href: `${url.pathname.split("/").pop()}${url.search}${url.hash}`,
+        };
+      });
+
+      const purchasePanelHtml = `
+        <article class="flex h-full min-h-0 flex-col rounded-[30px] border border-[#d9e0ef] bg-white p-5 shadow-soft" id="purchase-panel">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-label-caps text-on-surface-variant">Compra y recepción</p>
+              <h2 class="mt-2 text-[24px] font-semibold tracking-[-0.03em] text-primary">Compra rápida</h2>
+              <p class="mt-2 text-body-sm text-[#5f6d82]">Registro primero, validación física después.</p>
+            </div>
+            <span class="rounded-full ${pendingReceiptCount ? "bg-[#fff5df] text-[#9a6503]" : "bg-[#f4f7ff] text-[#2341ae]"} px-3 py-2 text-body-sm font-medium">${pendingReceiptCount ? `${pendingReceiptCount} pendientes` : "Sin pendientes"}</span>
+          </div>
+
+          <div class="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+            <div class="space-y-5">
+              <form class="space-y-3" id="purchase-form">
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <label class="block rounded-[18px] border border-[#dce4ff] bg-[#f9fbff] p-3">
+                    <span class="text-label-caps text-on-surface-variant">Proveedor</span>
+                    <select class="mt-2 w-full rounded-none border-none bg-transparent p-0 text-body-md text-primary focus:ring-0" id="purchase-supplier">
+                      ${suppliers.map((supplier) => `<option value="${supplier}">${supplier}</option>`).join("")}
+                    </select>
+                  </label>
+                  <label class="block rounded-[18px] border border-[#dce4ff] bg-[#f9fbff] p-3">
+                    <span class="text-label-caps text-on-surface-variant">Insumo</span>
+                    <select class="mt-2 w-full rounded-none border-none bg-transparent p-0 text-body-md text-primary focus:ring-0" id="purchase-ingredient">
+                      ${state.insumos.map((ingredient) => `<option value="${ingredient.id}">${ingredient.nombre}</option>`).join("")}
+                    </select>
+                  </label>
+                  <label class="block rounded-[18px] border border-[#dce4ff] bg-[#f9fbff] p-3">
+                    <span class="text-label-caps text-on-surface-variant">Cantidad solicitada</span>
+                    <input class="mt-2 w-full rounded-none border-none bg-transparent p-0 text-body-md text-primary placeholder:text-[#9aa6bd] focus:ring-0" id="purchase-quantity" min="0" placeholder="0.0" step="0.1" type="number"/>
+                  </label>
+                  <label class="block rounded-[18px] border border-[#dce4ff] bg-[#f9fbff] p-3">
+                    <span class="text-label-caps text-on-surface-variant">Precio unitario</span>
+                    <input class="mt-2 w-full rounded-none border-none bg-transparent p-0 text-body-md text-primary placeholder:text-[#9aa6bd] focus:ring-0" id="purchase-price" min="0" placeholder="0" type="number"/>
+                  </label>
+                  <label class="block rounded-[18px] border border-[#dce4ff] bg-[#f9fbff] p-3">
+                    <span class="text-label-caps text-on-surface-variant">Fecha documento</span>
+                    <input class="mt-2 w-full rounded-none border-none bg-transparent p-0 text-body-md text-primary focus:ring-0" id="purchase-date" type="date" value="${today}"/>
+                  </label>
+                  <label class="block rounded-[18px] border border-[#dce4ff] bg-[#f9fbff] p-3">
+                    <span class="text-label-caps text-on-surface-variant">Factura</span>
+                    <input class="mt-2 w-full rounded-none border-none bg-transparent p-0 text-body-md text-primary placeholder:text-[#9aa6bd] focus:ring-0" id="purchase-doc" placeholder="FAC-00000" type="text"/>
+                  </label>
+                </div>
+                <div class="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+                  <div class="rounded-[18px] bg-[#162440] px-3 py-3 text-white">
+                    <p class="text-label-caps text-[#c9d4f4]">Costo compra</p>
+                    <p class="mt-2 font-data-md" id="purchase-preview-total">${insumosApi.formatCurrency(0)}</p>
+                  </div>
+                  <div class="rounded-[18px] bg-[#162440] px-3 py-3 text-white">
+                    <p class="text-label-caps text-[#c9d4f4]">Stock proyectado</p>
+                    <p class="mt-2 font-data-md" id="purchase-preview-stock">${state.insumos[0].stock.toFixed(1)} ${state.insumos[0].unidad}</p>
+                  </div>
+                  <div class="rounded-[18px] bg-[#162440] px-3 py-3 text-white">
+                    <p class="text-label-caps text-[#c9d4f4]">Precio ref.</p>
+                    <p class="mt-2 font-data-md" id="purchase-reference-price">${insumosApi.formatCurrency(state.insumos[0].precioReferencia)}</p>
+                  </div>
+                  <div class="rounded-[18px] bg-[#162440] px-3 py-3 text-white">
+                    <p class="text-label-caps text-[#c9d4f4]">Uso bodega</p>
+                    <p class="mt-2 font-data-md" id="purchase-preview-capacity">${Math.min(100, Math.round((state.insumos[0].stock / Math.max(1, state.insumos[0].capacidad)) * 100))}%</p>
+                  </div>
+                </div>
+                <p class="rounded-[18px] bg-[#f4f7ff] px-3 py-3 text-body-sm leading-6 text-[#4b5b78]" id="purchase-preview-message">La compra quedará pendiente hasta validar la recepción física.</p>
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <button class="flex items-center justify-center gap-3 rounded-2xl bg-[#2341ae] px-4 py-4 text-body-md font-semibold text-white transition-colors hover:bg-[#1d3590]" type="submit">
+                    <span class="material-symbols-outlined">playlist_add_check</span>
+                    Registrar compra
+                  </button>
+                  <button class="flex items-center justify-center gap-3 rounded-2xl border border-[#dce4ff] bg-white px-4 py-4 text-body-md font-semibold text-[#2341ae] transition-colors hover:bg-[#f4f7ff]" id="purchase-open-sii" type="button">
+                    <span class="material-symbols-outlined">account_balance</span>
+                    Sincronización con SII
+                  </button>
+                </div>
+              </form>
+
+              <section class="rounded-[24px] border border-[#dce4ff] bg-[#fbfcff] p-4">
+                <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <p class="text-label-caps text-on-surface-variant">Recepción física y validación</p>
+                    <h3 class="mt-2 text-[20px] font-semibold tracking-[-0.03em] text-primary">Pendientes de recibir</h3>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="rounded-full bg-[#f4f7ff] px-3 py-1 text-body-sm font-semibold text-[#2341ae]">${pendingReceiptCount} documentos</span>
+                    <span class="rounded-full bg-[#fff5df] px-3 py-1 text-body-sm font-semibold text-[#9a6503]">${insumosApi.formatCurrency(pendingReceiptAmount)}</span>
+                  </div>
+                </div>
+                <div class="mt-4 grid gap-3">
+                  ${pendingReceipts.map((receipt) => {
+                    const ingredient = ingredientMap[receipt.insumoId];
+                    return `
+                      <article class="rounded-[22px] border border-[#dce4ff] bg-white p-4 shadow-soft">
+                        <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                          <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                              <span class="rounded-full ${receipt.origen === "SII" ? "bg-[#edf2ff] text-[#2341ae]" : "bg-[#fff5df] text-[#9a6503]"} px-2.5 py-1 text-[11px] font-semibold">${receipt.origen}</span>
+                              <span class="rounded-full bg-surface-container-low px-2.5 py-1 text-[11px] font-semibold text-on-surface-variant">${receipt.documento || "Sin folio"}</span>
+                            </div>
+                            <h4 class="mt-2 text-body-md font-semibold text-primary">${insumosApi.escapeHtml(ingredient?.nombre || receipt.insumoId)}</h4>
+                            <p class="mt-1 text-body-sm text-[#5f6d82]">${insumosApi.escapeHtml(receipt.proveedor)} · ${receipt.cantidadSolicitada.toFixed(1)} ${ingredient?.unidad || "kg"}</p>
+                          </div>
+                          <div class="grid gap-2 sm:grid-cols-2 lg:min-w-[280px]">
+                            <button class="rounded-2xl bg-[#2341ae] px-4 py-3 text-body-sm font-semibold text-white transition-colors hover:bg-[#1d3590] reception-conforme" data-receipt="${receipt.id}" type="button">Recepción conforme</button>
+                            <button class="rounded-2xl border border-[#dce4ff] bg-white px-4 py-3 text-body-sm font-semibold text-[#2341ae] transition-colors hover:bg-[#f4f7ff] reception-difference" data-receipt="${receipt.id}" type="button">Con diferencia</button>
+                          </div>
+                        </div>
+                      </article>
+                    `;
+                  }).join("") || `
+                    <div class="rounded-[22px] border border-dashed border-[#dce4ff] bg-white px-4 py-8 text-center">
+                      <p class="text-body-md font-semibold text-primary">Sin recepciones pendientes</p>
+                      <p class="mt-2 text-body-sm text-[#5f6d82]">Todo lo comprado ya fue validado y dado de alta en inventario.</p>
+                    </div>
+                  `}
+                </div>
+              </section>
+            </div>
+
+            <aside class="space-y-4">
+              <div class="rounded-[22px] border border-[#dce4ff] bg-[#f9fbff] p-4">
+                <p class="text-label-caps text-on-surface-variant">Ayuda operativa</p>
+                <div class="mt-4 space-y-3">
+                  <div class="rounded-[18px] bg-white p-3 shadow-soft">
+                    <p class="text-body-sm font-medium text-primary">Paso 1</p>
+                    <p class="mt-1 text-body-sm text-[#5f6d82]">Registra la compra o importa desde SII.</p>
+                  </div>
+                  <div class="rounded-[18px] bg-white p-3 shadow-soft">
+                    <p class="text-body-sm font-medium text-primary">Paso 2</p>
+                    <p class="mt-1 text-body-sm text-[#5f6d82]">Valida físicamente lo recibido antes de subir stock.</p>
+                  </div>
+                  <div class="rounded-[18px] bg-white p-3 shadow-soft">
+                    <p class="text-body-sm font-medium text-primary">Paso 3</p>
+                    <p class="mt-1 text-body-sm text-[#5f6d82]">Si hay diferencia, deja evidencia y se alta solo lo conforme.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="rounded-[22px] bg-[#162440] p-4 text-white shadow-soft">
+                <p class="text-label-caps text-[#c9d4f4]">Pulso de recepción</p>
+                <div class="mt-4 space-y-3">
+                  <div class="rounded-[18px] bg-white/10 p-3">
+                    <p class="text-label-caps text-[#c9d4f4]">Recibidas hoy</p>
+                    <p class="mt-2 font-data-md">${purchasesToday.length}</p>
+                  </div>
+                  <div class="rounded-[18px] bg-white/10 p-3">
+                    <p class="text-label-caps text-[#c9d4f4]">Pendientes</p>
+                    <p class="mt-2 font-data-md">${pendingReceiptCount}</p>
+                  </div>
+                  <div class="rounded-[18px] bg-white/10 p-3">
+                    <p class="text-label-caps text-[#c9d4f4]">Monto en espera</p>
+                    <p class="mt-2 font-data-md">${insumosApi.formatCurrency(pendingReceiptAmount)}</p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </article>
+      `;
+
+      const stockPanelHtml = `
+        <article class="flex h-full min-h-0 flex-col rounded-[30px] border border-[#d9e0ef] bg-white p-5 shadow-soft">
+          <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+            <div>
+              <p class="text-label-caps text-on-surface-variant">Focos de stock</p>
+              <h2 class="mt-2 text-[24px] font-semibold tracking-[-0.03em] text-primary">Qué reponer</h2>
+              <p class="mt-2 text-body-sm text-[#5f6d82]">Prioridades del turno.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="rounded-full bg-[#fff4f2] px-3 py-1 text-body-sm font-semibold text-[#d14b3f]">${criticalIngredients.length} críticos</span>
+              <span class="rounded-full bg-[#eef3ff] px-3 py-1 text-body-sm font-semibold text-[#3556c5]">${warningIngredients.length} reposición</span>
+            </div>
+          </div>
+          <div class="mt-5 grid gap-3 lg:grid-cols-2">
+            ${focusIngredients.map(({ ingredient, status }) => {
+              const capacityPct = Math.min(100, Math.round((ingredient.stock / Math.max(1, ingredient.capacidad)) * 100));
+              const shortage = Math.max(0, ingredient.minimo - ingredient.stock);
+              const visual = getIngredientVisual(ingredient.id);
+              return `
+                <article class="rounded-[22px] border border-[#dce4ff] bg-[#f9fbff] p-4">
+                  <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-start gap-3">
+                      <span class="flex h-11 w-11 items-center justify-center rounded-2xl ${visual.accent}">
+                        <span class="material-symbols-outlined">${visual.icon}</span>
+                      </span>
+                      <div>
+                        <p class="text-body-md font-semibold text-primary">${ingredient.nombre}</p>
+                        <p class="mt-1 text-body-sm text-[#5f6d82]">${ingredient.stock.toFixed(1)} ${ingredient.unidad} / mínimo ${ingredient.minimo}</p>
+                      </div>
+                    </div>
+                    <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${status.toneClass}">${status.label}</span>
+                  </div>
+                  <div class="mt-3 flex items-center justify-between gap-4">
+                    <div class="h-2 flex-1 overflow-hidden rounded-full bg-[#e6ecf8]">
+                      <div class="h-full ${status.barClass}" style="width:${Math.max(10, capacityPct)}%"></div>
+                    </div>
+                    <span class="text-body-sm font-medium ${status.label === "Crítico" ? "text-[#a63c31]" : status.label === "Reposición" ? "text-[#3556c5]" : "text-[#1f7a46]"}">${shortage > 0 ? `faltan ${shortage.toFixed(1)} ${ingredient.unidad}` : "sin brecha"}</span>
+                  </div>
+                </article>
+              `;
+            }).join("")}
+          </div>
+          <div class="mt-5 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-[20px] bg-[#fff8eb] p-4">
+              <p class="text-label-caps text-[#9a6503]">Más urgente</p>
+              <p class="mt-2 text-body-md font-semibold text-primary">${focusIngredients[0]?.ingredient.nombre || "Sin focos"}</p>
+            </div>
+            <div class="rounded-[20px] bg-[#f4f7ff] p-4">
+              <p class="text-label-caps text-[#2341ae]">Cobertura</p>
+              <p class="mt-2 text-body-md font-semibold text-primary">${averageCoverage}%</p>
+            </div>
+            <div class="rounded-[20px] bg-[#f4fbf5] p-4">
+              <p class="text-label-caps text-[#1f7a46]">Mix protegido</p>
+              <p class="mt-2 text-body-md font-semibold text-primary">${healthyShare}%</p>
+            </div>
+          </div>
+        </article>
+      `;
+
+      const outputPanelHtml = `
+        <article class="flex h-full min-h-0 flex-col rounded-[30px] border border-[#d9e0ef] bg-white p-5 shadow-soft">
+          <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+            <div>
+              <p class="text-label-caps text-on-surface-variant">Salida a producción</p>
+              <h2 class="mt-2 text-[24px] font-semibold tracking-[-0.03em] text-primary">Consumo a producción</h2>
+            </div>
+            <div class="rounded-full bg-[#fff5df] px-4 py-2 text-body-sm font-medium text-[#9a6503]">
+              ${totalConsumedQty.toFixed(1)} kg consumidos
+            </div>
+          </div>
+          <div class="mt-5 grid gap-3 sm:grid-cols-4">
+            <article class="rounded-[20px] border border-[#dce4ff] bg-[#f9fbff] p-4">
+              <p class="text-label-caps text-on-surface-variant">Consumo hoy</p>
+              <p class="mt-2 font-data-md text-primary">${consumedToday.toFixed(1)} kg</p>
+            </article>
+            <article class="rounded-[20px] border border-[#dce4ff] bg-[#f9fbff] p-4">
+              <p class="text-label-caps text-on-surface-variant">Turnos</p>
+              <p class="mt-2 font-data-md text-primary">${recentOutputs.length}</p>
+            </article>
+            <article class="rounded-[20px] border border-[#dce4ff] bg-[#f9fbff] p-4">
+              <p class="text-label-caps text-on-surface-variant">Mayor descarga</p>
+              <p class="mt-2 font-data-md text-primary">${maxRecentOutputConsumption.toFixed(1)} kg</p>
+            </article>
+            <article class="rounded-[20px] border border-[#dce4ff] bg-[#f9fbff] p-4">
+              <p class="text-label-caps text-on-surface-variant">Recetas activas</p>
+              <p class="mt-2 font-data-md text-primary">${activeRecipes}</p>
+            </article>
+          </div>
+          <div class="mt-5 grid gap-3">
+            ${recentOutputs.slice(0, 2).map((turn) => {
+              const totalTurnConsumption = (turn.consumoInsumos || []).reduce((sum, item) => sum + item.cantidad, 0);
+              const normalizedWidth = Math.max(16, Math.round((totalTurnConsumption / Math.max(1, maxRecentOutputConsumption)) * 100));
+              const dominantItems = [...(turn.consumoInsumos || [])]
+                .sort((a, b) => b.cantidad - a.cantidad)
+                .slice(0, 2);
+              return `
+                <article class="rounded-[22px] border border-[#dce4ff] bg-[#f9fbff] p-4">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <div class="flex flex-wrap items-center gap-2">
+                        <span class="rounded-full bg-white px-3 py-1 text-body-sm font-medium text-[#2341ae]">${turn.fecha}</span>
+                        <span class="rounded-full bg-white px-3 py-1 text-body-sm font-medium text-[#9a6503]">${turn.turno}</span>
+                      </div>
+                      <h3 class="mt-3 text-body-md font-semibold text-primary">${productMap[turn.productoId]?.nombre || turn.productoId}</h3>
+                      <p class="mt-1 text-body-sm text-[#5f6d82]">${Math.max(0, turn.cantidadReal - turn.merma)} unidades netas</p>
+                    </div>
+                    <div class="grid gap-2 sm:grid-cols-3">
+                      <div class="rounded-[16px] bg-white px-3 py-3 text-center shadow-soft">
+                        <p class="text-label-caps text-on-surface-variant">Consumo</p>
+                        <p class="mt-1 font-data-md text-primary">${totalTurnConsumption.toFixed(1)} kg</p>
+                      </div>
+                      <div class="rounded-[16px] bg-white px-3 py-3 text-center shadow-soft">
+                        <p class="text-label-caps text-on-surface-variant">Merma</p>
+                        <p class="mt-1 font-data-md text-primary">${turn.merma.toFixed(0)} un</p>
+                      </div>
+                      <div class="rounded-[16px] bg-white px-3 py-3 text-center shadow-soft">
+                        <p class="text-label-caps text-on-surface-variant">Intensidad</p>
+                        <p class="mt-1 font-data-md text-primary">${normalizedWidth}%</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-4 h-3 overflow-hidden rounded-full bg-[#e8eeff]">
+                    <div class="h-full rounded-full bg-[linear-gradient(90deg,_#2341ae,_#5e7cff)]" style="width:${normalizedWidth}%"></div>
+                  </div>
+                  <div class="mt-4 grid gap-2 sm:grid-cols-2">
+                    ${dominantItems.map((item) => `
+                      <div class="rounded-[16px] bg-white px-3 py-3 shadow-soft">
+                        <div class="flex items-center justify-between gap-3">
+                          <span class="text-body-sm font-medium text-primary">${ingredientMap[item.insumoId]?.nombre || item.insumoId}</span>
+                          <span class="font-data-md text-[#2341ae]">${item.cantidad.toFixed(1)} ${ingredientMap[item.insumoId]?.unidad || "kg"}</span>
+                        </div>
+                      </div>
+                    `).join("")}
+                  </div>
+                </article>
+              `;
+            }).join("") || `
+              <div class="rounded-2xl bg-surface-container-low p-6 text-body-md text-on-surface-variant">
+                Sin salidas registradas.
+              </div>
+            `}
+          </div>
+        </article>
+      `;
+
+      const purchasesPanelHtml = `
+        <article class="flex h-full min-h-0 flex-col rounded-[30px] border border-[#d9e0ef] bg-white p-5 shadow-soft">
+          <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+            <div>
+              <p class="text-label-caps text-on-surface-variant">Entradas de inventario</p>
+              <h2 class="mt-2 text-[24px] font-semibold tracking-[-0.03em] text-primary">Recepciones validadas</h2>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="rounded-full bg-[#f4f7ff] px-4 py-2 text-body-sm font-medium text-[#2341ae]">${insumosApi.formatCurrency(metrics.totalPurchases)} recibidos</span>
+              <span class="rounded-full bg-[#fff5df] px-4 py-2 text-body-sm font-medium text-[#9a6503]">${pendingReceiptCount} pendientes</span>
+            </div>
+          </div>
+          <div class="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div class="relative md:w-80">
+              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+              <input class="w-full rounded-2xl border border-[#dce4ff] bg-[#f9fbff] py-3 pl-10 pr-4 text-body-md" id="purchase-filter" placeholder="Filtrar por proveedor, insumo o factura" type="text" value="${insumosApi.escapeHtml(purchaseFilter)}"/>
+            </div>
+            <div class="flex items-center gap-3 text-body-sm text-on-surface-variant">
+              <span>Página ${purchasePage + 1} de ${totalPages}</span>
+              <button class="rounded-xl border border-outline-variant px-3 py-2 transition-colors hover:bg-surface-container ${purchasePage === 0 ? "opacity-40" : ""}" ${purchasePage === 0 ? "disabled" : ""} id="purchase-prev" type="button">Anterior</button>
+              <button class="rounded-xl border border-outline-variant px-3 py-2 transition-colors hover:bg-surface-container ${(purchasePage + 1) >= totalPages ? "opacity-40" : ""}" ${(purchasePage + 1) >= totalPages ? "disabled" : ""} id="purchase-next" type="button">Siguiente</button>
+            </div>
+          </div>
+          <div class="mt-5 overflow-hidden rounded-[24px] border border-outline-variant">
+            <table class="min-w-full divide-y divide-outline-variant bg-white">
+              <thead class="bg-[#f8faff]">
+                <tr>
+                  <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Fecha</th>
+                  <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Proveedor</th>
+                  <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Insumo</th>
+                  <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Recibido</th>
+                  <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Diferencia</th>
+                  <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Estado</th>
+                  <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Total</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant">
+                ${paginated.map((purchase) => `
+                  <tr class="hover:bg-[#f9fbff]">
+                    <td class="px-4 py-4 text-body-md text-on-surface">${purchase.fecha}</td>
+                    <td class="px-4 py-4 text-body-md text-on-surface">${purchase.proveedor}</td>
+                    <td class="px-4 py-4 text-body-md text-on-surface">${ingredientMap[purchase.insumoId]?.nombre || purchase.insumoId}</td>
+                    <td class="px-4 py-4 font-data-md text-on-surface">${purchase.cantidad.toFixed(1)} ${ingredientMap[purchase.insumoId]?.unidad || "kg"}</td>
+                    <td class="px-4 py-4 font-data-md text-on-surface">${Number(purchase.diferencia || 0).toFixed(1)} ${ingredientMap[purchase.insumoId]?.unidad || "kg"}</td>
+                    <td class="px-4 py-4"><span class="rounded-full ${purchase.estadoRecepcion === "Con diferencia" ? "bg-[#fff5df] text-[#9a6503]" : "bg-[#edf7ef] text-[#1f7a46]"} px-2.5 py-1 text-[11px] font-semibold">${purchase.estadoRecepcion || "Conforme"}</span></td>
+                    <td class="px-4 py-4 font-data-md text-primary">${insumosApi.formatCurrency(purchase.total)}</td>
+                  </tr>
+                `).join("") || `
+                  <tr>
+                    <td class="px-4 py-8 text-center text-body-md text-on-surface-variant" colspan="7">No hay recepciones que coincidan con el filtro actual.</td>
+                  </tr>
+                `}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      `;
+
+      const recipesPanelHtml = `
+        <article class="flex min-h-full flex-col rounded-[26px] border border-[#d9e0ef] bg-[linear-gradient(180deg,_#ffffff,_#fbfcff)] p-4 shadow-soft">
+          <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+            <div>
+              <p class="text-label-caps text-on-surface-variant">Recetas activas</p>
+              <h2 class="mt-2 text-[22px] font-semibold tracking-[-0.03em] text-primary">Consumo unitario</h2>
+              <p class="mt-2 text-body-sm text-[#5f6d82]">Receta por producto.</p>
+            </div>
+            <a class="inline-flex items-center gap-2 rounded-2xl bg-[#f4f7ff] px-4 py-3 text-body-sm font-semibold text-[#2341ae]" href="recetas.html">
+              <span class="material-symbols-outlined text-[18px]">menu_book</span>
+              Ver recetas
+            </a>
+          </div>
+          <div class="mt-4 grid gap-3 md:grid-cols-2">
+            ${state.productos.slice(0, 4).map((product) => `
+              <article class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <p class="text-label-caps text-on-surface-variant">${product.recetaId}</p>
+                    <h3 class="mt-2 text-body-md font-semibold text-primary">${product.nombre}</h3>
+                    <div class="mt-2 flex flex-wrap items-center gap-2">
+                      <span class="rounded-full bg-[#f4f7ff] px-2.5 py-1 text-[11px] font-semibold text-[#3556c5]">${product.rendimientoEsperado} ${product.unidad}/lote</span>
+                      <span class="rounded-full bg-[#fff5df] px-2.5 py-1 text-[11px] font-semibold text-[#9a6503]">${product.recetaInsumos.length} insumos</span>
+                    </div>
+                  </div>
+                  <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#fff1d6] text-[#9a6503]">
+                    <span class="material-symbols-outlined">bakery_dining</span>
+                  </span>
+                </div>
+                <div class="mt-4 space-y-2">
+                  ${product.recetaInsumos.map((item) => {
+                    const gramsPerUnit = Math.round((item.cantidad * 1000) / Math.max(1, product.rendimientoEsperado));
+                    const density = Math.max(12, Math.min(100, Math.round((gramsPerUnit / 200) * 100)));
+                    const visual = getIngredientVisual(item.insumoId);
+                    return `
+                    <div class="rounded-[18px] border border-[#eef2fb] bg-[#fbfcff] px-3 py-3">
+                      <div class="flex items-center justify-between gap-3">
+                        <div class="flex min-w-0 items-center gap-3">
+                          <span class="flex h-9 w-9 items-center justify-center rounded-xl ${visual.accent}">
+                            <span class="material-symbols-outlined text-[18px]">${visual.icon}</span>
+                          </span>
+                          <div class="min-w-0">
+                            <p class="truncate text-body-sm font-medium text-primary">${ingredientMap[item.insumoId]?.nombre || item.insumoId}</p>
+                            <p class="text-[11px] text-[#7a86a4]">${item.cantidad.toFixed(1)} ${ingredientMap[item.insumoId]?.unidad || "kg"} por lote</p>
+                          </div>
+                        </div>
+                        <span class="font-data-md text-primary">${gramsPerUnit} g/un</span>
+                      </div>
+                      <div class="mt-2 h-2 overflow-hidden rounded-full bg-[#e8eeff]">
+                        <div class="h-full rounded-full bg-[linear-gradient(90deg,_#ffb72b,_#2341ae)]" style="width:${density}%"></div>
+                      </div>
+                    </div>
+                  `;
+                  }).join("")}
+                </div>
+                <div class="mt-3 grid grid-cols-2 gap-2">
+                  ${product.recetaInsumos.slice(0, 2).map((item) => `
+                    <div class="rounded-2xl bg-[#f4f7ff] px-3 py-2">
+                      <p class="text-label-caps text-[#7181a3]">${ingredientMap[item.insumoId]?.nombre || item.insumoId}</p>
+                      <p class="mt-1 text-body-sm font-semibold text-[#2341ae]">${Math.round((item.cantidad * 1000) / Math.max(1, product.rendimientoEsperado))} g/un</p>
+                    </div>
+                  `).join("")}
+                </div>
+              </article>
+            `).join("")}
+          </div>
+        </article>
+      `;
+
+      const subviewContent = {
+        purchase: purchasePanelHtml,
+        stock: stockPanelHtml,
+        output: outputPanelHtml,
+        purchases: purchasesPanelHtml,
+        recipes: recipesPanelHtml,
+      };
+
+      insumosApi.mountShell({
+        activePage: "insumos",
+        title: "Inventarios",
+        sidebarSubmenu: {
+          parentPage: "insumos",
+          activeId: inventorySubview,
+          items: sidebarSubmenuItems,
+        },
+        header: {
+          eyebrow: "CONTROL DE INVENTARIO",
+          badge: pendingReceiptCount
+            ? `${pendingReceiptCount} recepciones pendientes`
+            : criticalIngredients.length
+              ? `${criticalIngredients.length} insumos críticos`
+              : "Inventario bajo control",
+          badgeIcon: "inventory_2",
+          secondaryActions: [
+            { id: "insumos-refresh", icon: "autorenew", label: "Refrescar" },
+            { id: "insumos-sync-sii", icon: "account_balance", label: "Sincronizar SII" },
+            { id: "insumos-recipes", icon: "menu_book", label: "Recetas" },
+            { id: "insumos-production", icon: "bakery_dining", label: "Producción" },
+          ],
+          primaryAction: { id: "insumos-new-purchase", icon: "add_shopping_cart", label: "Nueva compra" },
+        },
+      });
+
+      const root = document.getElementById("insumos-root");
+      root.innerHTML = `
+        <section class="grid h-full min-h-0 gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
+          <aside class="flex min-h-0 flex-col rounded-[24px] border border-[#d9e0ef] bg-[radial-gradient(circle_at_top_left,_rgba(255,190,92,0.14),_transparent_18%),radial-gradient(circle_at_top_right,_rgba(35,65,174,0.08),_transparent_14%),linear-gradient(180deg,_#fffdf8,_#ffffff_58%,_#f7faff)] p-4 shadow-soft">
+            <div>
+              <div class="inline-flex items-center gap-2 rounded-full border border-[#ffe5bf] bg-[#fff5df] px-3 py-1 text-body-sm font-medium text-[#9a6503]">
+                <span class="material-symbols-outlined text-[18px]">bakery_dining</span>
+                Inventario vivo
+              </div>
+              <h1 class="mt-2.5 text-[20px] font-bold leading-[1.02] tracking-[-0.04em] text-primary">
+                Compra y controla.
+              </h1>
+              <p class="mt-1.5 text-[11px] leading-4 text-[#5f6d82]">KPIs y detalle.</p>
+            </div>
+
+            <div class="mt-3 flex flex-col gap-2">
+              <button class="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#2341ae] px-3 py-2 text-body-sm font-semibold text-white transition-colors hover:bg-[#1d3590]" id="hero-open-purchase" type="button">
+                <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+                Registrar compra
+              </button>
+              <button class="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#dce4ff] bg-white px-3 py-2 text-body-sm font-semibold text-[#2341ae] transition-colors hover:bg-[#f4f7ff]" id="hero-open-sii" type="button">
+                <span class="material-symbols-outlined text-[18px]">account_balance</span>
+                Sincronizar SII
+              </button>
+              <span class="rounded-full bg-[#fff1d6] px-3 py-1.5 text-center text-[11px] font-medium text-[#9a6503]">${pendingReceiptCount ? `${pendingReceiptCount} recepciones por ${insumosApi.formatCurrency(pendingReceiptAmount)}` : `${nextSiiBatch.documentos.length} facturas por ${insumosApi.formatCurrency(siiPendingAmount)}`}</span>
+            </div>
+
+            <div class="mt-4 grid min-h-0 flex-1 gap-2 overflow-y-auto pr-1">
+              <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
+                <div class="flex items-center justify-between gap-3">
+                  <div>
+                    <p class="text-label-caps text-on-surface-variant">Estado</p>
+                    <p class="mt-1 text-body-sm font-semibold text-primary">${health.title}</p>
+                  </div>
+                  <span class="flex h-9 w-9 items-center justify-center rounded-xl ${health.iconWrapClass}">
+                    <span class="material-symbols-outlined text-[18px]">${health.icon}</span>
+                  </span>
+                </div>
+                <p class="mt-1.5 text-[11px] leading-4 text-[#5f6d82]">${health.summary}</p>
+              </article>
+              <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Inventario</p>
+                <p class="mt-1 font-data-md text-primary">${insumosApi.formatCurrency(inventoryValue)}</p>
+                <div class="mt-1.5 flex items-center gap-2 text-[11px] text-[#5f6d82]">
+                  <span class="material-symbols-outlined text-[16px] text-[#1f7a46]">south_west</span>
+                  ${purchaseQtyToday.toFixed(1)} kg hoy
+                </div>
+              </article>
+              <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Riesgo</p>
+                <p class="mt-1 font-data-md text-primary">${criticalIngredients.length + warningIngredients.length} focos</p>
+                <div class="mt-1.5 h-2 overflow-hidden rounded-full bg-[#e8eeff]">
+                  <div class="h-full rounded-full bg-[linear-gradient(90deg,_#ffb72b,_#d14b3f)]" style="width:${Math.min(100, Math.max(12, (criticalIngredients.length + warningIngredients.length) * 18))}%"></div>
+                </div>
+              </article>
+              <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Mix sano</p>
+                <div class="mt-1 flex items-center justify-between gap-3">
+                  <p class="font-data-md text-primary">${healthyShare}%</p>
+                  <span class="material-symbols-outlined text-[#1f7a46]">verified</span>
+                </div>
+              </article>
+              <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Cobertura</p>
+                <div class="mt-1 flex items-center justify-between gap-3">
+                  <p class="font-data-md text-primary">${averageCoverage}%</p>
+                  <span class="material-symbols-outlined text-[#3556c5]">stacked_line_chart</span>
+                </div>
+              </article>
+              <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Consumo hoy</p>
+                <div class="mt-1 flex items-center justify-between gap-3">
+                  <p class="font-data-md text-primary">${consumedToday.toFixed(1)} kg</p>
+                  <span class="material-symbols-outlined text-[#9c6400]">local_fire_department</span>
+                </div>
+              </article>
+              <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Compra vs consumo</p>
+                <div class="mt-1 flex items-center justify-between gap-3">
+                  <p class="font-data-md text-primary">${purchaseVsOutput}%</p>
+                  <span class="material-symbols-outlined text-[#2341ae]">sync_alt</span>
+                </div>
+              </article>
+              <article class="rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2.5 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Brecha</p>
+                <div class="mt-1 flex items-center justify-between gap-3">
+                  <p class="font-data-md text-primary">${shortageQty.toFixed(1)} kg</p>
+                  <span class="material-symbols-outlined text-[#d14b3f]">warning</span>
+                </div>
+              </article>
+              <button class="flex items-center justify-center gap-2 rounded-[18px] border border-[#dce4ff] bg-white px-3 py-2 text-body-sm font-semibold text-[#2341ae] transition-colors hover:bg-[#f4f7ff]" id="inventory-open-sii" type="button">
+                <span class="material-symbols-outlined">account_balance</span>
+                Sincronizar con SII
+              </button>
+            </div>
+          </aside>
+
+          <section class="flex min-h-0 flex-col overflow-hidden rounded-[30px] border border-[#d9e0ef] bg-white p-5 shadow-soft md:p-6">
+            <div class="flex flex-col gap-4 border-b border-[#ebf0fb] pb-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p class="text-label-caps text-[#7181a3]">Submódulo activo</p>
+                <h2 class="mt-2 text-[28px] font-semibold tracking-[-0.04em] text-primary">${activeSubview.label}</h2>
+                <p class="mt-2 text-body-md text-[#5f6d82]">${activeSubview.helper}.</p>
+              </div>
+              <div class="inline-flex items-center gap-2 rounded-full border border-[#dce4ff] bg-[#f7f9ff] px-4 py-2 text-body-sm font-medium text-[#3556c5]">
+                <span class="material-symbols-outlined text-[18px]">${activeSubview.icon}</span>
+                Detalle operativo
+              </div>
+            </div>
+
+            <div class="mt-5 flex-1 min-h-0 min-w-0 overflow-y-auto pr-2">
+              ${subviewContent[activeSubview.id]}
+            </div>
+          </section>
+        </section>
+      `;
+
+      const bindClick = (id, handler) => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener("click", handler);
+        }
+      };
+      const bindInput = (id, handler) => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener("input", handler);
+        }
+      };
+
+      bindClick("insumos-refresh", renderInsumos);
+      bindClick("insumos-sync-sii", () => {
+        openSiiSyncModal(state, ingredientMap);
+      });
+      bindClick("insumos-recipes", () => {
+        window.location.href = "recetas.html";
+      });
+      bindClick("insumos-production", () => {
+        window.location.href = "production.html";
+      });
+      bindClick("insumos-new-purchase", focusPurchaseForm);
+      bindClick("hero-open-purchase", focusPurchaseForm);
+      bindClick("hero-open-sii", () => {
+        openSiiSyncModal(state, ingredientMap);
+      });
+      bindClick("inventory-open-sii", () => {
+        openSiiSyncModal(state, ingredientMap);
+      });
+      bindClick("purchase-open-sii", () => {
+        openSiiSyncModal(state, ingredientMap);
+      });
+      bindClick("inventory-focus-purchase", focusPurchaseForm);
+      bindClick("purchase-prev", () => {
+        purchasePage = Math.max(0, purchasePage - 1);
+        renderInsumos();
+      });
+      bindClick("purchase-next", () => {
+        purchasePage += 1;
+        renderInsumos();
+      });
+      bindInput("purchase-filter", (event) => {
+        purchaseFilter = event.target.value;
+        purchasePage = 0;
+        renderInsumos();
+      });
+
+      const ingredientSelect = document.getElementById("purchase-ingredient");
+      const quantityInput = document.getElementById("purchase-quantity");
+      const priceInput = document.getElementById("purchase-price");
+      const stockTarget = document.getElementById("purchase-preview-stock");
+      const capacityTarget = document.getElementById("purchase-preview-capacity");
+      const totalTarget = document.getElementById("purchase-preview-total");
+      const referenceTarget = document.getElementById("purchase-reference-price");
+      const messageTarget = document.getElementById("purchase-preview-message");
+
+      if (
+        !ingredientSelect ||
+        !quantityInput ||
+        !priceInput ||
+        !stockTarget ||
+        !capacityTarget ||
+        !totalTarget ||
+        !referenceTarget ||
+        !messageTarget
+      ) {
+        return;
+      }
+
+      function syncPurchasePreview() {
+        const ingredient = ingredientMap[ingredientSelect.value];
+        if (!ingredient) {
+          return;
+        }
+
+        const quantity = Number(quantityInput.value || 0);
+        const unitPrice = Number(priceInput.value || 0);
+        const projectedStock = ingredient.stock + quantity;
+        const projectedCapacity = Math.round((projectedStock / Math.max(1, ingredient.capacidad)) * 100);
+        const shortageAfterPurchase = Math.max(0, ingredient.minimo - projectedStock);
+
+        referenceTarget.textContent = insumosApi.formatCurrency(ingredient.precioReferencia);
+        totalTarget.textContent = insumosApi.formatCurrency(quantity * unitPrice);
+        stockTarget.textContent = `${projectedStock.toFixed(1)} ${ingredient.unidad}`;
+        capacityTarget.textContent = `${Math.max(0, projectedCapacity)}%`;
+
+        if (projectedStock > ingredient.capacidad) {
+          messageTarget.textContent = "La compra quedará pendiente y conviene fraccionarla al momento de recibir.";
+          return;
+        }
+
+        if (shortageAfterPurchase > 0) {
+          messageTarget.textContent = `Si la recepción llega completa, aún faltarían ${shortageAfterPurchase.toFixed(1)} ${ingredient.unidad} para quedar sobre el mínimo.`;
+          return;
+        }
+
+        if (projectedCapacity < 50) {
+          messageTarget.textContent = "La recepción mejorará el stock, pero seguirá con cobertura ajustada.";
+          return;
+        }
+
+        messageTarget.textContent = "Si la recepción queda conforme, el insumo quedará operativo para producción inmediata.";
+      }
+
+      if (!priceInput.value) {
+        priceInput.value = state.insumos[0].precioReferencia;
+      }
+      syncPurchasePreview();
+
+      ingredientSelect.addEventListener("change", () => {
+        const nextIngredient = ingredientMap[ingredientSelect.value];
+        priceInput.value = nextIngredient ? nextIngredient.precioReferencia : "";
+        syncPurchasePreview();
+      });
+      quantityInput.addEventListener("input", syncPurchasePreview);
+      priceInput.addEventListener("input", syncPurchasePreview);
+
+      document.querySelectorAll(".reception-conforme").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const receipt = state.recepcionesPendientes.find((item) => item.id === event.currentTarget.dataset.receipt);
+          if (!receipt) {
+            return;
+          }
+          insumosApi.registrarRecepcionInsumo({
+            id: receipt.id,
+            recepcionEstado: "Conforme",
+            cantidadRecibida: receipt.cantidadSolicitada,
+          });
+          insumosApi.showToast("Recepción conforme registrada y stock actualizado.", "success");
+          renderInsumos();
+        });
+      });
+
+      document.querySelectorAll(".reception-difference").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const receipt = state.recepcionesPendientes.find((item) => item.id === event.currentTarget.dataset.receipt);
+          if (!receipt) {
+            return;
+          }
+          openReceptionDifferenceModal(receipt, ingredientMap);
+        });
+      });
+
+      document.getElementById("purchase-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const cantidad = Number(document.getElementById("purchase-quantity").value || 0);
+        const precioUnitario = Number(document.getElementById("purchase-price").value || 0);
+        if (cantidad <= 0 || precioUnitario <= 0) {
+          insumosApi.showToast("Ingresa cantidad y precio válidos antes de guardar.", "warn");
+          return;
+        }
+
+        insumosApi.registrarCompraInsumo({
+          proveedor: document.getElementById("purchase-supplier").value,
+          insumoId: document.getElementById("purchase-ingredient").value,
+          cantidad,
+          precioUnitario,
+          fecha: document.getElementById("purchase-date").value || today,
+          documento: document.getElementById("purchase-doc").value.trim(),
+        });
+        insumosApi.showToast("Compra registrada. Falta validar la recepción física para subir stock.", "success");
+        purchasePage = 0;
+        renderInsumos();
+      });
+    }
+
+    window.addEventListener("focus", renderInsumos);
+    window.addEventListener("storage", renderInsumos);
+    renderInsumos();
+  </script>
+</body>
+</html>

@@ -1,484 +1,688 @@
 <!DOCTYPE html>
-
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Lanzarote - Ventas</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
-        .delta-track {
-            height: 6px;
-            background-color: #e5eeff;
-            border-radius: 3px;
-            position: relative;
-            overflow: hidden;
-        }
-        .delta-fill {
-            height: 100%;
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(203, 219, 245, 0.5);
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface": "#f8f9ff",
-                      "surface-tint": "#565e74",
-                      "surface-dim": "#cbdbf5",
-                      "surface-container": "#e5eeff",
-                      "background": "#f8f9ff",
-                      "on-tertiary": "#ffffff",
-                      "surface-container-lowest": "#ffffff",
-                      "primary-container": "#131b2e",
-                      "error": "#ba1a1a",
-                      "outline": "#76777d",
-                      "tertiary-container": "#002113",
-                      "secondary-fixed-dim": "#adc6ff",
-                      "primary-fixed-dim": "#bec6e0",
-                      "on-tertiary-container": "#009668",
-                      "inverse-on-surface": "#eaf1ff",
-                      "on-primary-container": "#7c839b",
-                      "on-background": "#0b1c30",
-                      "inverse-primary": "#bec6e0",
-                      "surface-container-high": "#dce9ff",
-                      "primary-fixed": "#dae2fd",
-                      "on-surface": "#0b1c30",
-                      "surface-container-low": "#eff4ff",
-                      "tertiary": "#000000",
-                      "on-tertiary-fixed": "#002113",
-                      "tertiary-fixed": "#6ffbbe",
-                      "on-primary-fixed-variant": "#3f465c",
-                      "on-error": "#ffffff",
-                      "surface-variant": "#d3e4fe",
-                      "tertiary-fixed-dim": "#4edea3",
-                      "primary": "#000000",
-                      "error-container": "#ffdad6",
-                      "on-secondary-fixed": "#001a42",
-                      "on-secondary": "#ffffff",
-                      "on-error-container": "#93000a",
-                      "secondary-fixed": "#d8e2ff",
-                      "on-primary": "#ffffff",
-                      "inverse-surface": "#213145",
-                      "secondary": "#0058be",
-                      "outline-variant": "#c6c6cd",
-                      "surface-container-highest": "#d3e4fe",
-                      "on-secondary-container": "#fefcff",
-                      "on-secondary-fixed-variant": "#004395",
-                      "on-tertiary-fixed-variant": "#005236",
-                      "secondary-container": "#2170e4",
-                      "on-primary-fixed": "#131b2e",
-                      "surface-bright": "#f8f9ff",
-                      "on-surface-variant": "#45464d"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "gutter": "24px",
-                      "card-padding": "20px",
-                      "unit": "4px",
-                      "margin-mobile": "16px",
-                      "margin-desktop": "32px"
-              },
-              "fontFamily": {
-                      "headline-md": ["Plus Jakarta Sans"],
-                      "mono-data": ["JetBrains Mono"],
-                      "label-caps": ["Inter"],
-                      "body-lg": ["Inter"],
-                      "body-sm": ["Inter"],
-                      "headline-lg": ["Plus Jakarta Sans"],
-                      "headline-lg-mobile": ["Plus Jakarta Sans"],
-                      "display-kpi": ["Plus Jakarta Sans"]
-              },
-              "fontSize": {
-                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
-                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "display-kpi": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
-              }
-            },
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Lanzarote - Ventas</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e0e3e5",
+            "on-error": "#ffffff",
+            "primary": "#000000",
+            "on-tertiary-fixed-variant": "#38485d",
+            "tertiary-container": "#0b1c30",
+            "secondary-container": "#d5e3fd",
+            "on-surface-variant": "#45464d",
+            "secondary-fixed": "#d5e3fd",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "secondary": "#515f74",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "surface-container-lowest": "#ffffff",
+            "background": "#f7f9fb",
+            "on-secondary-container": "#57657b",
+            "on-secondary-fixed": "#0d1c2f",
+            "on-secondary-fixed-variant": "#3a485c",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "inverse-surface": "#2d3133",
+            "surface-dim": "#d8dadc",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#131b2e",
+            "surface": "#f7f9fb",
+            "surface-container-low": "#f2f4f6",
+            "on-surface": "#191c1e",
+            "on-background": "#191c1e",
+            "on-tertiary-fixed": "#0b1c30",
+            "inverse-on-surface": "#eff1f3",
+            "on-primary-container": "#7c839b",
+            "error-container": "#ffdad6",
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#3f465c",
+            "tertiary": "#000000",
+            "inverse-primary": "#bec6e0",
+            "surface-container-high": "#e6e8ea",
+            "surface-tint": "#565e74",
+            "on-tertiary-container": "#75859d",
+            "secondary-fixed-dim": "#b9c7e0",
+            "tertiary-fixed": "#d3e4fe",
+            "primary-container": "#131b2e",
+            "outline-variant": "#c6c6cd"
           },
+          borderRadius: {
+            "sm": "0.125rem",
+            "DEFAULT": "0.25rem",
+            "md": "0.375rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "unit": "4px",
+            "container-padding": "24px",
+            "gutter": "16px",
+            "stack-sm": "8px",
+            "stack-md": "16px",
+            "stack-lg": "32px"
+          },
+          fontFamily: {
+            "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "label-caps": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "data-lg": ["JetBrains Mono", "monospace"],
+            "data-md": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "display-lg": ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+            "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "data-lg": ["20px", { lineHeight: "24px", fontWeight: "600" }],
+            "data-md": ["14px", { lineHeight: "20px", fontWeight: "500" }]
+          },
+          boxShadow: {
+            "soft": "0 8px 24px rgba(15, 23, 42, 0.08)"
+          }
         }
-      </script>
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      vertical-align: middle;
+    }
+    .delta-track {
+      height: 6px;
+      background: #eceef0;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .delta-fill {
+      height: 100%;
+      transition: width 0.2s ease;
+    }
+  </style>
 </head>
-<body class="bg-surface font-body-sm text-on-surface min-h-screen flex">
-<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-gutter px-4 z-50" id="sidebar"></aside>
-<main class="flex-1 flex flex-col min-w-0">
-<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-40 bg-surface-bright shadow-sm border-b border-outline-variant" id="topbar"></header>
-<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-8" id="sales-root"></div>
-</main>
-<script src="state.js"></script>
-<script>
-        const salesApi = window.LanzaroteState;
-        let activeChannelId = "meson";
-        const salesScenarios = {
-            breakfast: { label: "Breakfast Rush", channelId: "meson", quantity: 8 },
-            wholesale: { label: "Wholesale Pick-up", channelId: "retiro", quantity: 12 },
-            sprint: { label: "Delivery Sprint", channelId: "delivery", quantity: 10 }
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(213,227,253,0.45),_transparent_28%),linear-gradient(180deg,_#f7f9fb,_#eef2f6)] text-on-surface antialiased md:flex">
+  <aside class="px-3 pt-3 md:h-screen md:w-[300px] md:shrink-0 md:p-6" id="sidebar"></aside>
+  <main class="min-w-0 flex-1">
+    <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:px-6 md:min-h-[88px] md:px-container-padding" id="topbar"></header>
+    <div class="mx-auto max-w-[1440px] space-y-stack-lg px-4 pb-6 pt-6 sm:px-6 md:p-container-padding md:pt-8" id="sales-root"></div>
+  </main>
+  <script src="state.js?v=20260709-ui6"></script>
+  <script>
+    const salesApi = window.LanzaroteState;
+    const salesParams = new URLSearchParams(window.location.search);
+    const salesFocus = salesParams.get("focus") || "";
+    let activeChannelId = salesParams.get("channel") || (salesFocus === "collections" ? "retiro" : "meson");
+    let selectedCustomerId = "aromos";
+    let selectedPaymentStatus = "Pendiente";
+
+    function renderSales() {
+      const state = salesApi.getState();
+      const metrics = salesApi.buildMetrics(state);
+      const productMap = salesApi.getProductMap(state);
+      const customerMap = salesApi.getCustomerMap(state);
+      const activeChannel = state.canales.find((item) => item.id === activeChannelId) || state.canales[0];
+      activeChannelId = activeChannel.id;
+      const availableProducts = activeChannel.stock.filter((item) => item.cantidad > 0);
+      const selectedProductId = availableProducts[0] ? availableProducts[0].productoId : "";
+      const selectedProduct = productMap[selectedProductId];
+      const selectedCustomer = customerMap[selectedCustomerId] || state.clientesComerciales[0];
+      selectedCustomerId = selectedCustomer ? selectedCustomer.id : "";
+      const delta = salesApi.calcularDelta(metrics.expectedCollections || 1, metrics.realCollections || 0);
+      const shouldWarn = activeChannelId === "retiro" && selectedCustomer && selectedCustomer.saldo > 0 && selectedCustomer.diasVencimiento >= 30;
+      const channelSummary = state.canales.map((channel) => {
+        const sales = metrics.soldByChannel[channel.id] || { units: 0, revenue: 0 };
+        return {
+          id: channel.id,
+          label: channel.nombre,
+          units: sales.units,
+          revenue: sales.revenue,
+        };
+      });
+      const maxChannelUnits = Math.max(1, ...channelSummary.map((item) => item.units));
+      const mixRows = metrics.productMix.slice(0, 6);
+      const topMixShare = Math.max(1, ...mixRows.map((item) => item.sharePct || 0));
+      const collectionProgress = Math.max(8, Math.min(100, Math.round(((metrics.realCollections || 0) / Math.max(1, metrics.expectedCollections || 1)) * 100)));
+
+      salesApi.mountShell({
+        activePage: "sales",
+        title: "Ventas",
+        header: {
+          eyebrow: "VENTAS Y COBRANZAS",
+          badge: metrics.formattedSoldAmount,
+          badgeIcon: "payments",
+          secondaryActions: [
+            { id: "sales-refresh", icon: "autorenew", label: "Refrescar" },
+            { id: "sales-distribution", icon: "local_shipping", label: "Distribución" },
+          ],
+          primaryAction: { id: "sales-dashboard", icon: "dashboard", label: "Dashboard" },
+        },
+      });
+
+      const root = document.getElementById("sales-root");
+      root.innerHTML = `
+        ${salesFocus === "channels" ? `
+          <section class="rounded-xl border border-[#dce4ff] bg-[linear-gradient(180deg,_#f5f8ff,_#ffffff)] p-5 shadow-soft">
+            <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p class="text-label-caps text-[#7181a3]">Detalle desde dashboard</p>
+                <h2 class="mt-2 text-headline-md text-primary">Venta por canal</h2>
+                <p class="mt-2 text-body-sm text-on-surface-variant">Volumen y monto comparado entre mesón, retiro y delivery.</p>
+              </div>
+              <a class="inline-flex items-center gap-2 rounded-full border border-[#dce4ff] bg-white px-4 py-2 text-body-sm font-semibold text-[#2341ae]" href="index.html">
+                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                Volver al dashboard
+              </a>
+            </div>
+            <div class="mt-4 grid gap-3 md:grid-cols-3">
+              ${channelSummary.map((item) => `
+                <button class="channel-switch rounded-[22px] border ${item.id === activeChannelId ? "border-[#2f57d3]/20 bg-white shadow-soft" : "border-outline-variant bg-white"} p-4 text-left transition-colors hover:border-[#dce4ff] hover:bg-[#f9fbff]" data-channel="${item.id}" type="button">
+                  <div class="flex items-center justify-between gap-3">
+                    <span class="text-body-md font-semibold text-primary">${item.label}</span>
+                    <span class="font-data-md text-[#2341ae]">${item.units} u</span>
+                  </div>
+                  <p class="mt-2 text-body-sm text-on-surface-variant">${salesApi.formatCurrency(item.revenue)}</p>
+                  <div class="mt-3 h-2.5 overflow-hidden rounded-full bg-[#e8eeff]">
+                    <div class="h-full rounded-full ${item.id === "meson" ? "bg-[#39b980]" : item.id === "retiro" ? "bg-[#2f57d3]" : "bg-[#ffb72b]"}" style="width:${Math.max(8, Math.round((item.units / maxChannelUnits) * 100))}%"></div>
+                  </div>
+                </button>
+              `).join("")}
+            </div>
+          </section>
+        ` : ""}
+
+        ${salesFocus === "mix" ? `
+          <section class="rounded-xl border border-[#ffe0a0] bg-[linear-gradient(180deg,_#fff8ea,_#ffffff)] p-5 shadow-soft">
+            <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p class="text-label-caps text-[#9c6400]">Detalle desde dashboard</p>
+                <h2 class="mt-2 text-headline-md text-primary">Mix de producto</h2>
+                <p class="mt-2 text-body-sm text-on-surface-variant">Participación de cada tipo de pan dentro de la venta total.</p>
+              </div>
+              <a class="inline-flex items-center gap-2 rounded-full border border-[#ffe0a0] bg-white px-4 py-2 text-body-sm font-semibold text-[#7a4f00]" href="index.html">
+                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                Volver al dashboard
+              </a>
+            </div>
+            <div class="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1.1fr)_320px]">
+              <div class="space-y-3">
+                ${mixRows.map((item) => `
+                  <article class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
+                    <div class="flex items-center justify-between gap-3">
+                      <div>
+                        <p class="text-body-md font-semibold text-primary">${item.producto}</p>
+                        <p class="mt-1 text-body-sm text-on-surface-variant">${item.units} unidades · ${salesApi.formatCurrency(item.revenue)}</p>
+                      </div>
+                      <span class="font-data-md text-[#7a4f00]">${item.sharePct}%</span>
+                    </div>
+                    <div class="mt-3 h-2.5 overflow-hidden rounded-full bg-[#f2e6c9]">
+                      <div class="h-full rounded-full bg-[#ffb72b]" style="width:${Math.max(8, Math.round((item.sharePct / topMixShare) * 100))}%"></div>
+                    </div>
+                  </article>
+                `).join("") || '<p class="rounded-xl bg-white p-4 text-body-md text-on-surface-variant">Sin ventas para calcular mix.</p>'}
+              </div>
+              <aside class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Lectura rápida</p>
+                <div class="mt-4 space-y-3">
+                  <div class="rounded-2xl bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Producto líder</p>
+                    <p class="mt-2 text-body-md font-semibold text-primary">${mixRows[0]?.producto || "Sin líder"}</p>
+                  </div>
+                  <div class="rounded-2xl bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Participación</p>
+                    <p class="mt-2 font-data-lg text-primary">${mixRows[0]?.sharePct || 0}%</p>
+                  </div>
+                  <div class="rounded-2xl bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Productos con venta</p>
+                    <p class="mt-2 font-data-lg text-primary">${mixRows.length}</p>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </section>
+        ` : ""}
+
+        ${salesFocus === "collections" ? `
+          <section class="rounded-xl border border-[#dce4ff] bg-[linear-gradient(180deg,_#f5f8ff,_#ffffff)] p-5 shadow-soft">
+            <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p class="text-label-caps text-[#7181a3]">Detalle desde dashboard</p>
+                <h2 class="mt-2 text-headline-md text-primary">Cobranza efectiva</h2>
+                <p class="mt-2 text-body-sm text-on-surface-variant">Monto cobrado versus esperado y estado por cliente comercial.</p>
+              </div>
+              <a class="inline-flex items-center gap-2 rounded-full border border-[#dce4ff] bg-white px-4 py-2 text-body-sm font-semibold text-[#2341ae]" href="index.html">
+                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                Volver al dashboard
+              </a>
+            </div>
+            <div class="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1fr)_320px]">
+              <div class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
+                <div class="grid gap-3 md:grid-cols-2">
+                  <div class="rounded-2xl bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Cobrado</p>
+                    <p class="mt-2 font-data-lg text-primary">${salesApi.formatCurrency(metrics.realCollections)}</p>
+                  </div>
+                  <div class="rounded-2xl bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Esperado</p>
+                    <p class="mt-2 font-data-lg text-primary">${salesApi.formatCurrency(metrics.expectedCollections)}</p>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="mb-2 flex items-center justify-between text-body-sm">
+                    <span class="text-on-surface-variant">Cobranza efectiva</span>
+                    <span class="font-semibold text-primary">${metrics.effectiveCollectionsPct}%</span>
+                  </div>
+                  <div class="delta-track">
+                    <div class="delta-fill ${metrics.effectiveCollectionsPct >= 80 ? "bg-on-tertiary-container" : "bg-secondary"}" style="width:${collectionProgress}%"></div>
+                  </div>
+                </div>
+                <div class="mt-4 space-y-3">
+                  ${state.clientesComerciales.map((customer) => {
+                    const status = salesApi.getCustomerStatus(customer);
+                    return `
+                      <article class="rounded-2xl bg-surface-container-low p-4">
+                        <div class="flex items-start justify-between gap-3">
+                          <div>
+                            <p class="text-body-md font-semibold text-primary">${customer.nombre}</p>
+                            <p class="mt-1 text-body-sm text-on-surface-variant">${customer.diasVencimiento ? `${customer.diasVencimiento} días` : "sin mora"}</p>
+                          </div>
+                          <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${status.toneClass}">${status.label}</span>
+                        </div>
+                        <p class="mt-3 font-data-md text-primary">${salesApi.formatCurrency(customer.saldo)}</p>
+                      </article>
+                    `;
+                  }).join("")}
+                </div>
+              </div>
+              <aside class="rounded-[22px] border border-outline-variant bg-white p-4 shadow-soft">
+                <p class="text-label-caps text-on-surface-variant">Lectura rápida</p>
+                <div class="mt-4 space-y-3">
+                  <div class="rounded-2xl bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Saldo total</p>
+                    <p class="mt-2 font-data-lg text-primary">${salesApi.formatCurrency(metrics.totalReceivables)}</p>
+                  </div>
+                  <div class="rounded-2xl bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Vencido</p>
+                    <p class="mt-2 font-data-lg text-primary">${salesApi.formatCurrency(metrics.overdueReceivables)}</p>
+                  </div>
+                  <div class="rounded-2xl bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Clientes con saldo</p>
+                    <p class="mt-2 font-data-lg text-primary">${state.clientesComerciales.filter((item) => item.saldo > 0).length}</p>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </section>
+        ` : ""}
+
+        ${shouldWarn ? `
+          <section class="rounded-xl border border-error bg-error-container p-4 text-on-error-container shadow-soft">
+            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p class="text-label-caps">Alerta de saldo vencido</p>
+                <h2 class="mt-2 text-headline-md">${selectedCustomer.nombre}</h2>
+                <p class="mt-2 text-body-md">Mantiene ${salesApi.formatCurrency(selectedCustomer.saldo)} vencidos por ${selectedCustomer.diasVencimiento} días. La venta no se bloquea, pero se debe autorizar visualmente antes de confirmar.</p>
+              </div>
+            </div>
+          </section>
+        ` : ""}
+
+        <section class="grid gap-gutter md:grid-cols-2 xl:grid-cols-4">
+          ${summaryCard("Ventas del día", metrics.formattedSoldAmount, `${metrics.totalSoldUnits} unidades`)}
+          ${summaryCard("Saldo por cobrar", metrics.formattedReceivables, `${state.clientesComerciales.filter((item) => item.saldo > 0).length} clientes con saldo`)}
+          ${summaryCard("Cobranza del mes", salesApi.formatCurrency(metrics.realCollections), `Esperado ${salesApi.formatCurrency(metrics.expectedCollections)}`, "data")}
+          ${summaryCard("Saldo vencido", salesApi.formatCurrency(metrics.overdueReceivables), metrics.overdueReceivables ? "requiere seguimiento" : "sin alertas", "alert")}
+        </section>
+
+        <section class="grid gap-stack-lg xl:grid-cols-[minmax(0,1fr)_360px]">
+          <div class="space-y-stack-md">
+            <div class="rounded-xl border border-outline-variant bg-white p-6 shadow-soft">
+              <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">Registro de venta</p>
+                  <h2 class="mt-2 text-headline-md text-primary">Registro de venta</h2>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  ${state.canales.map((channel) => `
+                    <button class="channel-switch rounded-full px-4 py-2 text-body-sm font-semibold ${channel.id === activeChannelId ? "bg-primary text-white" : "bg-surface-container-low text-on-surface-variant"}" data-channel="${channel.id}" type="button">
+                      ${channel.nombre}
+                    </button>
+                  `).join("")}
+                </div>
+              </div>
+
+              <form class="mt-6 grid gap-gutter md:grid-cols-2" id="sales-form">
+                <label class="block rounded-xl bg-surface-container-low p-4">
+                  <span class="text-label-caps text-on-surface-variant">Producto</span>
+                  <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-product">
+                    ${availableProducts.map((item) => `<option value="${item.productoId}">${productMap[item.productoId].nombre} · ${item.cantidad} u</option>`).join("")}
+                    ${availableProducts.length ? "" : '<option value="">Sin stock asignado</option>'}
+                  </select>
+                </label>
+                <label class="block rounded-xl bg-surface-container-low p-4">
+                  <span class="text-label-caps text-on-surface-variant">Cantidad</span>
+                  <input class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 font-data-md text-primary" id="sale-quantity" min="1" type="number" value="1"/>
+                </label>
+                <label class="block rounded-xl bg-surface-container-low p-4">
+                  <span class="text-label-caps text-on-surface-variant">Medio de pago</span>
+                  <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-payment">
+                    ${salesApi.paymentMethods.map((method) => `<option value="${method}">${method}</option>`).join("")}
+                  </select>
+                </label>
+                <div class="rounded-xl bg-primary-container p-4 text-white">
+                  <p class="text-label-caps text-primary-fixed-dim">Monto estimado</p>
+                  <p class="mt-2 font-data-lg" id="sale-total">${selectedProduct ? salesApi.formatCurrency(selectedProduct.precioUnitario) : salesApi.formatCurrency(0)}</p>
+                  <p class="mt-2 text-body-sm text-primary-fixed-dim">CLP estimado.</p>
+                </div>
+
+                ${activeChannelId === "retiro" ? `
+                  <label class="block rounded-xl bg-surface-container-low p-4">
+                    <span class="text-label-caps text-on-surface-variant">Cliente comercial</span>
+                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-customer">
+                      ${state.clientesComerciales.map((customer) => `<option value="${customer.id}" ${customer.id === selectedCustomerId ? "selected" : ""}>${customer.nombre}</option>`).join("")}
+                    </select>
+                  </label>
+                  <label class="block rounded-xl bg-surface-container-low p-4">
+                    <span class="text-label-caps text-on-surface-variant">Estatus de pago</span>
+                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-body-md" id="sale-status">
+                      ${salesApi.commercialPaymentStatuses.map((status) => `<option value="${status}" ${status === selectedPaymentStatus ? "selected" : ""}>${status}</option>`).join("")}
+                    </select>
+                  </label>
+                ` : `
+                  <div class="md:col-span-2 rounded-xl border border-outline-variant bg-surface-container-low p-4">
+                    <p class="text-label-caps text-on-surface-variant">Canales al contado</p>
+                    <p class="mt-2 text-body-md text-on-surface-variant">Pago al contado.</p>
+                  </div>
+                `}
+
+                <button class="md:col-span-2 rounded-xl bg-primary px-4 py-4 text-body-md font-semibold text-white transition-colors hover:bg-primary-container disabled:cursor-not-allowed disabled:bg-outline" ${availableProducts.length ? "" : "disabled"} type="submit">
+                  Confirmar venta
+                </button>
+              </form>
+            </div>
+
+            <div class="rounded-xl border border-outline-variant bg-white p-6 shadow-soft">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">Cobranza del mes</p>
+                  <h3 class="mt-2 text-headline-md text-primary">Real vs meta</h3>
+                </div>
+                <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${delta.toneClass}">${delta.label}</span>
+              </div>
+              <div class="mt-5 grid gap-gutter md:grid-cols-2">
+                <div class="rounded-xl bg-surface-container-low p-4">
+                  <p class="text-label-caps text-on-surface-variant">Real cobrado</p>
+                  <p class="mt-2 font-data-lg text-primary">${salesApi.formatCurrency(metrics.realCollections)}</p>
+                </div>
+                <div class="rounded-xl bg-surface-container-low p-4">
+                  <p class="text-label-caps text-on-surface-variant">Esperado</p>
+                  <p class="mt-2 font-data-lg text-primary">${salesApi.formatCurrency(metrics.expectedCollections)}</p>
+                </div>
+              </div>
+              <div class="mt-4">
+                <div class="mb-2 flex items-center justify-between text-body-sm">
+                  <span class="text-on-surface-variant">Delta</span>
+                  <span class="${delta.colorClass}">${delta.pct > 0 ? "+" : ""}${delta.pct.toFixed(1)}%</span>
+                </div>
+                <div class="delta-track">
+                  <div class="delta-fill ${delta.fillClass}" style="width:${Math.max(8, Math.min(100, Math.round(((metrics.realCollections || 0) / Math.max(1, metrics.expectedCollections || 1)) * 100)))}%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-outline-variant bg-white p-6 shadow-soft">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">Historial reciente</p>
+                  <h3 class="mt-2 text-headline-md text-primary">Ventas</h3>
+                </div>
+              </div>
+              <div class="mt-5 overflow-hidden rounded-xl border border-outline-variant">
+                <table class="min-w-full divide-y divide-outline-variant bg-white">
+                  <thead class="bg-surface-container-low">
+                    <tr>
+                      <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Fecha</th>
+                      <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Canal</th>
+                      <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Producto</th>
+                      <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Cliente</th>
+                      <th class="px-4 py-3 text-left text-label-caps text-on-surface-variant">Estatus pago</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant">
+                    ${[...state.ventas].reverse().slice(0, 10).map((sale) => {
+                      const customer = sale.clienteComercialId ? customerMap[sale.clienteComercialId] : null;
+                      const status = sale.estadoPago === "Vencido"
+                        ? "bg-error-container text-on-error-container"
+                        : sale.estadoPago === "Pendiente"
+                          ? "bg-secondary-fixed text-on-secondary-fixed"
+                          : "bg-tertiary-fixed text-on-tertiary-fixed";
+                      return `
+                        <tr class="hover:bg-surface-container-low">
+                          <td class="px-4 py-4 text-body-md text-on-surface">${String(sale.timestamp).slice(0, 10)}</td>
+                          <td class="px-4 py-4 text-body-md text-on-surface">${state.canales.find((channel) => channel.id === sale.canalId).nombre}</td>
+                          <td class="px-4 py-4 text-body-md text-on-surface">${productMap[sale.productoId].nombre}</td>
+                          <td class="px-4 py-4 text-body-md text-on-surface">${customer ? customer.nombre : "Sin cliente"}</td>
+                          <td class="px-4 py-4"><span class="rounded-full px-3 py-1 text-body-sm font-semibold ${status}">${sale.estadoPago}</span></td>
+                        </tr>
+                      `;
+                    }).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <aside class="space-y-stack-md">
+            <section class="rounded-xl border border-outline-variant bg-white p-6 shadow-soft">
+              <p class="text-label-caps text-on-surface-variant">Saldos por cliente</p>
+              <div class="mt-5 space-y-3">
+                ${state.clientesComerciales.map((customer) => {
+                  const status = salesApi.getCustomerStatus(customer);
+                  return `
+                    <article class="rounded-xl bg-surface-container-low p-4">
+                      <div class="flex items-start justify-between gap-3">
+                        <div>
+                          <h3 class="text-body-md font-semibold text-primary">${customer.nombre}</h3>
+                          <p class="mt-1 text-body-sm text-on-surface-variant">${customer.diasVencimiento ? `${customer.diasVencimiento} días` : "sin mora"}</p>
+                        </div>
+                        <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${status.toneClass}">${status.label}</span>
+                      </div>
+                      <p class="mt-3 font-data-md text-primary">${salesApi.formatCurrency(customer.saldo)}</p>
+                    </article>
+                  `;
+                }).join("")}
+              </div>
+            </section>
+
+            <section class="rounded-xl border border-outline-variant bg-primary-container p-6 text-white shadow-soft">
+              <p class="text-label-caps text-primary-fixed-dim">Registrar devolución</p>
+              <form class="mt-5 space-y-4" id="return-form">
+                <label class="block rounded-xl bg-white/10 p-4">
+                  <span class="text-label-caps text-primary-fixed-dim">Producto</span>
+                  <select class="mt-2 w-full border-none bg-transparent p-0 text-body-md text-white focus:ring-0" id="return-product">
+                    ${state.productos.map((product) => `<option class="text-primary" value="${product.id}">${product.nombre}</option>`).join("")}
+                  </select>
+                </label>
+                <label class="block rounded-xl bg-white/10 p-4">
+                  <span class="text-label-caps text-primary-fixed-dim">Cantidad</span>
+                  <input class="mt-2 w-full border-none bg-transparent p-0 text-body-md text-white placeholder:text-primary-fixed-dim/60 focus:ring-0" id="return-quantity" min="1" placeholder="0" type="number"/>
+                </label>
+                <label class="block rounded-xl bg-white/10 p-4">
+                  <span class="text-label-caps text-primary-fixed-dim">Motivo</span>
+                  <textarea class="mt-2 h-20 w-full resize-none border-none bg-transparent p-0 text-body-md text-white placeholder:text-primary-fixed-dim/60 focus:ring-0" id="return-reason" placeholder="Ej. merma comercial, producto no retirado"></textarea>
+                </label>
+                <button class="flex w-full items-center justify-center gap-3 rounded-xl bg-white px-4 py-4 text-body-md font-semibold text-primary transition-colors hover:bg-surface-container-low" type="submit">
+                  <span class="material-symbols-outlined">assignment_return</span>
+                  Guardar devolución
+                </button>
+              </form>
+            </section>
+          </aside>
+        </section>
+      `;
+
+      document.getElementById("sales-refresh").addEventListener("click", renderSales);
+      document.getElementById("sales-distribution").addEventListener("click", () => {
+        window.location.href = "distribution.html";
+      });
+      document.getElementById("sales-dashboard").addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+
+      document.querySelectorAll(".channel-switch").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          activeChannelId = event.currentTarget.dataset.channel;
+          renderSales();
+        });
+      });
+
+      const productSelect = document.getElementById("sale-product");
+      const quantityInput = document.getElementById("sale-quantity");
+      const paymentSelect = document.getElementById("sale-payment");
+      const customerSelect = document.getElementById("sale-customer");
+      const statusSelect = document.getElementById("sale-status");
+
+      function updateTotal() {
+        const product = productMap[productSelect.value];
+        const quantity = Math.max(1, Number(quantityInput.value || 1));
+        document.getElementById("sale-total").textContent = salesApi.formatCurrency(product ? product.precioUnitario * quantity : 0);
+      }
+
+      productSelect.addEventListener("change", updateTotal);
+      quantityInput.addEventListener("input", updateTotal);
+      if (customerSelect) {
+        customerSelect.addEventListener("change", (event) => {
+          selectedCustomerId = event.target.value;
+          renderSales();
+        });
+      }
+      if (statusSelect) {
+        statusSelect.addEventListener("change", (event) => {
+          selectedPaymentStatus = event.target.value;
+        });
+      }
+
+      document.getElementById("sales-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!productSelect.value) {
+          return;
+        }
+        const quantity = Math.max(1, Math.floor(Number(quantityInput.value || 1)));
+        const product = productMap[productSelect.value];
+        const stockItem = activeChannel.stock.find((item) => item.productoId === productSelect.value);
+        if (!stockItem || quantity > stockItem.cantidad) {
+          salesApi.showToast("La cantidad supera el stock disponible para este canal.", "warn");
+          return;
+        }
+        const submitPayload = {
+          canalId: activeChannelId,
+          productoId: productSelect.value,
+          cantidad: quantity,
+          medioPago: paymentSelect.value,
+          monto: quantity * product.precioUnitario,
         };
 
-        function renderSales() {
-            const state = salesApi.getState();
-            const metrics = salesApi.buildMetrics(state);
-            const productMap = salesApi.getProductMap(state);
-            const activeChannel = state.canales.find((canal) => canal.id === activeChannelId) || state.canales[0];
-            activeChannelId = activeChannel.id;
-            const availableProducts = activeChannel.stock.filter((item) => item.cantidad > 0);
-            const selectedProductId = availableProducts[0] ? availableProducts[0].productoId : "";
-            const selectedProduct = productMap[selectedProductId];
-            const soldUnitsForChannel = metrics.soldByChannel[activeChannelId].units;
-            const assignedUnitsForChannel = activeChannel.stock.reduce((sum, item) => sum + item.cantidad, 0) + soldUnitsForChannel;
-
-            salesApi.mountShell({
-                activePage: "sales",
-                title: "Sales",
-                header: {
-                    eyebrow: "PANEL DE VENTAS",
-                    badge: metrics.formattedSoldAmount,
-                    badgeIcon: "payments",
-                    secondaryActions: [
-                        { id: "sales-refresh", icon: "autorenew", label: "Refrescar" },
-                        { id: "sales-dashboard", icon: "dashboard", label: "Dashboard" }
-                    ],
-                    primaryAction: { id: "sales-distribution", icon: "local_shipping", label: "Ver Distribution" }
-                }
-            });
-
-            const root = document.getElementById("sales-root");
-            root.innerHTML = `
-                <section class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                    <div>
-                        <h2 class="font-headline-lg text-headline-lg text-primary">Sales Command</h2>
-                        <p class="text-body-lg text-on-surface-variant">Registra venta por canal, medio de pago y conciliacion diaria.</p>
-                    </div>
-                    <div class="rounded-full bg-surface-container px-4 py-2 text-sm font-semibold text-secondary">
-                        ${metrics.formattedSoldAmount} cobrados hoy
-                    </div>
-                </section>
-
-                <section class="grid grid-cols-12 gap-6">
-                    <div class="col-span-8 rounded-2xl border border-outline-variant bg-white p-6 shadow-sm">
-                        <div class="flex items-center justify-between gap-4">
-                            <div>
-                                <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Demo accelerators</p>
-                                <h3 class="mt-2 font-headline-md text-headline-md text-primary">Simula momentos comerciales con un solo clic</h3>
-                            </div>
-                            <div class="flex gap-2">
-                                <button class="rounded-xl bg-primary px-4 py-3 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-primary-container scenario-button" data-scenario="breakfast" type="button">Breakfast Rush</button>
-                                <button class="rounded-xl bg-white px-4 py-3 text-xs font-semibold uppercase tracking-widest text-secondary shadow-sm transition-colors hover:bg-surface-container scenario-button" data-scenario="wholesale" type="button">Wholesale Pick-up</button>
-                                <button class="rounded-xl bg-white px-4 py-3 text-xs font-semibold uppercase tracking-widest text-primary shadow-sm transition-colors hover:bg-surface-container scenario-button" data-scenario="sprint" type="button">Delivery Sprint</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-4 rounded-2xl border border-outline-variant bg-primary-container p-6 text-white shadow-sm">
-                        <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed-dim">Speaker note</p>
-                        <p class="mt-3 text-sm text-white/90">Usa estos botones para mostrar que el demo reacciona como un sistema vivo y no como una maqueta estática.</p>
-                    </div>
-                </section>
-
-                <section class="grid gap-6 xl:grid-cols-12">
-                    <div class="space-y-6 xl:col-span-8">
-                        <div class="rounded-xl border border-outline-variant bg-white p-card-padding shadow-sm">
-                            <div class="mb-5 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                                <div>
-                                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Canal activo</p>
-                                    <h3 class="mt-2 text-2xl font-semibold text-primary">Registro de venta por frente comercial</h3>
-                                </div>
-                                <div class="flex flex-wrap gap-2">
-                                    ${state.canales.map((canal) => `
-                                        <button class="rounded-full px-4 py-2 text-sm font-semibold ${canal.id === activeChannelId ? "bg-primary text-white" : "bg-surface-container-low text-on-surface-variant"} channel-switch" data-channel="${canal.id}" type="button">
-                                            ${canal.nombre}
-                                        </button>
-                                    `).join("")}
-                                </div>
-                            </div>
-
-                            <form class="grid gap-4 md:grid-cols-2" id="sales-form">
-                                <label class="rounded-xl bg-surface-container-low p-4">
-                                    <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Producto</span>
-                                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-sm" id="sale-product">
-                                        ${availableProducts.map((item) => `
-                                            <option value="${item.productoId}">${productMap[item.productoId].nombre} · ${item.cantidad} uds</option>
-                                        `).join("")}
-                                        ${availableProducts.length === 0 ? '<option value="">Sin stock asignado</option>' : ""}
-                                    </select>
-                                </label>
-
-                                <label class="rounded-xl bg-surface-container-low p-4">
-                                    <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Cantidad</span>
-                                    <input class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 font-mono-data text-mono-data" id="sale-quantity" min="1" type="number" value="1"/>
-                                </label>
-
-                                <label class="rounded-xl bg-surface-container-low p-4">
-                                    <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Medio de pago</span>
-                                    <select class="mt-2 w-full rounded-lg border border-outline-variant bg-white px-3 py-2 text-sm" id="sale-payment">
-                                        ${salesApi.paymentMethods.map((method) => `<option value="${method}">${method}</option>`).join("")}
-                                    </select>
-                                </label>
-
-                                <div class="rounded-xl bg-primary-container p-4 text-white">
-                                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed-dim">Monto estimado</p>
-                                    <p class="mt-2 text-3xl font-semibold" id="sale-total">${selectedProduct ? salesApi.formatCurrency(selectedProduct.precioUnitario) : salesApi.formatCurrency(0)}</p>
-                                    <p class="mt-2 text-sm text-primary-fixed-dim">La venta descuenta stock del canal de inmediato.</p>
-                                </div>
-
-                                <button class="md:col-span-2 rounded-xl bg-primary px-4 py-4 text-sm font-semibold uppercase tracking-widest text-white disabled:cursor-not-allowed disabled:bg-outline" ${availableProducts.length ? "" : "disabled"} type="submit">
-                                    Registrar venta
-                                </button>
-                            </form>
-                        </div>
-
-                        ${renderDeltaIndicator(assignedUnitsForChannel || 1, soldUnitsForChannel, activeChannel.nombre)}
-
-                        <div class="rounded-xl border border-outline-variant bg-white p-card-padding shadow-sm">
-                            <div class="flex items-center justify-between gap-3">
-                                <div>
-                                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Ventas del dia</p>
-                                    <h3 class="mt-2 text-xl font-semibold text-primary">Movimientos recientes</h3>
-                                </div>
-                                <div class="text-sm text-on-primary-container">${metrics.formattedSoldAmount}</div>
-                            </div>
-                            <div class="mt-4 space-y-3">
-                                ${[...state.ventas].reverse().slice(0, 8).map((sale) => `
-                                    <div class="rounded-xl bg-surface-container-low p-4">
-                                        <div class="flex items-start justify-between gap-3">
-                                            <div>
-                                                <p class="font-semibold text-on-surface">${productMap[sale.productoId].nombre}</p>
-                                                <p class="text-sm text-on-primary-container">${state.canales.find((canal) => canal.id === sale.canalId).nombre} · ${sale.medioPago}</p>
-                                            </div>
-                                            <div class="text-right">
-                                                <p class="font-mono-data text-mono-data text-on-surface">${sale.cantidad} uds</p>
-                                                <p class="text-sm text-on-primary-container">${salesApi.formatCurrency(sale.monto)}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `).join("")}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6 xl:col-span-4">
-                        <div class="rounded-xl border border-outline-variant bg-white p-card-padding shadow-sm">
-                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Resumen por canal</p>
-                            <div class="mt-5 space-y-4">
-                                ${state.canales.map((canal) => `
-                                    <div class="rounded-xl bg-surface-container-low p-4">
-                                        <div class="flex items-center justify-between gap-3">
-                                            <div>
-                                                <h4 class="font-semibold text-on-surface">${canal.nombre}</h4>
-                                                <p class="text-sm text-on-primary-container">${metrics.soldByChannel[canal.id].units.toLocaleString("es-CL")} uds vendidas</p>
-                                            </div>
-                                            <span class="text-sm font-semibold text-secondary">${salesApi.formatCurrency(metrics.soldByChannel[canal.id].revenue)}</span>
-                                        </div>
-                                    </div>
-                                `).join("")}
-                            </div>
-                        </div>
-
-                        <div class="rounded-xl border border-outline-variant bg-primary-container p-card-padding text-white shadow-sm">
-                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed-dim">Stock utilizable</p>
-                            <div class="mt-4 space-y-3">
-                                ${availableProducts.map((item) => `
-                                    <div class="rounded-xl bg-white/10 p-4">
-                                        <div class="flex items-center justify-between gap-3">
-                                            <span class="font-medium">${productMap[item.productoId].nombre}</span>
-                                            <span class="font-mono-data text-mono-data">${item.cantidad} uds</span>
-                                        </div>
-                                    </div>
-                                `).join("")}
-                                ${availableProducts.length === 0 ? '<p class="text-sm text-primary-fixed-dim">Este canal no tiene stock disponible.</p>' : ""}
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            `;
-
-            document.getElementById("sales-refresh").addEventListener("click", () => {
-                renderSales();
-                salesApi.showToast("Resumen de ventas actualizado.", "info");
-            });
-            document.getElementById("sales-dashboard").addEventListener("click", () => {
-                window.location.href = "index.html";
-            });
-            document.getElementById("sales-distribution").addEventListener("click", () => {
-                window.location.href = "distribution.html";
-            });
-            document.querySelectorAll(".scenario-button").forEach((button) => {
-                button.addEventListener("click", (event) => {
-                    runScenario(event.target.dataset.scenario);
-                });
-            });
-
-            document.querySelectorAll(".channel-switch").forEach((button) => {
-                button.addEventListener("click", (event) => {
-                    activeChannelId = event.target.dataset.channel;
-                    salesApi.showToast(`Canal activo: ${state.canales.find((canal) => canal.id === activeChannelId).nombre}.`, "info");
-                    renderSales();
-                });
-            });
-
-            const productSelect = document.getElementById("sale-product");
-            const quantityInput = document.getElementById("sale-quantity");
-            const paymentSelect = document.getElementById("sale-payment");
-
-            function updateTotal() {
-                const product = productMap[productSelect.value];
-                const quantity = Math.max(1, Number(quantityInput.value || 1));
-                document.getElementById("sale-total").textContent = salesApi.formatCurrency(product ? product.precioUnitario * quantity : 0);
-            }
-
-            productSelect.addEventListener("change", updateTotal);
-            quantityInput.addEventListener("input", updateTotal);
-
-            document.getElementById("sales-form").addEventListener("submit", (event) => {
-                event.preventDefault();
-                if (!productSelect.value) {
-                    return;
-                }
-
-                const quantity = Math.max(1, Math.floor(Number(quantityInput.value || 1)));
-                const product = productMap[productSelect.value];
-                salesApi.registrarVenta({
-                    canalId: activeChannelId,
-                    productoId: productSelect.value,
-                    cantidad: quantity,
-                    medioPago: paymentSelect.value,
-                    monto: quantity * product.precioUnitario
-                });
-                salesApi.showToast(`Venta registrada por ${quantity} unidades de ${product.nombre}.`, "success");
-                showReceiptModal(product.nombre, quantity, quantity * product.precioUnitario, paymentSelect.value, activeChannelId, state);
-                renderSales();
-            });
+        if (activeChannelId === "retiro") {
+          submitPayload.clienteComercialId = customerSelect.value;
+          submitPayload.estadoPago = statusSelect.value;
         }
 
-        function renderDeltaIndicator(expected, real, channelName) {
-            const delta = salesApi.calcularDelta(expected, real);
-            const width = expected === 0 ? 100 : Math.min(Math.max((real / expected) * 100, 0), 100);
+        const commitSale = () => {
+          salesApi.registrarVenta(submitPayload);
+          salesApi.showToast(`Venta registrada por ${quantity} unidades de ${product.nombre}.`, "success");
+          renderSales();
+        };
 
-            return `
-                <div class="rounded-xl border border-outline-variant bg-white p-card-padding shadow-sm">
-                    <div class="mb-5 flex items-center justify-between gap-3">
-                        <div>
-                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Conciliacion del canal</p>
-                            <h3 class="mt-2 text-xl font-semibold text-primary">${channelName}</h3>
-                        </div>
-                        <span class="rounded px-3 py-1 text-xs font-bold ${delta.toneClass}">${delta.label}</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="rounded-xl bg-surface-container-low p-4">
-                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Esperado</p>
-                            <p class="mt-2 font-mono-data text-mono-data text-primary">${expected.toLocaleString("es-CL")} uds</p>
-                        </div>
-                        <div class="rounded-xl bg-surface-container-low p-4">
-                            <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Real</p>
-                            <p class="mt-2 font-mono-data text-mono-data text-primary">${real.toLocaleString("es-CL")} uds</p>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="mb-2 flex justify-between text-xs font-semibold uppercase tracking-widest">
-                            <span class="text-on-surface-variant">Delta</span>
-                            <span class="${delta.colorClass}">${delta.pct > 0 ? "+" : ""}${delta.pct.toFixed(1)}% (${delta.label})</span>
-                        </div>
-                        <div class="delta-track">
-                            <div class="delta-fill ${delta.fillClass}" style="width:${width}%"></div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function runScenario(scenarioName) {
-            const scenario = salesScenarios[scenarioName];
-            if (!scenario) {
-                return;
-            }
-            const state = salesApi.getState();
-            const channel = state.canales.find((item) => item.id === scenario.channelId);
-            const stockItem = channel && channel.stock.find((item) => item.cantidad > 0);
-
-            if (!channel || !stockItem) {
-                salesApi.showToast(`No hay stock disponible para ${scenario.label}.`, "warn");
-                return;
-            }
-
-            const product = state.productos.find((item) => item.id === stockItem.productoId);
-            const quantity = Math.min(scenario.quantity, stockItem.cantidad);
-            const paymentMethod = scenario.channelId === "retiro" ? "Transferencia" : "POS";
-
-            salesApi.registrarVenta({
-                canalId: scenario.channelId,
-                productoId: stockItem.productoId,
-                cantidad: quantity,
-                medioPago: paymentMethod,
-                monto: quantity * product.precioUnitario
-            });
-            salesApi.showToast(`${scenario.label} ejecutado en ${channel.nombre}.`, "success");
-            showReceiptModal(product.nombre, quantity, quantity * product.precioUnitario, paymentMethod, scenario.channelId, state, scenario.label);
-            activeChannelId = scenario.channelId;
-            renderSales();
-        }
-
-        function showReceiptModal(productName, quantity, amount, paymentMethod, channelId, state, scenarioLabel) {
-            const channel = state.canales.find((item) => item.id === channelId);
+        if (activeChannelId === "retiro") {
+          const customer = customerMap[customerSelect.value];
+          if (customer && customer.saldo > 0 && customer.diasVencimiento >= 30) {
             salesApi.openModal({
-                kicker: scenarioLabel || "Live Receipt",
-                title: "Ticket comercial generado",
-                body: `
-                    <div class="space-y-4">
-                        <div class="rounded-2xl border border-dashed border-outline-variant bg-surface-container-low p-5">
-                            <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Canal</p>
-                            <p class="mt-2 text-base font-semibold text-primary">${salesApi.escapeHtml(channel ? channel.nombre : channelId)}</p>
-                            <div class="mt-4 grid grid-cols-3 gap-3 text-sm">
-                                <div>
-                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Producto</p>
-                                    <p class="mt-2 text-on-surface">${salesApi.escapeHtml(productName)}</p>
-                                </div>
-                                <div>
-                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Cantidad</p>
-                                    <p class="mt-2 text-on-surface">${quantity} uds</p>
-                                </div>
-                                <div>
-                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Pago</p>
-                                    <p class="mt-2 text-on-surface">${salesApi.escapeHtml(paymentMethod)}</p>
-                                </div>
-                            </div>
-                            <div class="mt-5 rounded-xl bg-white p-4">
-                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Monto</p>
-                                <p class="mt-2 font-headline-md text-primary">${salesApi.formatCurrency(amount)}</p>
-                            </div>
-                        </div>
-                    </div>
-                `,
-                actions: [
-                    { id: "receipt-close", label: "Cerrar" }
-                ]
+              kicker: "Autorización comercial",
+              title: "Cliente con saldo vencido",
+              body: `
+                <div class="space-y-4">
+                  <p class="text-body-md text-on-surface">Antes de confirmar la venta, revisa la advertencia de saldo vencido del cliente seleccionado.</p>
+                  <div class="rounded-xl bg-error-container p-4 text-on-error-container">
+                    <p class="font-semibold">${salesApi.escapeHtml(customer.nombre)}</p>
+                    <p class="mt-2 text-body-sm">Saldo actual ${salesApi.formatCurrency(customer.saldo)} · ${customer.diasVencimiento} días de vencimiento.</p>
+                  </div>
+                </div>
+              `,
+              actions: [
+                { id: "sale-cancel-modal", label: "Cancelar" },
+                {
+                  id: "sale-authorize-modal",
+                  label: "Autorizar venta",
+                  className: "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-container",
+                },
+              ],
             });
-            document.getElementById("receipt-close").addEventListener("click", salesApi.closeModal);
+            document.getElementById("sale-cancel-modal").addEventListener("click", salesApi.closeModal);
+            document.getElementById("sale-authorize-modal").addEventListener("click", () => {
+              salesApi.closeModal();
+              commitSale();
+            });
+            return;
+          }
         }
 
-        window.addEventListener("focus", renderSales);
-        window.addEventListener("storage", renderSales);
+        commitSale();
+      });
+
+      document.getElementById("return-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const quantity = Number(document.getElementById("return-quantity").value || 0);
+        if (quantity <= 0) {
+          salesApi.showToast("Ingresa una cantidad válida para la devolución.", "warn");
+          return;
+        }
+        salesApi.registrarDevolucion({
+          productoId: document.getElementById("return-product").value,
+          cantidad: quantity,
+          motivo: document.getElementById("return-reason").value.trim(),
+        });
+        salesApi.showToast("Devolución registrada.", "success");
         renderSales();
-    </script>
-</body></html>
+      });
+    }
+
+    function summaryCard(label, value, helper, tone = "default") {
+      const toneClass = tone === "data"
+        ? "border-secondary/10 bg-secondary-fixed/50"
+        : tone === "alert"
+          ? "border-error/10 bg-error-container/30"
+          : "border-outline-variant bg-white";
+      return `
+        <article class="rounded-xl border ${toneClass} p-5 shadow-soft">
+          <p class="text-label-caps text-on-surface-variant">${label}</p>
+          <p class="mt-3 font-data-lg text-primary">${value}</p>
+          <p class="mt-2 text-body-sm text-on-surface-variant">${helper}</p>
+        </article>
+      `;
+    }
+
+    window.addEventListener("focus", renderSales);
+    window.addEventListener("storage", renderSales);
+    renderSales();
+  </script>
+</body>
+</html>

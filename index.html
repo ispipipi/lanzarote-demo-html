@@ -1,611 +1,685 @@
 <!DOCTYPE html>
-
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Lanzarote - Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
-        .delta-track {
-            height: 6px;
-            background-color: #e5eeff;
-            border-radius: 3px;
-            position: relative;
-            overflow: hidden;
-        }
-        .delta-fill {
-            height: 100%;
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(203, 219, 245, 0.5);
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface": "#f8f9ff",
-                      "surface-tint": "#565e74",
-                      "surface-dim": "#cbdbf5",
-                      "surface-container": "#e5eeff",
-                      "background": "#f8f9ff",
-                      "on-tertiary": "#ffffff",
-                      "surface-container-lowest": "#ffffff",
-                      "primary-container": "#131b2e",
-                      "error": "#ba1a1a",
-                      "outline": "#76777d",
-                      "tertiary-container": "#002113",
-                      "secondary-fixed-dim": "#adc6ff",
-                      "primary-fixed-dim": "#bec6e0",
-                      "on-tertiary-container": "#009668",
-                      "inverse-on-surface": "#eaf1ff",
-                      "on-primary-container": "#7c839b",
-                      "on-background": "#0b1c30",
-                      "inverse-primary": "#bec6e0",
-                      "surface-container-high": "#dce9ff",
-                      "primary-fixed": "#dae2fd",
-                      "on-surface": "#0b1c30",
-                      "surface-container-low": "#eff4ff",
-                      "tertiary": "#000000",
-                      "on-tertiary-fixed": "#002113",
-                      "tertiary-fixed": "#6ffbbe",
-                      "on-primary-fixed-variant": "#3f465c",
-                      "on-error": "#ffffff",
-                      "surface-variant": "#d3e4fe",
-                      "tertiary-fixed-dim": "#4edea3",
-                      "primary": "#000000",
-                      "error-container": "#ffdad6",
-                      "on-secondary-fixed": "#001a42",
-                      "on-secondary": "#ffffff",
-                      "on-error-container": "#93000a",
-                      "secondary-fixed": "#d8e2ff",
-                      "on-primary": "#ffffff",
-                      "inverse-surface": "#213145",
-                      "secondary": "#0058be",
-                      "outline-variant": "#c6c6cd",
-                      "surface-container-highest": "#d3e4fe",
-                      "on-secondary-container": "#fefcff",
-                      "on-secondary-fixed-variant": "#004395",
-                      "on-tertiary-fixed-variant": "#005236",
-                      "secondary-container": "#2170e4",
-                      "on-primary-fixed": "#131b2e",
-                      "surface-bright": "#f8f9ff",
-                      "on-surface-variant": "#45464d"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "gutter": "24px",
-                      "card-padding": "20px",
-                      "unit": "4px",
-                      "margin-mobile": "16px",
-                      "margin-desktop": "32px"
-              },
-              "fontFamily": {
-                      "headline-md": ["Plus Jakarta Sans"],
-                      "mono-data": ["JetBrains Mono"],
-                      "label-caps": ["Inter"],
-                      "body-lg": ["Inter"],
-                      "body-sm": ["Inter"],
-                      "headline-lg": ["Plus Jakarta Sans"],
-                      "headline-lg-mobile": ["Plus Jakarta Sans"],
-                      "display-kpi": ["Plus Jakarta Sans"]
-              },
-              "fontSize": {
-                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
-                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "display-kpi": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
-              }
-            },
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Lanzarote - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e0e3e5",
+            "on-error": "#ffffff",
+            "primary": "#000000",
+            "on-tertiary-fixed-variant": "#38485d",
+            "tertiary-container": "#0b1c30",
+            "secondary-container": "#d5e3fd",
+            "on-surface-variant": "#45464d",
+            "secondary-fixed": "#d5e3fd",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "secondary": "#515f74",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "surface-container-lowest": "#ffffff",
+            "background": "#f7f9fb",
+            "on-secondary-container": "#57657b",
+            "on-secondary-fixed": "#0d1c2f",
+            "on-secondary-fixed-variant": "#3a485c",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "inverse-surface": "#2d3133",
+            "surface-dim": "#d8dadc",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#131b2e",
+            "surface": "#f7f9fb",
+            "surface-container-low": "#f2f4f6",
+            "on-surface": "#191c1e",
+            "on-background": "#191c1e",
+            "on-tertiary-fixed": "#0b1c30",
+            "inverse-on-surface": "#eff1f3",
+            "on-primary-container": "#7c839b",
+            "error-container": "#ffdad6",
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#3f465c",
+            "tertiary": "#000000",
+            "inverse-primary": "#bec6e0",
+            "surface-container-high": "#e6e8ea",
+            "surface-tint": "#565e74",
+            "on-tertiary-container": "#75859d",
+            "secondary-fixed-dim": "#b9c7e0",
+            "tertiary-fixed": "#d3e4fe",
+            "primary-container": "#131b2e",
+            "outline-variant": "#c6c6cd"
           },
+          borderRadius: {
+            "sm": "0.125rem",
+            "DEFAULT": "0.25rem",
+            "md": "0.375rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "unit": "4px",
+            "container-padding": "24px",
+            "gutter": "16px",
+            "stack-sm": "8px",
+            "stack-md": "16px",
+            "stack-lg": "32px"
+          },
+          fontFamily: {
+            "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "label-caps": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "data-lg": ["JetBrains Mono", "monospace"],
+            "data-md": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "display-lg": ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+            "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "data-lg": ["20px", { lineHeight: "24px", fontWeight: "600" }],
+            "data-md": ["14px", { lineHeight: "20px", fontWeight: "500" }]
+          },
+          boxShadow: {
+            "soft": "0 8px 24px rgba(15, 23, 42, 0.08)"
+          }
         }
-      </script>
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      vertical-align: middle;
+    }
+  </style>
 </head>
-<body class="bg-surface font-body-sm text-on-surface min-h-screen flex">
-<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-gutter px-4 z-50" id="sidebar"></aside>
-<main class="flex-1 flex flex-col min-w-0">
-<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-40 bg-surface-bright shadow-sm border-b border-outline-variant" id="topbar"></header>
-<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-6" id="dashboard-root"></div>
-</main>
-<script src="state.js"></script>
-<script>
-        const dashboardApi = window.LanzaroteState;
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(88,120,228,0.14),_transparent_26%),linear-gradient(180deg,_#f9fbff,_#eef3ff)] text-on-surface antialiased md:flex">
+  <aside class="px-3 pt-3 md:h-screen md:w-[300px] md:shrink-0 md:p-6" id="sidebar"></aside>
+  <main class="min-w-0 flex-1">
+    <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-3 backdrop-blur-xl sm:px-6 md:px-container-padding" id="topbar"></header>
+    <div class="mx-auto flex h-full max-w-[1440px] min-h-0 flex-col px-4 pb-4 pt-4 sm:px-6 sm:pt-5 md:p-container-padding md:pt-5" id="dashboard-root"></div>
+  </main>
+  <script src="state.js?v=20260709-ui6"></script>
+  <script>
+    const dashboardApi = window.LanzaroteState;
 
-        function renderDashboard() {
-            const snapshot = dashboardApi.recalcularDashboard();
-            const state = snapshot.state;
-            const metrics = snapshot.metrics;
-            const soldConfig = [
-                { id: "meson", label: "Meson", tone: "bg-secondary" },
-                { id: "retiro", label: "Retiro", tone: "bg-slate-500" },
-                { id: "delivery", label: "Delivery", tone: "bg-emerald-500" }
-            ];
+    function renderDashboard() {
+      const snapshot = dashboardApi.recalcularDashboard();
+      const state = snapshot.state;
+      const metrics = snapshot.metrics;
+      const urgentAlerts = state.alertas.filter((alert) => alert.severidad !== "baja").slice(0, 3);
+      const today = dashboardApi.getToday();
+      const currentMonth = today.slice(0, 7);
+      const monthlyBudget = 6500000;
+      const dailySalesBudget = Math.round(monthlyBudget / 30);
 
-            dashboardApi.mountShell({
-                activePage: "dashboard",
-                title: "Dashboard",
-                header: {
-                    eyebrow: "VISIÓN GLOBAL",
-                    badge: "Ultimo cruce 14:30",
-                    badgeIcon: "schedule",
-                    secondaryActions: [
-                        { id: "dashboard-refresh", icon: "autorenew", label: "Refrescar" },
-                        { id: "dashboard-history", icon: "history", label: "Historial" }
-                    ],
-                    primaryAction: { id: "dashboard-reset", icon: "restart_alt", label: "Reiniciar Demo" }
-                }
-            });
+      const isSameDay = (value) => String(value || "").slice(0, 10) === today;
+      const isCurrentMonth = (value) => String(value || "").slice(0, 7) === currentMonth;
 
-            const soldCards = soldConfig.map((item) => {
-                const units = metrics.soldByChannel[item.id].units;
-                const width = Math.max(18, Math.min(100, Math.round((units / Math.max(1, metrics.totalSoldUnits || 1)) * 100)));
+      const salesTodayAmount = state.ventas
+        .filter((sale) => isSameDay(sale.timestamp))
+        .reduce((sum, sale) => sum + sale.monto, 0);
+      const salesMonthAmount = state.ventas
+        .filter((sale) => isCurrentMonth(sale.timestamp))
+        .reduce((sum, sale) => sum + sale.monto, 0);
+      const salesBudgetPct = Math.min(100, Math.round((salesMonthAmount / Math.max(1, monthlyBudget)) * 100));
+      const salesDayPct = Math.min(100, Math.round((salesTodayAmount / Math.max(1, dailySalesBudget)) * 100));
+      const salesGap = Math.max(0, monthlyBudget - salesMonthAmount);
 
-                return `
-                    <div class="rounded border border-outline-variant/20 bg-surface-container-low p-3">
-                        <p class="mb-2 text-xs font-label-caps uppercase text-on-surface-variant">${item.label}</p>
-                        <p class="font-display-kpi text-xl leading-none text-primary">${units.toLocaleString("es-CL")}</p>
-                        <div class="mt-2 h-1 w-full overflow-hidden rounded-full bg-slate-200">
-                            <div class="h-full ${item.tone}" style="width:${width}%"></div>
-                        </div>
-                    </div>
-                `;
-            }).join("");
+      const productionTodayPlan = state.turnos
+        .filter((turn) => isSameDay(turn.fecha))
+        .reduce((sum, turn) => sum + turn.cantidadPlan, 0);
+      const productionMonthPlan = state.turnos
+        .filter((turn) => isCurrentMonth(turn.fecha))
+        .reduce((sum, turn) => sum + turn.cantidadPlan, 0);
+      const productionTodayUnits = state.turnos
+        .filter((turn) => isSameDay(turn.fecha))
+        .reduce((sum, turn) => sum + Math.max(0, turn.cantidadReal - turn.merma), 0);
+      const productionMonthUnits = state.turnos
+        .filter((turn) => isCurrentMonth(turn.fecha))
+        .reduce((sum, turn) => sum + Math.max(0, turn.cantidadReal - turn.merma), 0);
+      const productionTodayTurns = state.turnos.filter((turn) => isSameDay(turn.fecha)).length;
+      const productionMonthTurns = state.turnos.filter((turn) => isCurrentMonth(turn.fecha)).length;
+      const productionDayPct = productionTodayPlan ? Math.min(100, Math.round((productionTodayUnits / productionTodayPlan) * 100)) : 0;
+      const productionMonthPct = productionMonthPlan ? Math.min(100, Math.round((productionMonthUnits / productionMonthPlan) * 100)) : 0;
 
-            const rows = metrics.recentConciliations.map((row, index) => {
-                const channelLabel = index % 3 === 0 ? "Retiro" : index % 3 === 1 ? "Meson" : "Delivery";
-                const soldReference = [83, 38, 44, 76, 22][index] || 0;
-                const badgeClass = row.estado === "Revision"
-                    ? "bg-error-container text-error"
-                    : "bg-on-tertiary-container/10 text-on-tertiary-container";
+      const deliveredShipments = state.pedidosDelivery.filter((order) => order.estado === "Entregada").length;
+      const inTransitShipments = state.pedidosDelivery.filter((order) => order.estado === "En Ruta").length;
+      const pendingShipments = state.pedidosDelivery.filter((order) => ["Pendiente de armar", "Cargada"].includes(order.estado)).length;
+      const closedLoads = state.pedidosDelivery.filter((order) => order.cargaCerrada).length;
+      const totalTrackedShipments = Math.max(1, deliveredShipments + inTransitShipments + pendingShipments);
+      const deliveredPct = Math.round((deliveredShipments / totalTrackedShipments) * 100);
+      const inTransitPct = Math.round((inTransitShipments / totalTrackedShipments) * 100);
+      const pendingPct = Math.round((pendingShipments / totalTrackedShipments) * 100);
+      const loadClosePct = Math.round((closedLoads / Math.max(1, state.pedidosDelivery.length || 1)) * 100);
+      const highAlertCount = state.alertas.filter((alert) => alert.severidad === "alta").length;
+      const mediumAlertCount = state.alertas.filter((alert) => alert.severidad === "media").length;
+      const lowAlertCount = state.alertas.filter((alert) => alert.severidad === "baja").length;
+      const topRecipeYield = metrics.recipeYieldByProduct.slice(0, 4);
+      const topMixRows = metrics.productMix.slice(0, 4);
+      const channelKpis = [
+        { label: "Mesón", units: metrics.soldByChannel.meson?.units || 0, revenue: metrics.soldByChannel.meson?.revenue || 0, tone: "bg-[#39b980]" },
+        { label: "Retiro", units: metrics.soldByChannel.retiro?.units || 0, revenue: metrics.soldByChannel.retiro?.revenue || 0, tone: "bg-[#2f57d3]" },
+        { label: "Delivery", units: metrics.soldByChannel.delivery?.units || 0, revenue: metrics.soldByChannel.delivery?.revenue || 0, tone: "bg-[#ffb72b]" },
+      ];
+      const maxChannelUnits = Math.max(1, ...channelKpis.map((item) => item.units));
 
-                return `
-                    <tr class="transition-colors hover:bg-surface-container-low">
-                        <td class="px-6 py-4 font-mono-data">${dashboardApi.escapeHtml(row.producto)}</td>
-                        <td class="px-6 py-4">${channelLabel}</td>
-                        <td class="px-6 py-4">${row.real.toLocaleString("es-CL")}</td>
-                        <td class="px-6 py-4 font-bold ${row.estado === "Revision" ? "text-error" : "text-primary"}">${soldReference.toLocaleString("es-CL")}</td>
-                        <td class="px-6 py-4">
-                            <span class="rounded px-2 py-1 text-xs font-bold ${badgeClass}">${row.estado}</span>
-                        </td>
-                    </tr>
-                `;
-            }).join("");
+      dashboardApi.mountShell({
+        activePage: "dashboard",
+        title: "Panel de control",
+        header: {
+          eyebrow: "VISIÓN GLOBAL",
+          badge: `${state.alertas.length} alertas activas`,
+          badgeIcon: "analytics",
+          secondaryActions: [
+            { id: "dashboard-refresh", icon: "autorenew", label: "Refrescar" },
+            { id: "dashboard-audit", icon: "query_stats", label: "Audit" },
+          ],
+          primaryAction: { id: "dashboard-reset", icon: "restart_alt", label: "Reset Demo" },
+        },
+      });
 
-            const alerts = state.alertas.slice(0, 3).map((alert, index) => `
-                <div class="rounded-xl bg-surface-container-low p-4">
-                    <div class="flex items-center justify-between gap-3">
-                        <span class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">${alert.tipo}</span>
-                        <span class="rounded px-2 py-1 text-[10px] font-bold ${
-                            alert.severidad === "alta"
-                                ? "bg-error-container text-error"
-                                : alert.severidad === "media"
-                                    ? "bg-secondary-fixed text-secondary"
-                                    : "bg-surface-container text-on-surface-variant"
-                        }">${alert.severidad}</span>
-                    </div>
-                    <p class="mt-2 text-sm text-on-surface">${dashboardApi.escapeHtml(alert.mensaje)}</p>
-                    <button class="mt-3 text-xs font-semibold uppercase tracking-widest text-secondary alert-detail-button" data-alert-index="${index}" type="button">Ver detalle</button>
+      const root = document.getElementById("dashboard-root");
+      root.innerHTML = `
+        <section class="grid h-full min-h-0 gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+          <div class="grid min-h-0 gap-5 xl:grid-rows-[auto_minmax(0,1fr)]">
+            <section class="rounded-[32px] border border-[#dce4ff] bg-[radial-gradient(circle_at_top_left,_rgba(84,109,217,0.18),_transparent_30%),linear-gradient(135deg,_#ffffff,_#f7f9ff)] p-5 shadow-[0_22px_48px_rgba(47,87,211,0.08)] md:p-6">
+              <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+                <div class="max-w-3xl">
+                  <span class="inline-flex items-center gap-2 rounded-full border border-[#dce4ff] bg-white px-3 py-1 text-label-caps text-[#3556c5]">
+                    <span class="material-symbols-outlined text-sm">campaign</span>
+                    Panel ejecutivo de hoy
+                  </span>
+                  <h1 class="mt-4 text-[30px] font-bold leading-[1.02] tracking-[-0.04em] text-[#2341ae] md:text-[34px]">
+                    Vista ejecutiva.
+                  </h1>
+                  <p class="mt-3 max-w-2xl text-body-md text-[#5f6f92]">
+                    KPIs por módulo.
+                  </p>
                 </div>
-            `).join("");
-
-            const root = document.getElementById("dashboard-root");
-            root.innerHTML = `
-                <section class="relative overflow-hidden rounded-[28px] border border-outline-variant bg-[radial-gradient(circle_at_top_left,_rgba(33,112,228,0.18),_transparent_35%),linear-gradient(135deg,_#ffffff,_#eff4ff)] p-8 shadow-sm">
-                    <div class="absolute -right-10 top-0 h-40 w-40 rounded-full bg-secondary/10 blur-3xl"></div>
-                    <div class="absolute bottom-0 left-10 h-24 w-24 rounded-full bg-tertiary-fixed/40 blur-2xl"></div>
-                    <div class="relative grid grid-cols-12 gap-6">
-                        <div class="col-span-8">
-                            <span class="inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-white/80 px-3 py-1 text-[11px] font-label-caps uppercase tracking-[0.2em] text-secondary">
-                                <span class="material-symbols-outlined text-sm">campaign</span>
-                                Demo comercial en vivo
-                            </span>
-                            <h2 class="mt-4 max-w-3xl font-headline-lg text-[36px] leading-[44px] text-primary">Convierte un recorrido operativo en una historia visible: producir, asignar, vender y conciliar sin salir del mismo demo.</h2>
-                            <p class="mt-4 max-w-2xl text-body-lg text-on-surface-variant">Usa este bloque como cabecera de presentación: muestra el estado global, lanza un pitch guiado y salta directo al módulo que quieras enseñar.</p>
-                            <div class="mt-6 flex flex-wrap gap-3">
-                                <button class="rounded-xl bg-primary px-5 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-colors hover:bg-primary-container" id="dashboard-guided-pitch" type="button">Guided Pitch</button>
-                                <button class="rounded-xl bg-white px-5 py-3 text-sm font-semibold uppercase tracking-widest text-secondary shadow-sm transition-colors hover:bg-surface-container" id="dashboard-demo-story" type="button">Storyline</button>
-                                <button class="rounded-xl bg-white px-5 py-3 text-sm font-semibold uppercase tracking-widest text-primary shadow-sm transition-colors hover:bg-surface-container" id="dashboard-jump-live" type="button">Jump to Live Flow</button>
-                            </div>
-                        </div>
-                        <div class="col-span-4 space-y-3">
-                            <div class="rounded-2xl bg-white/85 p-4 shadow-sm">
-                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Valor que se demuestra</p>
-                                <p class="mt-2 text-sm text-on-surface">Control en tiempo real, trazabilidad completa y conversación comercial lista para dueños y operadores.</p>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <button class="rounded-2xl bg-primary-container p-4 text-left text-white transition-transform hover:-translate-y-0.5" id="dashboard-open-production-card" type="button">
-                                    <p class="text-xs font-label-caps uppercase tracking-widest text-primary-fixed-dim">Paso 1</p>
-                                    <p class="mt-2 font-semibold">Produccion</p>
-                                </button>
-                                <button class="rounded-2xl bg-white/85 p-4 text-left shadow-sm transition-transform hover:-translate-y-0.5" id="dashboard-open-sales-card" type="button">
-                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Paso 3</p>
-                                    <p class="mt-2 font-semibold text-primary">Ventas</p>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="grid grid-cols-12 items-stretch gap-6">
-                    <div class="col-span-8 relative overflow-hidden rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
-                        <div class="mb-8 flex items-start justify-between gap-4">
-                            <div>
-                                <span class="mb-1 block font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Conciliacion automatica</span>
-                                <h3 class="font-headline-lg text-headline-lg text-primary">Estado de Flujo Real-Time</h3>
-                            </div>
-                            <div class="flex items-center gap-2 rounded border border-outline-variant/30 bg-surface-container px-3 py-1.5">
-                                <span class="material-symbols-outlined text-sm text-secondary">schedule</span>
-                                <span class="font-mono-data text-mono-data text-on-surface-variant">Sin backend · localStorage</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-12 py-4">
-                            <div class="relative flex h-48 w-48 items-center justify-center">
-                                <svg class="h-full w-full -rotate-90" viewBox="0 0 200 200">
-                                    <circle cx="100" cy="100" fill="transparent" r="88" stroke="#E2E8F0" stroke-width="12"></circle>
-                                    <circle
-                                        cx="100"
-                                        cy="100"
-                                        fill="transparent"
-                                        r="88"
-                                        stroke="#0058be"
-                                        stroke-dasharray="${2 * Math.PI * 88}"
-                                        stroke-dashoffset="${(2 * Math.PI * 88) - ((Math.max(0, Math.min(100, metrics.conciliationPct)) / 100) * (2 * Math.PI * 88))}"
-                                        stroke-linecap="round"
-                                        stroke-width="12"
-                                    ></circle>
-                                </svg>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span class="font-display-kpi text-display-kpi leading-none text-primary">${metrics.conciliationPct}%</span>
-                                    <span class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant">Eficacia Conc.</span>
-                                </div>
-                            </div>
-                            <div class="w-full flex-1 space-y-6">
-                                ${renderDeltaBar("Unidades producidas", metrics.totalPlanned, metrics.totalProduced, "")}
-                                ${renderDeltaBar("Volumen de carga (KG)", 840, 842.1, " kg")}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-4 flex flex-col gap-6">
-                        <div class="relative overflow-hidden rounded-lg border border-on-tertiary-container/20 bg-tertiary-container p-card-padding text-on-tertiary shadow-sm">
-                            <div class="relative z-10">
-                                <div class="mb-2 flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-tertiary-fixed">check_circle</span>
-                                    <span class="font-label-caps text-label-caps uppercase tracking-widest text-tertiary-fixed">Status operativo</span>
-                                </div>
-                                <h4 class="font-headline-lg text-headline-lg leading-tight">${metrics.statusLabel}</h4>
-                                <p class="mt-2 text-body-sm text-tertiary-fixed/80">
-                                    ${metrics.statusLabel === "Todo Cuadra"
-                                        ? "Los flujos de produccion coinciden con las ordenes activas."
-                                        : "Existen desviaciones controladas entre produccion, distribucion y ventas."}
-                                </p>
-                            </div>
-                            <div class="relative z-10 mt-6 space-y-3">
-                                <div class="rounded-lg border border-white/10 bg-black/20 p-3">
-                                    <div class="mb-1 flex items-center justify-between text-xs font-label-caps">
-                                        <span>Cumplimiento SLA</span>
-                                        <span class="text-tertiary-fixed">${state.slaCumplimiento}%</span>
-                                    </div>
-                                    <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                                        <div class="h-full bg-tertiary-fixed" style="width:${state.slaCumplimiento}%"></div>
-                                    </div>
-                                </div>
-                                <button class="w-full rounded bg-tertiary-fixed py-3 text-xs font-semibold uppercase tracking-widest text-tertiary-container" id="open-production" type="button">
-                                    Ir a Production
-                                </button>
-                            </div>
-                        </div>
-                        <div class="rounded-lg border border-outline-variant bg-white p-4 shadow-sm">
-                            <div class="mb-4 flex items-center justify-between">
-                                <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Alertas activas</p>
-                                <span class="text-sm font-semibold text-secondary">${String(state.alertas.length).padStart(2, "0")}</span>
-                            </div>
-                            <div class="space-y-3">
-                                ${alerts || '<p class="text-sm text-on-surface-variant">Sin alertas activas.</p>'}
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="grid grid-cols-4 gap-6">
-                    <div class="rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
-                        <div class="mb-4 flex items-start justify-between gap-3">
-                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Producido total</span>
-                            <span class="material-symbols-outlined text-on-surface-variant/40">heat</span>
-                        </div>
-                        <div class="mb-1 flex items-baseline gap-2">
-                            <span class="font-display-kpi text-3xl leading-none text-primary">${metrics.totalProduced.toLocaleString("es-CL")}</span>
-                            <span class="text-body-sm text-on-surface-variant">uds</span>
-                        </div>
-                        <p class="text-xs font-bold text-secondary">${metrics.productionAccuracy}% del plan diario</p>
-                    </div>
-                    <div class="rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
-                        <div class="mb-4 flex items-start justify-between gap-3">
-                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Volumen activo</span>
-                            <span class="material-symbols-outlined text-on-surface-variant/40">stacks</span>
-                        </div>
-                        <div class="mb-1 flex items-baseline gap-2">
-                            <span class="font-display-kpi text-3xl leading-none text-primary">${metrics.availableUnits.toLocaleString("es-CL")}</span>
-                            <span class="text-body-sm text-on-surface-variant">uds</span>
-                        </div>
-                        <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
-                            <div class="h-full rounded-full bg-secondary" style="width:${Math.max(18, Math.min(100, metrics.productionAccuracy))}%"></div>
-                        </div>
-                        <p class="mt-2 text-xs font-bold text-secondary">Stock listo para asignacion</p>
-                    </div>
-                    <div class="col-span-2 rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
-                        <div class="mb-4 flex items-start justify-between gap-3">
-                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Vendido por canal</span>
-                            <span class="material-symbols-outlined text-on-surface-variant/40">shopping_bag</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-4">
-                            ${soldCards}
-                        </div>
-                    </div>
-                </section>
-
-                <section class="grid grid-cols-4 gap-6">
-                    <div class="col-span-3 rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
-                        <div class="mb-4 flex items-start justify-between gap-3">
-                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Merma / no vendido</span>
-                            <span class="material-symbols-outlined text-on-surface-variant/40">delete_sweep</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="rounded border border-outline-variant/20 bg-surface-container-low p-3">
-                                <p class="mb-2 text-xs font-label-caps uppercase text-on-surface-variant">Descarte</p>
-                                <p class="font-display-kpi text-xl leading-none text-primary">${metrics.totalWaste.toLocaleString("es-CL")}</p>
-                                <p class="mt-2 text-xs font-bold text-error">Controlado</p>
-                            </div>
-                            <div class="rounded border border-outline-variant/20 bg-surface-container-low p-3">
-                                <p class="mb-2 text-xs font-label-caps uppercase text-on-surface-variant">No vendido</p>
-                                <p class="font-display-kpi text-xl leading-none text-primary">${metrics.unsoldUnits.toLocaleString("es-CL")}</p>
-                                <p class="mt-2 text-xs font-bold text-secondary">En canal</p>
-                            </div>
-                            <div class="rounded border border-outline-variant/20 bg-surface-container-low p-3">
-                                <p class="mb-2 text-xs font-label-caps uppercase text-on-surface-variant">Impacto</p>
-                                <p class="font-display-kpi text-xl leading-none text-primary">${((metrics.noVendidoTotal / Math.max(1, metrics.totalProduced)) * 100).toFixed(1)}%</p>
-                                <p class="mt-2 text-xs font-bold text-error">Objetivo &lt; 2%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rounded-lg border border-outline-variant bg-white p-card-padding shadow-sm">
-                        <div class="mb-4 flex items-center justify-between gap-3">
-                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Cobrado hoy</span>
-                            <span class="material-symbols-outlined text-on-surface-variant/40">payments</span>
-                        </div>
-                        <p class="font-display-kpi text-3xl leading-none text-primary">${metrics.formattedSoldAmount}</p>
-                        <p class="mt-2 text-xs font-bold text-on-tertiary-container">${metrics.totalSoldUnits.toLocaleString("es-CL")} unidades vendidas</p>
-                    </div>
-                </section>
-
-                <section class="grid grid-cols-3 gap-6">
-                    <div class="col-span-2 overflow-hidden rounded-lg border border-outline-variant bg-white shadow-sm">
-                        <div class="flex items-center justify-between border-b border-outline-variant bg-surface-bright p-card-padding">
-                            <h3 class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Ultimos registros de conciliacion</h3>
-                            <button class="flex items-center gap-1 text-xs font-bold text-secondary" id="go-sales" type="button">
-                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                Ir a Sales
-                            </button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left font-body-sm">
-                                <thead>
-                                    <tr class="bg-surface-container-lowest text-xs font-label-caps uppercase text-on-surface-variant">
-                                        <th class="px-6 py-3">Referencia</th>
-                                        <th class="px-6 py-3">Canal</th>
-                                        <th class="px-6 py-3">Producido</th>
-                                        <th class="px-6 py-3">Vendido</th>
-                                        <th class="px-6 py-3">Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-outline-variant/30">
-                                    ${rows}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="flex flex-col overflow-hidden rounded-lg bg-surface-container-highest p-1">
-                        <div class="relative min-h-[420px] flex-1 overflow-hidden rounded-lg border border-outline-variant bg-gradient-to-b from-sky-100 via-slate-200 to-slate-500">
-                            <div class="absolute inset-0" style="background:radial-gradient(circle at 20% 20%, rgba(255,255,255,0.42), transparent 22%), linear-gradient(180deg, rgba(255,255,255,0.08), rgba(15,23,42,0.26));"></div>
-                            <div class="absolute border border-slate-500/20 bg-gradient-to-b from-slate-300 to-slate-500 shadow-inner" style="left:14%; top:12%; width:66%; height:72%; border-radius:42%;"></div>
-                            <div class="absolute border border-slate-600/15 bg-gradient-to-b from-slate-200/80 to-slate-400/80" style="left:24%; top:15%; width:52%; height:67%; border-radius:38%;"></div>
-                            ${[
-                                { top: "18%", left: "62%" },
-                                { top: "22%", left: "70%" },
-                                { top: "35%", left: "58%" },
-                                { top: "43%", left: "76%" },
-                                { top: "48%", left: "67%" },
-                                { top: "58%", left: "54%" },
-                                { top: "64%", left: "72%" },
-                                { top: "74%", left: "60%" }
-                            ].map((point) => `<span class="absolute h-2.5 w-2.5 rounded-full bg-cyan-400" style="top:${point.top}; left:${point.left}; box-shadow:0 0 0 4px rgba(34,211,238,0.18);"></span>`).join("")}
-                            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/80 to-transparent p-4">
-                                <span class="mb-1 block font-label-caps text-xs uppercase text-white/70">Live Tracking</span>
-                                <h5 class="font-headline-md text-headline-md leading-none text-white">Rutas de Distribucion</h5>
-                                <div class="mt-3 flex items-center gap-2">
-                                    <div class="flex -space-x-2">
-                                        <div class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-primary bg-secondary text-xs text-white">4</div>
-                                        <div class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-primary bg-tertiary-fixed text-xs text-primary">2</div>
-                                    </div>
-                                    <span class="font-mono-data text-xs text-white/80">6 camiones en ruta</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="m-3 flex items-center justify-center gap-2 rounded bg-white p-3 text-xs font-semibold uppercase tracking-widest text-primary shadow-sm transition-colors hover:bg-primary hover:text-white" id="go-distribution" type="button">
-                            <span class="material-symbols-outlined text-sm">map</span>
-                            Ver distribucion
-                        </button>
-                    </div>
-                </section>
-            `;
-
-            document.getElementById("dashboard-refresh").addEventListener("click", () => {
-                renderDashboard();
-                dashboardApi.showToast("Dashboard recalculado con el estado actual.", "info");
-            });
-            document.getElementById("dashboard-reset").addEventListener("click", () => {
-                dashboardApi.resetState();
-                dashboardApi.showToast("Demo reiniciada a los datos precargados.", "success");
-                renderDashboard();
-            });
-            document.getElementById("dashboard-history").addEventListener("click", () => {
-                window.location.href = "dashboard.html";
-            });
-            document.getElementById("open-production").addEventListener("click", () => {
-                window.location.href = "production.html";
-            });
-            document.getElementById("go-sales").addEventListener("click", () => {
-                window.location.href = "sales.html";
-            });
-            document.getElementById("go-distribution").addEventListener("click", () => {
-                window.location.href = "distribution.html";
-            });
-            document.getElementById("dashboard-guided-pitch").addEventListener("click", () => {
-                dashboardApi.openModal({
-                    kicker: "Pitch Track",
-                    title: "Guion sugerido para presentar Lanzarote",
-                    body: `
-                        <div class="space-y-4">
-                            <div class="rounded-xl bg-surface-container-low p-4">
-                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">1. Problema</p>
-                                <p class="mt-2 text-sm text-on-surface">Hoy la panaderia trabaja entre papel, telefonos y planillas. Lanzarote convierte eso en un tablero operativo visible.</p>
-                            </div>
-                            <div class="rounded-xl bg-surface-container-low p-4">
-                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">2. Flujo</p>
-                                <p class="mt-2 text-sm text-on-surface">Mostramos produccion, luego asignacion por canal y finalmente ventas, todo conciliado en el dashboard.</p>
-                            </div>
-                            <div class="rounded-xl bg-surface-container-low p-4">
-                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">3. Cierre</p>
-                                <p class="mt-2 text-sm text-on-surface">El mensaje final es control, velocidad y menos friccion para tomar decisiones durante el dia.</p>
-                            </div>
-                        </div>
-                    `,
-                    actions: [
-                        { id: "pitch-close", label: "Cerrar" },
-                        { id: "pitch-go-production", label: "Abrir Production", className: "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-container" }
-                    ]
-                });
-                document.getElementById("pitch-close").addEventListener("click", dashboardApi.closeModal);
-                document.getElementById("pitch-go-production").addEventListener("click", () => {
-                    window.location.href = "production.html";
-                });
-            });
-            document.getElementById("dashboard-demo-story").addEventListener("click", () => {
-                dashboardApi.openModal({
-                    kicker: "Storyline",
-                    title: "Escena sugerida de demo",
-                    body: `
-                        <div class="grid grid-cols-3 gap-3">
-                            <div class="rounded-xl bg-surface-container-low p-4">
-                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Morning Rush</p>
-                                <p class="mt-2 text-sm text-on-surface">Parte desde Production con preset estable y avanza a asignacion express.</p>
-                            </div>
-                            <div class="rounded-xl bg-surface-container-low p-4">
-                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Channel Pressure</p>
-                                <p class="mt-2 text-sm text-on-surface">Usa Distribution para mostrar estrategias retail o delivery en segundos.</p>
-                            </div>
-                            <div class="rounded-xl bg-surface-container-low p-4">
-                                <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Cash Visibility</p>
-                                <p class="mt-2 text-sm text-on-surface">Cierra en Sales con tickets y resumen por canal para mostrar impacto.</p>
-                            </div>
-                        </div>
-                    `,
-                    actions: [{ id: "story-close", label: "Cerrar" }]
-                });
-                document.getElementById("story-close").addEventListener("click", dashboardApi.closeModal);
-            });
-            document.getElementById("dashboard-jump-live").addEventListener("click", () => {
-                window.location.href = "production.html";
-            });
-            document.getElementById("dashboard-open-production-card").addEventListener("click", () => {
-                window.location.href = "production.html";
-            });
-            document.getElementById("dashboard-open-sales-card").addEventListener("click", () => {
-                window.location.href = "sales.html";
-            });
-            document.querySelectorAll(".alert-detail-button").forEach((button) => {
-                button.addEventListener("click", (event) => {
-                    const alert = state.alertas[Number(event.target.dataset.alertIndex)];
-                    if (!alert) {
-                        return;
-                    }
-                    dashboardApi.openModal({
-                        kicker: "Operational Alert",
-                        title: alert.tipo.toUpperCase(),
-                        body: `
-                            <div class="space-y-4">
-                                <div class="rounded-xl bg-surface-container-low p-4">
-                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Severidad</p>
-                                    <p class="mt-2 text-base font-semibold text-primary">${dashboardApi.escapeHtml(alert.severidad)}</p>
-                                </div>
-                                <div class="rounded-xl bg-surface-container-low p-4">
-                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Mensaje</p>
-                                    <p class="mt-2 text-sm text-on-surface">${dashboardApi.escapeHtml(alert.mensaje)}</p>
-                                </div>
-                                <div class="rounded-xl bg-surface-container-low p-4">
-                                    <p class="text-xs font-label-caps uppercase tracking-widest text-on-surface-variant">Timestamp</p>
-                                    <p class="mt-2 text-sm text-on-surface">${dashboardApi.escapeHtml(alert.timestamp)}</p>
-                                </div>
-                            </div>
-                        `,
-                        actions: [
-                            { id: "modal-close-alert", label: "Cerrar" },
-                            { id: "modal-go-audit", label: "Ver Audit Trail", className: "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-container" }
-                        ]
-                    });
-                    document.getElementById("modal-close-alert").addEventListener("click", dashboardApi.closeModal);
-                    document.getElementById("modal-go-audit").addEventListener("click", () => {
-                        window.location.href = "dashboard.html";
-                    });
-                });
-            });
-        }
-
-        function renderDeltaBar(label, expected, real, unit) {
-            const delta = dashboardApi.calcularDelta(expected, real);
-            const width = expected === 0 ? 100 : Math.min(Math.max((real / expected) * 100, 0), 100);
-
-            return `
-                <div class="space-y-2">
-                    <div class="flex items-end justify-between gap-3">
-                        <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">${label}</span>
-                        <div class="flex items-baseline gap-2">
-                            <span class="font-mono-data text-lg text-primary">${Number(real).toLocaleString("es-CL")}${unit}</span>
-                            <span class="font-mono-data text-xs text-on-surface-variant opacity-60">/ ${Number(expected).toLocaleString("es-CL")}${unit}</span>
-                        </div>
-                    </div>
-                    <div class="h-3 w-full overflow-hidden rounded-full bg-slate-100">
-                        <div class="h-full rounded-full ${delta.fillClass}" style="width:${width}%"></div>
-                    </div>
-                    <div class="flex justify-end">
-                        <span class="font-mono-data text-[10px] font-bold ${delta.colorClass}">${delta.pct > 0 ? "+" : ""}${delta.pct.toFixed(1)}% ${delta.label}</span>
-                    </div>
+                <div class="grid gap-3 sm:grid-cols-3 xl:min-w-[480px]">
+                  <div class="rounded-2xl border border-[#dce4ff] bg-white/88 px-4 py-3">
+                    <p class="text-label-caps text-[#7181a3]">Ventas mes</p>
+                    <p class="mt-2 text-[24px] font-bold leading-none tracking-[-0.03em] text-[#2341ae]">${dashboardApi.formatCurrency(salesMonthAmount)}</p>
+                  </div>
+                  <div class="rounded-2xl border border-[#dce4ff] bg-white/88 px-4 py-3">
+                    <p class="text-label-caps text-[#7181a3]">Producción mes</p>
+                    <p class="mt-2 text-[24px] font-bold leading-none tracking-[-0.03em] text-[#2341ae]">${productionMonthUnits.toLocaleString("es-CL")}</p>
+                  </div>
+                  <div class="rounded-2xl border border-[#dce4ff] bg-white/88 px-4 py-3">
+                    <p class="text-label-caps text-[#7181a3]">Despachos hoy</p>
+                    <p class="mt-2 text-[24px] font-bold leading-none tracking-[-0.03em] text-[#2341ae]">${deliveredShipments + inTransitShipments + pendingShipments}</p>
+                  </div>
                 </div>
-            `;
-        }
+              </div>
+            </section>
 
-        window.addEventListener("focus", renderDashboard);
-        window.addEventListener("storage", renderDashboard);
+            <section class="grid min-h-0 gap-4 xl:grid-rows-[auto_minmax(0,1fr)]">
+              <div class="grid gap-4 xl:grid-cols-3">
+                ${sectionCard({
+                  href: "sales.html?focus=plata",
+                  icon: "paid",
+                  eyebrow: "La plata",
+                  title: "Ventas y presupuesto",
+                  theme: "money",
+                  heroValue: dashboardApi.formatCurrency(salesMonthAmount),
+                  heroLabel: "Facturación mensual",
+                  summary: `${dashboardApi.formatCurrency(salesTodayAmount)} hoy`,
+                  compareItems: [
+                    { icon: "today", label: "Hoy vs meta", value: `${salesDayPct}%` },
+                    { icon: "monitoring", label: "Mes vs presupuesto", value: `${salesBudgetPct}%` },
+                  ],
+                  miniSeries: [
+                    { label: "Hoy", value: salesDayPct, tone: "bg-[#ffb72b]" },
+                    { label: "Mes", value: salesBudgetPct, tone: "bg-[#2f57d3]" },
+                    { label: "Brecha", value: Math.min(100, Math.round((salesGap / Math.max(1, monthlyBudget)) * 100)), tone: "bg-[#dbe5ff]" },
+                  ],
+                  metrics: [
+                    { icon: "today", label: "Ventas del día", value: dashboardApi.formatCurrency(salesTodayAmount) },
+                    { icon: "calendar_month", label: "Ventas mensuales", value: dashboardApi.formatCurrency(salesMonthAmount) },
+                    { icon: "target", label: "Cumplimiento", value: `${salesBudgetPct}%` },
+                  ],
+                  bars: [
+                    { label: "Meta", value: salesBudgetPct, tone: "bg-[#ffb72b]" },
+                    { label: "Brecha", value: Math.max(0, 100 - salesBudgetPct), tone: "bg-[#dbe5ff]" },
+                  ],
+                })}
+                ${sectionCard({
+                  href: "production.html?focus=operacion",
+                  icon: "manufacturing",
+                  eyebrow: "La operación",
+                  title: "Producción día y mes",
+                  theme: "operation",
+                  heroValue: productionMonthUnits.toLocaleString("es-CL"),
+                  heroLabel: "Unidades netas",
+                  summary: `${productionTodayUnits.toLocaleString("es-CL")} hoy`,
+                  compareItems: [
+                    { icon: "factory", label: "Hoy vs plan", value: `${productionDayPct}%` },
+                    { icon: "insights", label: "Mes vs plan", value: `${productionMonthPct}%` },
+                  ],
+                  miniSeries: [
+                    { label: "Hoy", value: productionDayPct, tone: "bg-[#2f57d3]" },
+                    { label: "Mes", value: productionMonthPct, tone: "bg-[#8aa3ff]" },
+                    { label: "Precisión", value: metrics.productionAccuracy, tone: "bg-[#d7e2ff]" },
+                  ],
+                  metrics: [
+                    { icon: "today", label: "Producción del día", value: productionTodayUnits.toLocaleString("es-CL") },
+                    { icon: "date_range", label: "Producción mensual", value: productionMonthUnits.toLocaleString("es-CL") },
+                    { icon: "tune", label: "Precisión", value: `${metrics.productionAccuracy}%` },
+                  ],
+                  bars: [
+                    { label: "Peso del día", value: Math.min(100, Math.round((productionTodayUnits / Math.max(1, productionMonthUnits)) * 100)), tone: "bg-[#2f57d3]" },
+                    { label: "Ajuste", value: Math.min(100, metrics.productionAccuracy), tone: "bg-[#8aa3ff]" },
+                  ],
+                })}
+                ${sectionCard({
+                  href: "distribution.html?focus=transito",
+                  icon: "local_shipping",
+                  eyebrow: "El tránsito",
+                  title: "Logística y despacho",
+                  theme: "transit",
+                  heroValue: `${deliveredShipments}/${deliveredShipments + inTransitShipments + pendingShipments}`,
+                  heroLabel: "Despachos entregados",
+                  summary: `${inTransitShipments} en ruta ahora`,
+                  compareItems: [
+                    { icon: "route", label: "Entregados", value: `${deliveredPct}%` },
+                    { icon: "inventory", label: "Cargas cerradas", value: `${loadClosePct}%` },
+                  ],
+                  miniSeries: [
+                    { label: "Ok", value: deliveredPct, tone: "bg-[#39b980]" },
+                    { label: "Ruta", value: inTransitPct, tone: "bg-[#2f57d3]" },
+                    { label: "Pend.", value: pendingPct, tone: "bg-[#ffb72b]" },
+                  ],
+                  metrics: [
+                    { icon: "check_circle", label: "Entregados", value: String(deliveredShipments) },
+                    { icon: "route", label: "En tránsito", value: String(inTransitShipments) },
+                    { icon: "inventory_2", label: "Por enviar", value: String(pendingShipments) },
+                  ],
+                  bars: [
+                    { label: "Entregados", value: deliveredPct, tone: "bg-[#39b980]" },
+                    { label: "Pendientes", value: pendingPct, tone: "bg-[#ffb72b]" },
+                  ],
+                })}
+              </div>
+
+              <section class="min-h-0 overflow-hidden rounded-[30px] border border-[#dce4ff] bg-white p-4 shadow-[0_18px_40px_rgba(47,87,211,0.06)]">
+                <div class="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
+                  <div>
+                    <p class="text-label-caps text-[#7181a3]">Indicadores del proceso</p>
+                    <h2 class="mt-1.5 text-[24px] font-semibold tracking-[-0.03em] text-[#2341ae]">KPIs operativos y financieros</h2>
+                    <p class="mt-1 text-body-sm text-[#607196]">Lectura compacta del proceso completo.</p>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="rounded-full bg-[#f5f7ff] px-3 py-2 text-body-sm font-semibold text-[#3556c5]">${metrics.criticalStockCount} críticos</span>
+                    <span class="rounded-full bg-[#fff5df] px-3 py-2 text-body-sm font-semibold text-[#9c6400]">${metrics.pendingClosures} cierres pendientes</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 grid min-h-0 gap-4 xl:grid-cols-[minmax(0,1.2fr)_320px]">
+                  <div class="min-h-0 overflow-y-auto pr-1">
+                    <div class="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
+                      ${processKpiCard("menu_book", "Rendimiento por receta", `${Math.round(topRecipeYield.reduce((sum, item) => sum + item.pct, 0) / Math.max(1, topRecipeYield.length))}%`, `${topRecipeYield[0]?.producto || "Sin lote"} lidera`, "blue", "production.html?subview=recipes")}
+                      ${processKpiCard("nutrition", "Desviación de consumo", `${metrics.consumptionDeviationPct > 0 ? "+" : ""}${metrics.consumptionDeviationPct}%`, `${metrics.actualConsumption.toFixed(1)} kg vs estándar`, metrics.consumptionDeviationPct > 2 ? "amber" : "green")}
+                      ${processKpiCard("delete", "Merma total", `${metrics.totalProcessWaste.toLocaleString("es-CL")} u`, `Prod ${metrics.totalWaste} · vitrina ${metrics.showcaseUnits}`, "red")}
+                      ${processKpiCard("payments", "Venta por canal", dashboardApi.formatCurrency(salesMonthAmount), `${channelKpis[0].units + channelKpis[1].units + channelKpis[2].units} u vendidas`, "blue", "sales.html?focus=channels")}
+                      ${processKpiCard("bakery_dining", "Mix de producto", `${topMixRows[0]?.sharePct || 0}%`, topMixRows[0] ? `${topMixRows[0].producto}` : "Sin ventas", "amber", "sales.html?focus=mix")}
+                      ${processKpiCard("verified", "Cumplimiento de entrega", `${metrics.deliveryCompliancePct}%`, `${deliveredShipments} entregados`, metrics.deliveryCompliancePct >= 80 ? "green" : "amber")}
+                      ${processKpiCard("alt_route", "Diferencia de ruta", `${metrics.routeDifferenceUnits} u`, `${deliveredShipments} entregas cerradas`, metrics.routeDifferenceUnits > 0 ? "red" : "green")}
+                      ${processKpiCard("account_balance_wallet", "Cobranza efectiva", `${metrics.effectiveCollectionsPct}%`, `${dashboardApi.formatCurrency(metrics.realCollections)} cobrados`, metrics.effectiveCollectionsPct >= 80 ? "green" : "amber", "sales.html?focus=collections")}
+                      ${processKpiCard("point_of_sale", "Diferencia de rendición", dashboardApi.formatCurrency(metrics.renditionDifferenceAmount), `${dashboardApi.formatCurrency(metrics.renderedAmount)} rendidos`, metrics.renditionDifferenceAmount > 0 ? "amber" : "green")}
+                      ${processKpiCard("inventory_2", "Stock crítico", `${metrics.criticalStockCount}`, `${metrics.lowStockCount} insumos · ${metrics.finishedCriticalCount} terminados`, metrics.criticalStockCount > 0 ? "red" : "green", "insumos.html?subview=stock")}
+                      ${processKpiCard("event_busy", "Cierres pendientes", `${metrics.pendingClosures}`, `${state.asignacionesPendientes.length} asignaciones sin cerrar`, metrics.pendingClosures > 0 ? "amber" : "green", "dashboard.html?focus=closures")}
+                      ${processKpiCard("task_alt", "Brechas cerradas", `${metrics.closedGapPct}%`, `${metrics.closedGaps} cerradas vs ${metrics.openGaps} abiertas`, metrics.closedGapPct >= 60 ? "green" : "blue")}
+                    </div>
+                  </div>
+
+                  <div class="grid min-h-0 gap-3 xl:grid-rows-[auto_auto_minmax(0,1fr)]">
+                    <a class="block rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#f5f8ff,_#ffffff)] p-4 shadow-soft transition-transform hover:-translate-y-[1px]" href="sales.html?focus=channels">
+                      <div class="flex items-center justify-between gap-3">
+                        <div>
+                          <p class="text-label-caps text-[#7181a3]">Venta por canal</p>
+                          <h3 class="mt-1.5 text-[18px] font-semibold text-[#2341ae]">Volumen y monto</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <span class="material-symbols-outlined text-[#3556c5]">stacked_bar_chart</span>
+                          <span class="material-symbols-outlined text-[#9aa8cb]">arrow_outward</span>
+                        </div>
+                      </div>
+                      <div class="mt-3 space-y-3">
+                        ${channelKpis.map((item) => `
+                          <div>
+                            <div class="mb-1.5 flex items-center justify-between gap-3">
+                              <span class="text-body-sm font-medium text-[#607196]">${item.label}</span>
+                              <span class="text-body-sm font-semibold text-[#2341ae]">${item.units} u · ${dashboardApi.formatCurrency(item.revenue)}</span>
+                            </div>
+                            <div class="h-2.5 overflow-hidden rounded-full bg-[#e8eeff]">
+                              <div class="h-full rounded-full ${item.tone}" style="width:${Math.max(8, Math.round((item.units / maxChannelUnits) * 100))}%"></div>
+                            </div>
+                          </div>
+                        `).join("")}
+                      </div>
+                    </a>
+
+                    <a class="block rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#fff8ea,_#ffffff)] p-4 shadow-soft transition-transform hover:-translate-y-[1px]" href="sales.html?focus=mix">
+                      <div class="flex items-center justify-between gap-3">
+                        <div>
+                          <p class="text-label-caps text-[#9c6400]">Mix de producto</p>
+                          <h3 class="mt-1.5 text-[18px] font-semibold text-[#7a4f00]">Participación en venta</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <span class="material-symbols-outlined text-[#9c6400]">donut_large</span>
+                          <span class="material-symbols-outlined text-[#9aa8cb]">arrow_outward</span>
+                        </div>
+                      </div>
+                      <div class="mt-3 space-y-2.5">
+                        ${topMixRows.map((item) => `
+                          <div class="rounded-2xl bg-white/92 px-3 py-3 shadow-[0_10px_22px_rgba(47,87,211,0.05)]">
+                            <div class="flex items-center justify-between gap-3">
+                              <span class="text-body-sm font-medium text-[#607196]">${item.producto}</span>
+                              <span class="font-data-md text-[#2341ae]">${item.sharePct}%</span>
+                            </div>
+                            <div class="mt-2 h-2.5 overflow-hidden rounded-full bg-[#f2e6c9]">
+                              <div class="h-full rounded-full bg-[#ffb72b]" style="width:${Math.max(8, item.sharePct)}%"></div>
+                            </div>
+                          </div>
+                        `).join("") || '<p class="rounded-2xl bg-white/90 px-3 py-3 text-body-sm text-[#607196]">Sin ventas para calcular mix.</p>'}
+                      </div>
+                    </a>
+
+                    <a class="block min-h-0 overflow-hidden rounded-[24px] border border-outline-variant bg-white p-4 shadow-soft transition-transform hover:-translate-y-[1px]" href="production.html?subview=recipes">
+                      <div class="flex items-center justify-between gap-3">
+                        <div>
+                          <p class="text-label-caps text-[#7181a3]">Rendimiento por receta</p>
+                          <h3 class="mt-1.5 text-[18px] font-semibold text-[#2341ae]">Top de cumplimiento</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <span class="material-symbols-outlined text-[#3556c5]">monitoring</span>
+                          <span class="material-symbols-outlined text-[#9aa8cb]">arrow_outward</span>
+                        </div>
+                      </div>
+                      <div class="mt-3 min-h-0 space-y-2 overflow-y-auto pr-1">
+                        ${topRecipeYield.map((item) => `
+                          <div class="rounded-2xl bg-surface-container-low px-3 py-3">
+                            <div class="flex items-center justify-between gap-3">
+                              <span class="text-body-sm font-medium text-[#607196]">${item.producto}</span>
+                              <span class="font-data-md text-[#2341ae]">${item.pct}%</span>
+                            </div>
+                            <div class="mt-2 h-2.5 overflow-hidden rounded-full bg-[#e8eeff]">
+                              <div class="h-full rounded-full ${item.pct >= 95 ? "bg-[#39b980]" : item.pct >= 85 ? "bg-[#ffb72b]" : "bg-[#ff7a66]"}" style="width:${Math.max(8, Math.min(100, item.pct))}%"></div>
+                            </div>
+                          </div>
+                        `).join("") || '<p class="rounded-2xl bg-surface-container-low px-3 py-3 text-body-sm text-[#607196]">Sin turnos aún.</p>'}
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </section>
+            </section>
+          </div>
+
+          <aside class="grid min-h-0 gap-4 xl:grid-rows-[auto_auto_minmax(0,1fr)]">
+            <section class="overflow-hidden rounded-[30px] bg-[radial-gradient(circle_at_top_right,_rgba(145,176,255,0.22),_transparent_28%),linear-gradient(180deg,_#2f57d3,_#2444aa)] p-5 text-white shadow-[0_22px_48px_rgba(47,87,211,0.22)]">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-label-caps text-[#c8d6ff]">Focos prioritarios</p>
+                  <h2 class="mt-2 text-[24px] font-semibold tracking-[-0.03em]">Focos del día</h2>
+                </div>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-body-sm">${urgentAlerts.length} frentes</span>
+              </div>
+              <div class="mt-4 grid grid-cols-2 gap-3">
+                <div class="rounded-2xl bg-white/10 px-4 py-3">
+                  <p class="text-label-caps text-[#d7e0ff]">Críticas</p>
+                  <p class="mt-1 text-[24px] font-bold leading-none">${highAlertCount}</p>
+                </div>
+                <div class="rounded-2xl bg-white/10 px-4 py-3">
+                  <p class="text-label-caps text-[#d7e0ff]">Medias</p>
+                  <p class="mt-1 text-[24px] font-bold leading-none">${mediumAlertCount}</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="grid grid-cols-3 gap-2">
+              <div class="rounded-[24px] border border-[#ffd8d2] bg-[#fff2f0] px-3 py-3">
+                <p class="text-label-caps text-[#d14b3f]">Altas</p>
+                <p class="mt-1 text-[22px] font-bold leading-none text-[#9f3026]">${highAlertCount}</p>
+              </div>
+              <div class="rounded-[24px] border border-[#dde5ff] bg-[#f5f7ff] px-3 py-3">
+                <p class="text-label-caps text-[#3556c5]">Medias</p>
+                <p class="mt-1 text-[22px] font-bold leading-none text-[#2341ae]">${mediumAlertCount}</p>
+              </div>
+              <div class="rounded-[24px] border border-[#ebf0ff] bg-[#f8faff] px-3 py-3">
+                <p class="text-label-caps text-[#7a86a4]">Bajas</p>
+                <p class="mt-1 text-[22px] font-bold leading-none text-[#607196]">${lowAlertCount}</p>
+              </div>
+            </section>
+
+            <section class="min-h-0 rounded-[30px] border border-[#dce4ff] bg-white p-5 shadow-[0_18px_40px_rgba(47,87,211,0.06)]">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-[#7181a3]">Alertas activas</p>
+                  <h2 class="mt-2 text-[24px] font-semibold tracking-[-0.03em] text-[#2341ae]">Alertas y desvíos</h2>
+                </div>
+                <span class="rounded-full bg-[#f5f7ff] px-3 py-1 text-body-sm font-semibold text-[#3556c5]">${state.alertas.length}</span>
+              </div>
+              <div class="mt-4 grid gap-3">
+                ${state.alertas.slice(0, 3).map((alert) => `
+                  <article class="rounded-[22px] border ${alert.severidad === "alta" ? "border-[#ffd8d2] bg-[#fff2f0]" : alert.severidad === "media" ? "border-[#dde5ff] bg-[#f5f7ff]" : "border-[#ebf0ff] bg-[#f8faff]"} p-4">
+                    <div class="flex items-start gap-3">
+                      <span class="material-symbols-outlined rounded-xl p-2 ${alert.severidad === "alta" ? "bg-[#ffe0db] text-[#d14b3f]" : alert.severidad === "media" ? "bg-[#e8eeff] text-[#2f57d3]" : "bg-[#edf2ff] text-[#6f7fa1]"}">${alert.severidad === "alta" ? "warning" : alert.severidad === "media" ? "notifications_active" : "info"}</span>
+                      <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between gap-3">
+                          <span class="text-label-caps ${alert.severidad === "alta" ? "text-[#d14b3f]" : "text-[#6f7fa1]"}">${alert.tipo}</span>
+                          <span class="text-body-sm font-semibold ${alert.severidad === "alta" ? "text-[#d14b3f]" : "text-[#2341ae]"}">${alert.severidad}</span>
+                        </div>
+                        <p class="mt-2 text-body-md ${alert.severidad === "alta" ? "text-[#7a342c]" : "text-[#607196]"}">${dashboardApi.escapeHtml(alert.mensaje)}</p>
+                      </div>
+                    </div>
+                  </article>
+                `).join("") || '<p class="rounded-2xl bg-[#f8faff] p-4 text-body-md text-[#607196]">Sin alertas relevantes por ahora.</p>'}
+              </div>
+            </section>
+          </aside>
+        </section>
+      `;
+
+      document.getElementById("dashboard-refresh").addEventListener("click", renderDashboard);
+      document.getElementById("dashboard-audit").addEventListener("click", () => {
+        window.location.href = "dashboard.html";
+      });
+      document.getElementById("dashboard-reset").addEventListener("click", () => {
+        dashboardApi.resetState();
         renderDashboard();
-    </script>
-</body></html>
+      });
+    }
+
+    function sectionCard({ href, icon, eyebrow, title, theme, heroValue, heroLabel, summary, compareItems, miniSeries, metrics, bars }) {
+      const palette = {
+        money: {
+          wrapper: "border-[#ffe0a0] bg-[linear-gradient(180deg,_#fff7e7,_#ffffff)]",
+          badge: "bg-[#fff0c8] text-[#9c6400]",
+          title: "text-[#7a4f00]",
+          metricValue: "text-[#2341ae]",
+          helper: "text-[#7b829d]",
+          halo: "rgba(255,183,43,0.26)",
+          iconWrap: "bg-[#fff0c8] text-[#9c6400]",
+          compare: "bg-[#fff6e0] text-[#9c6400]",
+        },
+        operation: {
+          wrapper: "border-[#dce4ff] bg-[linear-gradient(180deg,_#f5f8ff,_#ffffff)]",
+          badge: "bg-[#e8eeff] text-[#2f57d3]",
+          title: "text-[#2341ae]",
+          metricValue: "text-[#2341ae]",
+          helper: "text-[#7080a3]",
+          halo: "rgba(47,87,211,0.22)",
+          iconWrap: "bg-[#e8eeff] text-[#2f57d3]",
+          compare: "bg-[#eef3ff] text-[#2f57d3]",
+        },
+        transit: {
+          wrapper: "border-[#dce4ff] bg-[linear-gradient(180deg,_#eef4ff,_#ffffff)]",
+          badge: "bg-[#e6efff] text-[#2f57d3]",
+          title: "text-[#2341ae]",
+          metricValue: "text-[#2341ae]",
+          helper: "text-[#7080a3]",
+          halo: "rgba(57,185,128,0.2)",
+          iconWrap: "bg-[#edf2ff] text-[#2f57d3]",
+          compare: "bg-[#eef4ff] text-[#2f57d3]",
+        },
+      };
+
+      const selected = palette[theme] || palette.operation;
+      const heroPct = bars[0] ? Math.max(6, Math.min(100, bars[0].value)) : 0;
+      const sparkValues = miniSeries || [];
+
+      return `
+        <a class="group flex h-full min-h-0 flex-col rounded-[30px] border ${selected.wrapper} p-5 shadow-[0_18px_40px_rgba(47,87,211,0.06)] transition-transform duration-150 hover:-translate-y-1" href="${href}">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-label-caps ${selected.badge}">
+                <span class="material-symbols-outlined text-sm">${icon}</span>
+                ${eyebrow}
+              </span>
+              <h2 class="mt-3 text-[20px] font-bold leading-[1.05] tracking-[-0.03em] ${selected.title} md:text-[22px]">${title}</h2>
+              <p class="mt-2 text-body-sm ${selected.helper}">${summary}</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="relative grid h-12 w-12 place-items-center rounded-full bg-white shadow-[0_12px_24px_rgba(47,87,211,0.08)]" style="background:conic-gradient(${selected.halo} ${heroPct}%, #eef2ff 0);">
+                <div class="grid h-8 w-8 place-items-center rounded-full bg-white">
+                  <span class="material-symbols-outlined ${selected.title}">${icon}</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-[#9aa8cb] transition-transform group-hover:translate-x-1">arrow_outward</span>
+            </div>
+          </div>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_132px]">
+            <div class="rounded-[22px] bg-white/92 p-4 shadow-[0_12px_24px_rgba(47,87,211,0.05)]">
+              <p class="text-label-caps text-[#7a86a4]">${heroLabel}</p>
+              <p class="mt-2 text-[28px] font-bold leading-none tracking-[-0.04em] ${selected.metricValue}">${heroValue}</p>
+              <p class="mt-2 text-body-sm ${selected.helper}">${summary}</p>
+            </div>
+
+            <div class="rounded-[22px] bg-white/92 p-4 shadow-[0_12px_24px_rgba(47,87,211,0.05)]">
+              <p class="text-label-caps text-[#7a86a4]">Pulso</p>
+              <div class="mt-4 flex h-[66px] items-end justify-between gap-2">
+                ${sparkValues.map((item) => `
+                  <div class="flex flex-1 flex-col items-center gap-1.5">
+                    <div class="flex w-full items-end justify-center rounded-t-2xl ${item.tone}" style="height:${Math.max(14, Math.min(52, item.value))}px"></div>
+                    <span class="text-[10px] font-semibold text-[#607196]">${item.label}</span>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 grid gap-2">
+            ${(compareItems || []).map((item) => `
+              <div class="flex items-center justify-between gap-3 rounded-2xl bg-white/78 px-3 py-2">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[16px] ${selected.title}">${item.icon}</span>
+                  <span class="text-body-sm font-semibold text-[#607196]">${item.label}</span>
+                </div>
+                <span class="text-body-sm font-semibold ${selected.metricValue}">${item.value}</span>
+              </div>
+            `).join("")}
+          </div>
+
+          <div class="mt-4 space-y-2">
+            ${metrics.map((metric) => `
+              <div class="flex items-center justify-between gap-3 rounded-2xl bg-white/92 px-4 py-3 shadow-[0_10px_22px_rgba(47,87,211,0.05)]">
+                <div class="flex min-w-0 items-center gap-3">
+                  <span class="material-symbols-outlined rounded-xl p-2 ${selected.iconWrap}">${metric.icon || "insights"}</span>
+                  <div class="min-w-0">
+                    <p class="text-label-caps text-[#7a86a4]">${metric.label}</p>
+                  </div>
+                </div>
+                <p class="shrink-0 font-data-md ${selected.metricValue}">${metric.value}</p>
+              </div>
+            `).join("")}
+          </div>
+
+          <div class="mt-auto space-y-2 pt-4">
+            ${bars.map((bar) => `
+              <div>
+                <div class="mb-1.5 flex items-center justify-between gap-3">
+                  <span class="text-body-sm font-medium text-[#607196]">${bar.label}</span>
+                  <span class="text-body-sm font-semibold text-[#2341ae]">${bar.value}%</span>
+                </div>
+                <div class="h-2.5 overflow-hidden rounded-full bg-[#e8eeff]">
+                  <div class="h-full rounded-full ${bar.tone}" style="width:${Math.max(6, Math.min(100, bar.value))}%"></div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </a>
+      `;
+    }
+
+    function processKpiCard(icon, label, value, helper, tone = "blue", href = "") {
+      const palette = {
+        blue: {
+          wrap: "border-[#dce4ff] bg-[#f5f8ff]",
+          icon: "bg-white text-[#2f57d3]",
+          value: "text-[#2341ae]",
+        },
+        green: {
+          wrap: "border-[#d6efdf] bg-[#f3fff7]",
+          icon: "bg-white text-[#1b8b5c]",
+          value: "text-[#146b48]",
+        },
+        amber: {
+          wrap: "border-[#ffe0a0] bg-[#fff7e7]",
+          icon: "bg-white text-[#9c6400]",
+          value: "text-[#7a4f00]",
+        },
+        red: {
+          wrap: "border-[#ffd8d2] bg-[#fff2f0]",
+          icon: "bg-white text-[#d14b3f]",
+          value: "text-[#9f3026]",
+        },
+      }[tone];
+
+      const Tag = href ? "a" : "article";
+      const attrs = href ? ` href="${href}"` : "";
+      const actionClass = href ? " transition-transform hover:-translate-y-[1px]" : "";
+      const actionIcon = href ? '<span class="material-symbols-outlined text-[#9aa8cb]">arrow_outward</span>' : "";
+
+      return `
+        <${Tag}${attrs} class="block rounded-[22px] border ${palette.wrap} px-4 py-3 shadow-[0_10px_22px_rgba(47,87,211,0.05)]${actionClass}">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <p class="text-label-caps text-[#7a86a4]">${label}</p>
+              <p class="mt-2 text-[24px] font-bold leading-none tracking-[-0.03em] ${palette.value}">${value}</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined rounded-xl p-2 ${palette.icon}">${icon}</span>
+              ${actionIcon}
+            </div>
+          </div>
+          <p class="mt-2 text-body-sm text-[#607196]">${helper}</p>
+        </${Tag}>
+      `;
+    }
+
+    window.addEventListener("focus", renderDashboard);
+    window.addEventListener("storage", renderDashboard);
+    renderDashboard();
+  </script>
+</body>
+</html>

@@ -1,476 +1,636 @@
 <!DOCTYPE html>
-
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Lanzarote - Distribución por Canal</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
-        .delta-track {
-            height: 6px;
-            background-color: #e5eeff;
-            border-radius: 3px;
-            position: relative;
-            overflow: hidden;
-        }
-        .delta-fill {
-            height: 100%;
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(203, 219, 245, 0.5);
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface": "#f8f9ff",
-                      "surface-tint": "#565e74",
-                      "surface-dim": "#cbdbf5",
-                      "surface-container": "#e5eeff",
-                      "background": "#f8f9ff",
-                      "on-tertiary": "#ffffff",
-                      "surface-container-lowest": "#ffffff",
-                      "primary-container": "#131b2e",
-                      "error": "#ba1a1a",
-                      "outline": "#76777d",
-                      "tertiary-container": "#002113",
-                      "secondary-fixed-dim": "#adc6ff",
-                      "primary-fixed-dim": "#bec6e0",
-                      "on-tertiary-container": "#009668",
-                      "inverse-on-surface": "#eaf1ff",
-                      "on-primary-container": "#7c839b",
-                      "on-background": "#0b1c30",
-                      "inverse-primary": "#bec6e0",
-                      "surface-container-high": "#dce9ff",
-                      "primary-fixed": "#dae2fd",
-                      "on-surface": "#0b1c30",
-                      "surface-container-low": "#eff4ff",
-                      "tertiary": "#000000",
-                      "on-tertiary-fixed": "#002113",
-                      "tertiary-fixed": "#6ffbbe",
-                      "on-primary-fixed-variant": "#3f465c",
-                      "on-error": "#ffffff",
-                      "surface-variant": "#d3e4fe",
-                      "tertiary-fixed-dim": "#4edea3",
-                      "primary": "#000000",
-                      "error-container": "#ffdad6",
-                      "on-secondary-fixed": "#001a42",
-                      "on-secondary": "#ffffff",
-                      "on-error-container": "#93000a",
-                      "secondary-fixed": "#d8e2ff",
-                      "on-primary": "#ffffff",
-                      "inverse-surface": "#213145",
-                      "secondary": "#0058be",
-                      "outline-variant": "#c6c6cd",
-                      "surface-container-highest": "#d3e4fe",
-                      "on-secondary-container": "#fefcff",
-                      "on-secondary-fixed-variant": "#004395",
-                      "on-tertiary-fixed-variant": "#005236",
-                      "secondary-container": "#2170e4",
-                      "on-primary-fixed": "#131b2e",
-                      "surface-bright": "#f8f9ff",
-                      "on-surface-variant": "#45464d"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "gutter": "24px",
-                      "card-padding": "20px",
-                      "unit": "4px",
-                      "margin-mobile": "16px",
-                      "margin-desktop": "32px"
-              },
-              "fontFamily": {
-                      "headline-md": ["Plus Jakarta Sans"],
-                      "mono-data": ["JetBrains Mono"],
-                      "label-caps": ["Inter"],
-                      "body-lg": ["Inter"],
-                      "body-sm": ["Inter"],
-                      "headline-lg": ["Plus Jakarta Sans"],
-                      "headline-lg-mobile": ["Plus Jakarta Sans"],
-                      "display-kpi": ["Plus Jakarta Sans"]
-              },
-              "fontSize": {
-                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
-                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "display-kpi": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
-              }
-            },
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Lanzarote - Distribución</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e0e3e5",
+            "on-error": "#ffffff",
+            "primary": "#000000",
+            "on-tertiary-fixed-variant": "#38485d",
+            "tertiary-container": "#0b1c30",
+            "secondary-container": "#d5e3fd",
+            "on-surface-variant": "#45464d",
+            "secondary-fixed": "#d5e3fd",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "secondary": "#515f74",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "surface-container-lowest": "#ffffff",
+            "background": "#f7f9fb",
+            "on-secondary-container": "#57657b",
+            "on-secondary-fixed": "#0d1c2f",
+            "on-secondary-fixed-variant": "#3a485c",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "inverse-surface": "#2d3133",
+            "surface-dim": "#d8dadc",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#131b2e",
+            "surface": "#f7f9fb",
+            "surface-container-low": "#f2f4f6",
+            "on-surface": "#191c1e",
+            "on-background": "#191c1e",
+            "on-tertiary-fixed": "#0b1c30",
+            "inverse-on-surface": "#eff1f3",
+            "on-primary-container": "#7c839b",
+            "error-container": "#ffdad6",
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#3f465c",
+            "tertiary": "#000000",
+            "inverse-primary": "#bec6e0",
+            "surface-container-high": "#e6e8ea",
+            "surface-tint": "#565e74",
+            "on-tertiary-container": "#75859d",
+            "secondary-fixed-dim": "#b9c7e0",
+            "tertiary-fixed": "#d3e4fe",
+            "primary-container": "#131b2e",
+            "outline-variant": "#c6c6cd"
           },
+          borderRadius: {
+            "sm": "0.125rem",
+            "DEFAULT": "0.25rem",
+            "md": "0.375rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "unit": "4px",
+            "container-padding": "24px",
+            "gutter": "16px",
+            "stack-sm": "8px",
+            "stack-md": "16px",
+            "stack-lg": "32px"
+          },
+          fontFamily: {
+            "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "label-caps": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "data-lg": ["JetBrains Mono", "monospace"],
+            "data-md": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "display-lg": ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+            "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "data-lg": ["20px", { lineHeight: "24px", fontWeight: "600" }],
+            "data-md": ["14px", { lineHeight: "20px", fontWeight: "500" }]
+          },
+          boxShadow: {
+            "soft": "0 8px 24px rgba(15, 23, 42, 0.08)"
+          }
         }
-      </script>
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      vertical-align: middle;
+    }
+  </style>
 </head>
-<body class="bg-surface font-body-sm text-on-surface min-h-screen flex">
-<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-gutter px-4 z-50" id="sidebar"></aside>
-<main class="flex-1 flex flex-col min-w-0">
-<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-40 bg-surface-bright shadow-sm border-b border-outline-variant" id="topbar"></header>
-<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-8" id="distribution-root"></div>
-</main>
-<script src="state.js"></script>
-<script>
-        const distributionApi = window.LanzaroteState;
-        const allocationQuantities = {};
-        const strategyProfiles = {
-            balanced: { meson: 0.4, retiro: 0.3, delivery: 0.3, label: "Balanced" },
-            retail: { meson: 0.58, retiro: 0.24, delivery: 0.18, label: "Retail Push" },
-            delivery: { meson: 0.2, retiro: 0.15, delivery: 0.65, label: "Delivery Rush" }
-        };
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(213,227,253,0.45),_transparent_28%),linear-gradient(180deg,_#f7f9fb,_#eef2f6)] text-on-surface antialiased md:flex">
+  <aside class="px-3 pt-3 md:h-screen md:w-[300px] md:shrink-0 md:p-6" id="sidebar"></aside>
+  <main class="min-w-0 flex-1">
+    <header class="sticky top-0 z-30 border-b border-outline-variant/80 bg-[rgba(247,249,251,0.82)] px-4 py-4 backdrop-blur-xl sm:px-6 md:min-h-[88px] md:px-container-padding" id="topbar"></header>
+    <div class="mx-auto flex h-full w-full max-w-none min-h-0 flex-col px-4 pb-4 pt-4 sm:px-6 sm:pt-5 md:p-container-padding md:pt-5" id="distribution-root"></div>
+  </main>
+  <script src="state.js?v=20260709-ui6"></script>
+  <script>
+    const distributionApi = window.LanzaroteState;
+    let allocationQuantities = {};
+    let selectedDeliveryId = "";
 
-        function getDisplayItems(channel, pendingItems, productMap) {
-            const merged = new Map();
+    function renderDistribution() {
+      const state = distributionApi.getState();
+      const metrics = distributionApi.buildMetrics(state);
+      const productMap = distributionApi.getProductMap(state);
+      const lotMap = distributionApi.getFinishedLots(state).reduce((accumulator, lot) => {
+        accumulator[lot.id] = lot;
+        return accumulator;
+      }, {});
+      const lots = Object.values(lotMap);
+      const availableLots = lots.filter((lot) => lot.cantidadDisponible > 0);
+      const confirmedUnits = lots.reduce((sum, lot) => sum + lot.cantidadConfirmada, 0);
+      const availableUnits = lots.reduce((sum, lot) => sum + lot.cantidadDisponible, 0);
+      const pendingUnits = lots.reduce((sum, lot) => sum + lot.cantidadPendiente, 0);
 
-            channel.stock.forEach((item) => {
-                merged.set(item.productoId, {
-                    productoId: item.productoId,
-                    cantidad: item.cantidad,
-                    pending: 0,
-                    nombre: productMap[item.productoId].nombre
-                });
-            });
+      if (selectedDeliveryId && !state.pedidosDelivery.some((pedido) => pedido.id === selectedDeliveryId)) {
+        selectedDeliveryId = "";
+      }
 
-            pendingItems.forEach((item) => {
-                const current = merged.get(item.productoId) || {
-                    productoId: item.productoId,
-                    cantidad: 0,
-                    pending: 0,
-                    nombre: productMap[item.productoId].nombre
-                };
-                merged.set(item.productoId, {
-                    ...current,
-                    cantidad: current.cantidad + item.cantidad,
-                    pending: current.pending + item.cantidad
-                });
-            });
+      const selectedDelivery = state.pedidosDelivery.find((pedido) => pedido.id === selectedDeliveryId) || state.pedidosDelivery[0] || null;
+      if (!selectedDeliveryId && selectedDelivery) {
+        selectedDeliveryId = selectedDelivery.id;
+      }
+      const selectedDeliveryLot = selectedDelivery?.loteId ? lotMap[selectedDelivery.loteId] : null;
 
-            return [...merged.values()].sort((a, b) => b.cantidad - a.cantidad);
-        }
+      distributionApi.mountShell({
+        activePage: "distribution",
+        title: "Distribución",
+        header: {
+          eyebrow: "DESPACHO OPERACIONAL",
+          badge: `${metrics.openDeliveryOrders} rutas activas`,
+          badgeIcon: "local_shipping",
+          secondaryActions: [
+            { id: "distribution-refresh", icon: "autorenew", label: "Refrescar" },
+            { id: "distribution-sales", icon: "payments", label: "Ventas" },
+          ],
+          primaryAction: { id: "distribution-close-load", icon: "inventory", label: "Cierre de Carga" },
+        },
+      });
 
-        function renderDistribution() {
-            const state = distributionApi.getState();
-            const metrics = distributionApi.buildMetrics(state);
-            const productMap = distributionApi.getProductMap(state);
-            const pendingByProduct = state.asignacionesPendientes.reduce((accumulator, item) => {
-                accumulator[item.productoId] = (accumulator[item.productoId] || 0) + item.cantidad;
-                return accumulator;
-            }, {});
-            const pendingUnits = state.asignacionesPendientes.reduce((sum, item) => sum + item.cantidad, 0);
-            const stockAvailable = state.stockTerminado.reduce((sum, item) => sum + item.cantidadDisponible, 0);
-            const projectedRevenue = state.stockTerminado.reduce((sum, item) => {
-                const product = productMap[item.productoId];
-                return sum + item.cantidadDisponible * (product ? product.precioUnitario : 0);
-            }, 0);
+      const root = document.getElementById("distribution-root");
+      root.innerHTML = `
+        <section class="grid h-full min-h-0 gap-4 xl:grid-cols-[270px_minmax(0,1fr)]">
+          <aside class="flex min-h-0 flex-col gap-4">
+            <section class="rounded-[26px] border border-outline-variant bg-[radial-gradient(circle_at_top_left,_rgba(255,214,153,0.34),_transparent_34%),linear-gradient(180deg,_#ffffff,_#f6f8ff)] p-4 shadow-soft">
+              <p class="inline-flex items-center gap-2 rounded-full border border-[#fde4bc] bg-[#fff7ea] px-3 py-1 text-body-sm font-medium text-[#b46900]">
+                <span class="material-symbols-outlined text-[18px]">bakery_dining</span>
+                Distribución
+              </p>
+              <h1 class="mt-3 text-[22px] font-bold leading-tight tracking-[-0.04em] text-primary">Carga por lote.</h1>
+              <div class="mt-4 grid grid-cols-2 gap-2">
+                ${summaryCard("Libre", availableUnits, "u", "accent")}
+                ${summaryCard("Reservado", confirmedUnits, "u", "default")}
+                ${summaryCard("Pendiente", pendingUnits, "u", pendingUnits ? "warn" : "default")}
+                ${summaryCard("SLA", `${metrics.conciliationPct}%`, "conciliado", "data")}
+              </div>
+            </section>
 
-            distributionApi.mountShell({
-                activePage: "distribution",
-                title: "Distribution",
-                header: {
-                    eyebrow: "CONTROL DE DISTRIBUCIÓN",
-                    badge: "Asignacion click-to-assign",
-                    badgeIcon: "inventory_2",
-                    secondaryActions: [
-                        { id: "distribution-refresh", icon: "autorenew", label: "Refrescar" },
-                        { id: "distribution-sales", icon: "payments", label: "Ventas" }
-                    ],
-                    primaryAction: { id: "distribution-finalize-top", icon: "task_alt", label: "Finalizar Asignación" }
-                }
-            });
-
-            const root = document.getElementById("distribution-root");
-            root.innerHTML = `
-                <section class="flex flex-row items-end justify-between gap-6">
-                    <div>
-                        <h2 class="font-headline-lg text-headline-lg text-primary">Distribucion por Canal</h2>
-                        <p class="font-body-lg text-on-surface-variant">Assign finished goods to active sales fronts.</p>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="min-w-[200px] rounded-xl border border-outline-variant bg-white/80 px-6 py-4 shadow-sm backdrop-blur-sm">
-                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Stock Total Disponible</span>
-                            <div class="mt-1 flex items-baseline gap-2">
-                                <span class="font-display-kpi text-[36px] leading-none text-primary">${stockAvailable.toLocaleString("es-CL")}</span>
-                                <span class="font-mono-data text-on-surface-variant">units</span>
-                            </div>
-                        </div>
-                        <div class="min-w-[220px] rounded-xl border border-outline-variant bg-white/80 px-6 py-4 shadow-sm backdrop-blur-sm">
-                            <span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary">Ingreso Proyectado</span>
-                            <div class="mt-1 flex items-baseline gap-2">
-                                <span class="font-display-kpi text-[36px] leading-none text-secondary">${distributionApi.formatCurrency(projectedRevenue)}</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="grid grid-cols-12 gap-6">
-                    <div class="col-span-8 rounded-2xl border border-outline-variant bg-white p-6 shadow-sm">
-                        <div class="flex items-center justify-between gap-4">
-                            <div>
-                                <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Demo strategies</p>
-                                <h3 class="mt-2 font-headline-md text-headline-md text-primary">Lanza una estrategia de asignacion en un clic</h3>
-                            </div>
-                            <div class="flex gap-2">
-                                <button class="rounded-xl bg-primary px-4 py-3 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-primary-container strategy-button" data-strategy="balanced" type="button">Balanced</button>
-                                <button class="rounded-xl bg-white px-4 py-3 text-xs font-semibold uppercase tracking-widest text-secondary shadow-sm transition-colors hover:bg-surface-container strategy-button" data-strategy="retail" type="button">Retail Push</button>
-                                <button class="rounded-xl bg-white px-4 py-3 text-xs font-semibold uppercase tracking-widest text-primary shadow-sm transition-colors hover:bg-surface-container strategy-button" data-strategy="delivery" type="button">Delivery Rush</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-4 rounded-2xl border border-outline-variant bg-primary-container p-6 text-white shadow-sm">
-                        <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed-dim">Recommended talk track</p>
-                        <p class="mt-3 text-sm text-white/90">Muestra como una decision de canal cambia la capacidad visible al instante y deja listo el stock para ventas.</p>
-                    </div>
-                </section>
-
-                <div class="grid grid-cols-12 items-start gap-8">
-                    <div class="col-span-3 space-y-4">
-                        <div class="flex items-center justify-between px-2">
-                            <h3 class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Inventario de Producto Terminado</h3>
-                            <span class="material-symbols-outlined text-outline">unfold_more</span>
-                        </div>
-                        <div class="space-y-3">
-                            ${state.stockTerminado.map((stock) => {
-                                const product = productMap[stock.productoId];
-                                const pending = pendingByProduct[stock.productoId] || 0;
-                                const visibleAvailable = Math.max(0, stock.cantidadDisponible - pending);
-                                const ratio = Math.min(1, visibleAvailable / Math.max(product.rendimientoEsperado, visibleAvailable, 1));
-                                const barTone = ratio < 0.35 ? "bg-on-tertiary-container" : ratio < 0.7 ? "bg-secondary" : "bg-secondary-container";
-
-                                return `
-                                    <div class="rounded-xl border border-outline-variant bg-white p-4 shadow-sm">
-                                        <div class="mb-2 flex items-start justify-between gap-3">
-                                            <span class="font-headline-md text-headline-md text-primary">${product.nombre}</span>
-                                            <span class="material-symbols-outlined text-outline-variant">drag_indicator</span>
-                                        </div>
-                                        <div class="flex items-end justify-between gap-4">
-                                            <div>
-                                                <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Disponible</p>
-                                                <p class="font-mono-data text-[18px] text-primary">${visibleAvailable.toLocaleString("es-CL")} <span class="text-[12px] opacity-60">u.</span></p>
-                                            </div>
-                                            <div class="text-right">
-                                                <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Valorización</p>
-                                                <p class="font-mono-data text-secondary">${distributionApi.formatCurrency(product.precioUnitario)}/u</p>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-surface-container">
-                                            <div class="h-full ${barTone}" style="width:${Math.max(14, Math.round(ratio * 100))}%"></div>
-                                        </div>
-                                        <div class="mt-3 flex items-center justify-between text-[11px] font-semibold uppercase tracking-widest">
-                                            <span class="text-on-surface-variant">Receta ${product.recetaId}</span>
-                                            <span class="${pending > 0 ? "text-secondary" : "text-on-surface-variant"}">${pending > 0 ? `${pending} pendiente` : "Sin bloqueo"}</span>
-                                        </div>
-                                        <div class="mt-4 flex gap-2">
-                                            <input class="w-24 rounded-lg border border-outline-variant bg-white px-3 py-2 font-mono-data text-mono-data text-primary quantity-input" data-product="${product.id}" min="0" placeholder="Cant." type="number" value="${allocationQuantities[product.id] || ""}"/>
-                                            <button class="rounded-lg bg-primary px-3 py-2 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-primary-container assign-button" data-channel="meson" data-product="${product.id}" type="button">Meson</button>
-                                            <button class="rounded-lg bg-secondary px-3 py-2 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-secondary-container assign-button" data-channel="retiro" data-product="${product.id}" type="button">Retiro</button>
-                                            <button class="rounded-lg bg-tertiary-fixed px-3 py-2 text-xs font-semibold uppercase tracking-widest text-on-tertiary-fixed transition-opacity hover:opacity-90 assign-button" data-channel="delivery" data-product="${product.id}" type="button">Delivery</button>
-                                        </div>
-                                    </div>
-                                `;
-                            }).join("")}
-                        </div>
-                    </div>
-
-                    <div class="col-span-9 grid grid-cols-3 gap-6">
-                        ${state.canales.map((channel) => {
-                            const pendingItems = state.asignacionesPendientes.filter((item) => item.canalId === channel.id);
-                            const items = getDisplayItems(channel, pendingItems, productMap);
-                            const badge = distributionApi.channelBadge(channel.id);
-                            const toneClass = channel.id === "retiro" ? "bg-error" : channel.id === "delivery" ? "bg-secondary" : "bg-on-tertiary-container";
-                            const icon = channel.id === "meson" ? "storefront" : channel.id === "retiro" ? "inventory_2" : "local_shipping";
-                            const footerLabel = channel.id === "delivery" ? "Carga Logística" : "Capacidad";
-
-                            return `
-                                <div class="flex min-h-[600px] flex-col rounded-2xl border border-transparent bg-surface-container-low p-5 transition-all hover:border-secondary">
-                                    <div class="mb-6 flex items-center justify-between">
-                                        <div class="flex items-center gap-2">
-                                            <span class="material-symbols-outlined text-secondary">${icon}</span>
-                                            <h4 class="font-headline-md text-headline-md text-primary">${channel.nombre}</h4>
-                                        </div>
-                                        <span class="rounded px-2 py-0.5 text-[10px] font-bold uppercase ${badge.className}">${badge.label}</span>
-                                    </div>
-                                    <div class="flex-1 space-y-4">
-                                        ${items.map((item) => `
-                                            <div class="rounded-xl border border-outline-variant bg-white p-4 shadow-sm">
-                                                <div class="mb-2 flex items-center justify-between">
-                                                    <span class="font-body-sm font-bold text-primary">${item.nombre}</span>
-                                                    <span class="font-mono-data text-secondary">${item.cantidad} u.</span>
-                                                </div>
-                                                <div class="flex items-center gap-2">
-                                                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">remove</span>
-                                                    <div class="h-1 flex-1 overflow-hidden rounded-full bg-surface-container">
-                                                        <div class="h-full ${toneClass}" style="width:${Math.max(24, Math.min(100, Math.round((item.cantidad / Math.max(1, channel.capacidadBase)) * 200)))}%"></div>
-                                                    </div>
-                                                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">add</span>
-                                                </div>
-                                                ${item.pending > 0 ? `<p class="mt-2 text-[10px] font-bold uppercase tracking-widest text-secondary">${item.pending} por confirmar</p>` : ""}
-                                            </div>
-                                        `).join("")}
-                                        <div class="flex h-24 items-center justify-center rounded-xl border-2 border-dashed border-outline-variant text-on-surface-variant opacity-50">
-                                            <span class="material-symbols-outlined mr-2">add_circle</span>
-                                            <span class="font-label-caps text-label-caps">Click to assign</span>
-                                        </div>
-                                    </div>
-                                    <div class="mt-6 border-t border-outline-variant pt-4">
-                                        <div class="mb-1 flex justify-between text-on-surface-variant">
-                                            <span class="font-label-caps text-label-caps">${footerLabel}</span>
-                                            <span class="font-mono-data text-[12px]">${channel.capacidadPct}%</span>
-                                        </div>
-                                        <div class="h-2 w-full overflow-hidden rounded-full bg-surface-container">
-                                            <div class="h-full ${toneClass}" style="width:${channel.capacidadPct}%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                        }).join("")}
-                    </div>
+            <section class="rounded-[26px] border border-outline-variant bg-white p-4 shadow-soft">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-on-surface-variant">Canales</p>
+                  <h2 class="mt-1.5 text-[18px] font-semibold tracking-[-0.03em] text-primary">Ocupación</h2>
                 </div>
+                <span class="rounded-full bg-surface-container-low px-3 py-1 text-body-sm text-on-surface-variant">${metrics.openDeliveryOrders} rutas</span>
+              </div>
+              <div class="mt-4 space-y-3">
+                ${["meson", "retiro", "delivery"].map((channelId) => channelSnapshot(state, channelId, productMap)).join("")}
+              </div>
+            </section>
 
-                <section class="grid grid-cols-4 gap-8 rounded-2xl border border-outline-variant bg-white/80 p-8 shadow-sm backdrop-blur-sm">
-                    <div class="flex flex-col">
-                        <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Stock Asignado</span>
-                        <div class="mt-2 flex items-center gap-2">
-                            <span class="font-display-kpi text-[32px] leading-none text-primary">${(metrics.assignedUnits + pendingUnits).toLocaleString("es-CL")}</span>
-                            <span class="font-mono-data text-on-tertiary-container">+12% vs. esperado</span>
+            <section class="flex min-h-0 flex-1 flex-col rounded-[26px] bg-primary-container p-4 text-white shadow-soft">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-label-caps text-primary-fixed-dim">Despacho activo</p>
+                  <h2 class="mt-1.5 text-[18px] font-semibold tracking-[-0.03em]">${selectedDelivery ? selectedDelivery.cliente : "Sin selección"}</h2>
+                </div>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-body-sm">${selectedDelivery ? selectedDelivery.estado : "--"}</span>
+              </div>
+              ${
+                selectedDelivery
+                  ? `
+                    <div class="mt-4 space-y-3">
+                      <article class="rounded-2xl bg-white/10 p-3.5">
+                        <p class="text-label-caps text-primary-fixed-dim">Origen</p>
+                        <p class="mt-1.5 text-body-md">${selectedDeliveryLot ? `${selectedDeliveryLot.productoNombre} · ${selectedDeliveryLot.turno}` : `${productMap[selectedDelivery.productoId].nombre} · ${selectedDelivery.cantidad} u`}</p>
+                        <p class="mt-1 text-body-sm text-primary-fixed-dim">${selectedDeliveryLot ? `${selectedDeliveryLot.orderId || selectedDeliveryLot.turnoId} · ${selectedDeliveryLot.fecha}` : selectedDelivery.ruta}</p>
+                      </article>
+                      <article class="rounded-2xl bg-white/10 p-3.5">
+                        <div class="flex items-center justify-between text-body-sm">
+                          <span>Ruta</span>
+                          <span>${selectedDelivery.paradasCompletadas}/${selectedDelivery.paradasTotales}</span>
                         </div>
-                    </div>
-                    <div class="flex flex-col border-l border-outline-variant pl-8">
-                        <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Stock Restante</span>
-                        <div class="mt-2 flex items-center gap-2">
-                            <span class="font-display-kpi text-[32px] leading-none text-on-surface-variant">${Math.max(0, metrics.availableUnits - pendingUnits).toLocaleString("es-CL")}</span>
-                            <span class="font-mono-data text-outline">Sin Asignar</span>
+                        <p class="mt-1.5 text-body-md">${selectedDelivery.ruta}</p>
+                        <p class="mt-1 text-body-sm text-primary-fixed-dim">${selectedDelivery.vehiculo} · ${selectedDelivery.chofer}</p>
+                        <div class="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                          <div class="h-full bg-white" style="width:${Math.max(10, Math.round((selectedDelivery.paradasCompletadas / Math.max(1, selectedDelivery.paradasTotales)) * 100))}%"></div>
                         </div>
+                      </article>
                     </div>
-                    <div class="flex flex-col border-l border-outline-variant pl-8">
-                        <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Eficiencia de Canal</span>
-                        <div class="mt-2 flex items-center gap-2">
-                            <span class="font-display-kpi text-[32px] leading-none text-secondary">${metrics.conciliationPct.toFixed(1)}%</span>
-                        </div>
+                    <button class="mt-4 flex w-full items-center justify-center gap-3 rounded-2xl bg-white px-4 py-3 text-body-md font-semibold text-primary transition-colors hover:bg-surface-container-low ${selectedDelivery.cargaCerrada ? "opacity-40" : ""}" ${selectedDelivery.cargaCerrada ? "disabled" : ""} id="distribution-close-load-inline" type="button">
+                      <span class="material-symbols-outlined">inventory</span>
+                      ${selectedDelivery.cargaCerrada ? "Carga cerrada" : "Cerrar carga"}
+                    </button>
+                  `
+                  : `<div class="mt-4 rounded-2xl bg-white/10 p-4 text-body-sm text-primary-fixed-dim">Selecciona una ruta activa.</div>`
+              }
+            </section>
+          </aside>
+
+          <section class="flex min-h-0 flex-col overflow-hidden rounded-[30px] border border-outline-variant bg-white p-5 shadow-soft">
+            <div class="flex flex-wrap items-end justify-between gap-3 border-b border-outline-variant pb-4">
+              <div>
+                <p class="text-label-caps text-on-surface-variant">Subproceso activo</p>
+                <h2 class="mt-1.5 text-[28px] font-semibold tracking-[-0.04em] text-primary">Asignación por origen</h2>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="rounded-full bg-[#fff3dc] px-3 py-1.5 text-body-sm font-medium text-[#b46900]">${availableLots.length} lotes con saldo</span>
+                <span class="rounded-full bg-surface-container-low px-3 py-1.5 text-body-sm text-on-surface-variant">${state.asignacionesPendientes.length} pendientes</span>
+              </div>
+            </div>
+
+            <div class="mt-4 grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
+              <div class="min-h-0 overflow-y-auto pr-2">
+                <div class="grid gap-3">
+                  ${lots.map((lot) => renderLotCard(lot, allocationQuantities[lot.id] || "")).join("") || `
+                    <article class="rounded-[24px] border border-dashed border-outline-variant bg-surface-container-low p-6 text-body-md text-on-surface-variant">
+                      Sin producto terminado.
+                    </article>
+                  `}
+                </div>
+              </div>
+
+              <aside class="flex min-h-0 flex-col gap-4 overflow-y-auto pr-1">
+                <section class="rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#ffffff,_#f8faff)] p-4 shadow-soft">
+                  <div class="flex items-center justify-between gap-3">
+                    <div>
+                      <p class="text-label-caps text-on-surface-variant">Confirmación</p>
+                      <h3 class="mt-1.5 text-[20px] font-semibold tracking-[-0.03em] text-primary">Pendientes</h3>
                     </div>
-                    <div class="flex flex-col items-end">
-                        <button class="flex items-center gap-2 rounded bg-primary px-8 py-4 font-bold uppercase tracking-widest text-white transition-all hover:bg-primary-container disabled:cursor-not-allowed disabled:bg-outline" ${state.asignacionesPendientes.length ? "" : "disabled"} id="distribution-finalize-bottom" type="button">
-                            Finalizar Asignación
-                            <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
-                        ${state.asignacionesPendientes.length ? `<p class="mt-3 text-[11px] font-semibold uppercase tracking-widest text-secondary">${state.asignacionesPendientes.length} movimientos por confirmar</p>` : ""}
-                    </div>
+                    <button class="rounded-xl bg-primary px-4 py-3 text-body-sm font-semibold text-white transition-colors hover:bg-primary-container disabled:cursor-not-allowed disabled:bg-outline" ${state.asignacionesPendientes.length ? "" : "disabled"} id="distribution-finalize" type="button">
+                      Confirmar
+                    </button>
+                  </div>
+                  <div class="mt-4 space-y-2.5">
+                    ${state.asignacionesPendientes.map((item) => renderPendingItem(item, lotMap, productMap)).join("") || `
+                      <div class="rounded-2xl bg-surface-container-low px-4 py-5 text-body-sm text-on-surface-variant">Sin pendientes.</div>
+                    `}
+                  </div>
                 </section>
-            `;
 
-            document.getElementById("distribution-refresh").addEventListener("click", () => {
-                renderDistribution();
-                distributionApi.showToast("Distribucion recalculada con el stock actual.", "info");
-            });
-            document.getElementById("distribution-sales").addEventListener("click", () => {
-                window.location.href = "sales.html";
-            });
-            document.querySelectorAll(".strategy-button").forEach((button) => {
-                button.addEventListener("click", (event) => {
-                    applyStrategy(event.target.dataset.strategy);
-                });
-            });
-            document.getElementById("distribution-finalize-top").addEventListener("click", finalizeAllocation);
-            document.getElementById("distribution-finalize-bottom").addEventListener("click", finalizeAllocation);
+                <section class="rounded-[24px] border border-outline-variant bg-primary-container p-4 text-white shadow-soft">
+                  <div class="flex items-center justify-between gap-3">
+                    <div>
+                      <p class="text-label-caps text-primary-fixed-dim">Delivery</p>
+                      <h3 class="mt-1.5 text-[20px] font-semibold tracking-[-0.03em]">Nuevo despacho</h3>
+                    </div>
+                    <span class="rounded-full bg-white/10 px-3 py-1 text-body-sm">${metrics.openDeliveryOrders} activos</span>
+                  </div>
+                  <form class="mt-4 space-y-3" id="delivery-form">
+                    <label class="block rounded-xl bg-white/10 p-3">
+                      <span class="text-label-caps text-primary-fixed-dim">Lote</span>
+                      <select class="mt-1.5 w-full border-none bg-transparent p-0 text-body-md text-white focus:ring-0" id="delivery-lot">
+                        <option class="text-primary" value="">Selecciona lote</option>
+                        ${availableLots.map((lot) => `<option class="text-primary" value="${lot.id}">${lot.productoNombre} · ${lot.orderId || lot.turnoId} · ${lot.cantidadDisponible} u</option>`).join("")}
+                      </select>
+                    </label>
+                    <div class="grid gap-3 md:grid-cols-2">
+                      <label class="block rounded-xl bg-white/10 p-3">
+                        <span class="text-label-caps text-primary-fixed-dim">Cantidad</span>
+                        <input class="mt-1.5 w-full border-none bg-transparent p-0 text-body-md text-white placeholder:text-primary-fixed-dim/60 focus:ring-0" id="delivery-quantity" min="0" placeholder="0" type="number"/>
+                      </label>
+                      <label class="block rounded-xl bg-white/10 p-3">
+                        <span class="text-label-caps text-primary-fixed-dim">Cliente</span>
+                        <input class="mt-1.5 w-full border-none bg-transparent p-0 text-body-md text-white placeholder:text-primary-fixed-dim/60 focus:ring-0" id="delivery-client" placeholder="Cliente" type="text"/>
+                      </label>
+                    </div>
+                    <label class="block rounded-xl bg-white/10 p-3">
+                      <span class="text-label-caps text-primary-fixed-dim">Ruta</span>
+                      <input class="mt-1.5 w-full border-none bg-transparent p-0 text-body-md text-white placeholder:text-primary-fixed-dim/60 focus:ring-0" id="delivery-route" placeholder="Ruta" type="text"/>
+                    </label>
+                    <div class="grid gap-3 md:grid-cols-2">
+                      <label class="block rounded-xl bg-white/10 p-3">
+                        <span class="text-label-caps text-primary-fixed-dim">Vehículo</span>
+                        <input class="mt-1.5 w-full border-none bg-transparent p-0 text-body-md text-white placeholder:text-primary-fixed-dim/60 focus:ring-0" id="delivery-vehicle" placeholder="Patente" type="text"/>
+                      </label>
+                      <label class="block rounded-xl bg-white/10 p-3">
+                        <span class="text-label-caps text-primary-fixed-dim">Chofer</span>
+                        <input class="mt-1.5 w-full border-none bg-transparent p-0 text-body-md text-white placeholder:text-primary-fixed-dim/60 focus:ring-0" id="delivery-driver" placeholder="Nombre" type="text"/>
+                      </label>
+                    </div>
+                    <button class="flex w-full items-center justify-center gap-3 rounded-xl bg-white px-4 py-3 text-body-md font-semibold text-primary transition-colors hover:bg-surface-container-low" type="submit">
+                      <span class="material-symbols-outlined">add_task</span>
+                      Crear despacho
+                    </button>
+                  </form>
+                </section>
 
-            document.querySelectorAll(".quantity-input").forEach((input) => {
-                input.addEventListener("input", (event) => {
-                    allocationQuantities[event.target.dataset.product] = event.target.value;
-                });
-            });
+                <section class="rounded-[24px] border border-outline-variant bg-white p-4 shadow-soft">
+                  <div class="flex items-center justify-between gap-3">
+                    <div>
+                      <p class="text-label-caps text-on-surface-variant">Rutas</p>
+                      <h3 class="mt-1.5 text-[20px] font-semibold tracking-[-0.03em] text-primary">Despachos</h3>
+                    </div>
+                  </div>
+                  <div class="mt-4 space-y-3">
+                    ${state.pedidosDelivery.map((pedido) => renderDeliveryItem(pedido, productMap, lotMap)).join("") || `
+                      <div class="rounded-2xl bg-surface-container-low px-4 py-5 text-body-sm text-on-surface-variant">Sin rutas activas.</div>
+                    `}
+                  </div>
+                </section>
+              </aside>
+            </div>
+          </section>
+        </section>
+      `;
 
-            document.querySelectorAll(".assign-button").forEach((button) => {
-                button.addEventListener("click", (event) => {
-                    const productId = event.target.dataset.product;
-                    const canalId = event.target.dataset.channel;
-                    const quantity = Number(allocationQuantities[productId] || 0);
-
-                    if (!quantity) {
-                        distributionApi.showToast("Ingresa una cantidad antes de asignar stock.", "warn");
-                        return;
-                    }
-
-                    distributionApi.asignarACanal({
-                        productoId: productId,
-                        canalId,
-                        cantidad: quantity
-                    });
-                    const channelLabel = state.canales.find((canal) => canal.id === canalId).nombre;
-                    distributionApi.showToast(`${quantity} unidades asignadas a ${channelLabel}.`, "success");
-                    allocationQuantities[productId] = "";
-                    renderDistribution();
-                });
-            });
+      document.getElementById("distribution-refresh").addEventListener("click", renderDistribution);
+      document.getElementById("distribution-sales").addEventListener("click", () => {
+        window.location.href = "sales.html";
+      });
+      document.getElementById("distribution-close-load").addEventListener("click", () => {
+        if (!selectedDeliveryId) {
+          distributionApi.showToast("Selecciona un despacho delivery antes de cerrar carga.", "warn");
+          return;
         }
-
-        function finalizeAllocation() {
-            const state = distributionApi.getState();
-            if (!state.asignacionesPendientes.length) {
-                distributionApi.showToast("No hay movimientos pendientes por confirmar.", "info");
-                return;
-            }
-            distributionApi.finalizarAlocacion();
-            distributionApi.showToast("Asignaciones finalizadas y stock enviado a canales.", "success");
-            renderDistribution();
-        }
-
-        function applyStrategy(strategyName) {
-            const profile = strategyProfiles[strategyName];
-            if (!profile) {
-                return;
-            }
-
-            const baseState = distributionApi.getState();
-            distributionApi.setState({ ...baseState, asignacionesPendientes: [] });
-            const state = distributionApi.getState();
-
-            state.stockTerminado.forEach((stock) => {
-                const available = stock.cantidadDisponible;
-                if (!available) {
-                    return;
-                }
-
-                const split = {
-                    meson: Math.floor(available * profile.meson),
-                    retiro: Math.floor(available * profile.retiro),
-                    delivery: Math.floor(available * profile.delivery)
-                };
-                const assigned = split.meson + split.retiro + split.delivery;
-                if (assigned < available) {
-                    split.meson += available - assigned;
-                }
-
-                Object.entries(split).forEach(([canalId, cantidad]) => {
-                    if (cantidad > 0) {
-                        distributionApi.asignarACanal({ productoId: stock.productoId, canalId, cantidad });
-                    }
-                });
-            });
-
-            distributionApi.showToast(`Estrategia ${profile.label} cargada como propuesta de demo.`, "success");
-            renderDistribution();
-        }
-
-        window.addEventListener("focus", renderDistribution);
-        window.addEventListener("storage", renderDistribution);
+        distributionApi.cerrarCargaDelivery(selectedDeliveryId);
+        distributionApi.showToast("Carga cerrada y asignación congelada para el despacho seleccionado.", "success");
         renderDistribution();
-    </script>
-</body></html>
+      });
+      const inlineCloseLoad = document.getElementById("distribution-close-load-inline");
+      if (inlineCloseLoad) {
+        inlineCloseLoad.addEventListener("click", () => {
+          if (!selectedDeliveryId) {
+            distributionApi.showToast("Selecciona un despacho delivery antes de cerrar carga.", "warn");
+            return;
+          }
+          distributionApi.cerrarCargaDelivery(selectedDeliveryId);
+          distributionApi.showToast("Carga cerrada y asignación congelada para el despacho seleccionado.", "success");
+          renderDistribution();
+        });
+      }
+      document.getElementById("distribution-finalize").addEventListener("click", () => {
+        distributionApi.finalizarAlocacion();
+        distributionApi.showToast("Reservas confirmadas.", "success");
+        renderDistribution();
+      });
+
+      document.querySelectorAll("[data-lot-qty]").forEach((input) => {
+        input.addEventListener("input", (event) => {
+          allocationQuantities[event.target.dataset.lotQty] = event.target.value;
+        });
+      });
+
+      document.querySelectorAll(".lot-assign").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const lotId = event.currentTarget.dataset.lot;
+          const lot = lotMap[lotId];
+          const productId = event.currentTarget.dataset.product;
+          const canalId = event.currentTarget.dataset.channel;
+          const quantity = Number(allocationQuantities[lotId] || 0);
+          const available = lot ? lot.cantidadDisponible : 0;
+          if (quantity <= 0) {
+            distributionApi.showToast("Ingresa una cantidad válida antes de asignar.", "warn");
+            return;
+          }
+          if (quantity > available) {
+            distributionApi.showToast("La cantidad supera el saldo del lote.", "warn");
+            return;
+          }
+          distributionApi.asignarACanal({ productoId: productId, canalId, cantidad: quantity, loteId: lotId });
+          allocationQuantities[lotId] = "";
+          distributionApi.showToast(`${canalId === "meson" ? "Mesón" : "Retiro"} reservado desde ${lot?.orderId || lot?.turnoId || "lote"}.`, "success");
+          renderDistribution();
+        });
+      });
+
+      document.querySelectorAll(".lot-delivery-fill").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const lotId = event.currentTarget.dataset.lot;
+          const lot = lotMap[lotId];
+          const quantity = Number(allocationQuantities[lotId] || 0);
+          if (!lot) {
+            return;
+          }
+          document.getElementById("delivery-lot").value = lotId;
+          document.getElementById("delivery-quantity").value = quantity > 0 ? quantity : Math.min(lot.cantidadDisponible, 20);
+          document.getElementById("delivery-client").focus();
+        });
+      });
+
+      document.getElementById("delivery-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const lotId = document.getElementById("delivery-lot").value;
+        const lot = lotMap[lotId];
+        if (!lotId || !lot) {
+          distributionApi.showToast("No hay stock suficiente para crear un despacho delivery.", "warn");
+          return;
+        }
+        const quantity = Number(document.getElementById("delivery-quantity").value || 0);
+        if (quantity <= 0 || quantity > lot.cantidadDisponible) {
+          distributionApi.showToast("Revisa la cantidad disponible del lote.", "warn");
+          return;
+        }
+        if (!document.getElementById("delivery-client").value.trim() || !document.getElementById("delivery-route").value.trim() || !document.getElementById("delivery-vehicle").value.trim() || !document.getElementById("delivery-driver").value.trim()) {
+          distributionApi.showToast("Completa cliente, ruta, vehículo y chofer para crear el despacho.", "warn");
+          return;
+        }
+        distributionApi.crearPedidoDelivery({
+          productoId: lot.productoId,
+          loteId: lotId,
+          cantidad: quantity,
+          cliente: document.getElementById("delivery-client").value.trim(),
+          ruta: document.getElementById("delivery-route").value.trim(),
+          vehiculo: document.getElementById("delivery-vehicle").value.trim(),
+          chofer: document.getElementById("delivery-driver").value.trim(),
+        });
+        distributionApi.showToast("Despacho delivery creado y stock reservado.", "success");
+        renderDistribution();
+      });
+
+      document.querySelectorAll(".delivery-select").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          selectedDeliveryId = event.currentTarget.dataset.delivery;
+          renderDistribution();
+        });
+      });
+
+      document.querySelectorAll(".delivery-advance").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          distributionApi.avanzarEstadoDelivery(event.currentTarget.dataset.delivery);
+          distributionApi.showToast("Estado del despacho actualizado.", "info");
+          renderDistribution();
+        });
+      });
+    }
+
+    function summaryCard(label, value, helper, tone = "default") {
+      const toneClass = tone === "data"
+        ? "border-secondary/10 bg-secondary-fixed/50"
+        : tone === "accent"
+          ? "border-[#fde4bc] bg-[#fff7ea]"
+          : tone === "warn"
+            ? "border-error/15 bg-error-container/35"
+            : "border-outline-variant bg-white";
+      return `
+        <article class="rounded-[18px] border ${toneClass} px-3 py-2.5 shadow-soft">
+          <p class="text-label-caps text-on-surface-variant">${label}</p>
+          <p class="mt-1 font-data-md text-primary">${value}</p>
+          <p class="mt-1 text-[11px] leading-4 text-on-surface-variant">${helper}</p>
+        </article>
+      `;
+    }
+
+    function channelSnapshot(state, channelId, productMap) {
+      const channel = state.canales.find((item) => item.id === channelId);
+      const badge = distributionApi.channelBadge(channelId);
+      const channelUnits = channel.stock.reduce((sum, item) => sum + item.cantidad, 0);
+      return `
+        <article class="rounded-[20px] border border-outline-variant bg-surface-container-low/70 p-3.5">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-label-caps text-on-surface-variant">${channel.nombre}</p>
+              <p class="mt-1 font-data-md text-primary">${channelUnits} u</p>
+            </div>
+            <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${badge.className}">${badge.label}</span>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-body-sm">
+            <span class="text-on-surface-variant">Capacidad</span>
+            <span class="font-data-md text-primary">${channel.capacidadPct}%</span>
+          </div>
+          <div class="mt-2 h-2 overflow-hidden rounded-full bg-white">
+            <div class="h-full ${channelId === "meson" ? "bg-[#f1b33f]" : channelId === "retiro" ? "bg-secondary" : "bg-primary"}" style="width:${Math.max(8, channel.capacidadPct)}%"></div>
+          </div>
+          <div class="mt-3 space-y-1.5">
+            ${channel.stock.slice(0, 2).map((item) => `
+              <div class="flex items-center justify-between text-body-sm">
+                <span class="text-on-surface-variant">${productMap[item.productoId].nombre}</span>
+                <span class="font-data-md text-primary">${item.cantidad}</span>
+              </div>
+            `).join("") || `<p class="text-body-sm text-on-surface-variant">Sin saldo.</p>`}
+          </div>
+        </article>
+      `;
+    }
+
+    function renderLotCard(lot, draftValue) {
+      const total = Math.max(1, lot.cantidadOriginal);
+      const availablePct = Math.round((lot.cantidadDisponible / total) * 100);
+      const confirmedPct = Math.round((lot.cantidadConfirmada / total) * 100);
+      const pendingPct = Math.round((lot.cantidadPendiente / total) * 100);
+      return `
+        <article class="rounded-[24px] border border-outline-variant bg-[linear-gradient(180deg,_#ffffff,_#f7faff)] p-4 shadow-soft">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-[#fff3dc] px-3 py-1 text-label-caps text-[#b46900]">${lot.recetaId}</span>
+                <span class="rounded-full bg-surface-container-low px-3 py-1 text-body-sm text-on-surface-variant">${lot.orderId || lot.turnoId}</span>
+              </div>
+              <h3 class="mt-2 text-[22px] font-semibold tracking-[-0.03em] text-primary">${lot.productoNombre}</h3>
+              <p class="mt-1 text-body-sm text-on-surface-variant">${lot.fecha} · ${lot.turno} · ${lot.equipo || "Equipo"}</p>
+            </div>
+            <div class="grid min-w-[220px] grid-cols-3 gap-2 text-right">
+              <div class="rounded-2xl bg-white px-3 py-2">
+                <p class="text-label-caps text-on-surface-variant">Libre</p>
+                <p class="mt-1 font-data-md text-primary">${lot.cantidadDisponible}</p>
+              </div>
+              <div class="rounded-2xl bg-white px-3 py-2">
+                <p class="text-label-caps text-on-surface-variant">Reservado</p>
+                <p class="mt-1 font-data-md text-primary">${lot.cantidadConfirmada}</p>
+              </div>
+              <div class="rounded-2xl bg-white px-3 py-2">
+                <p class="text-label-caps text-on-surface-variant">Rend.</p>
+                <p class="mt-1 font-data-md text-primary">${lot.rendimientoPct}%</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-body-sm">
+              <span class="text-on-surface-variant">Mix del lote</span>
+              <span class="font-data-md text-primary">${lot.cantidadOriginal} u</span>
+            </div>
+            <div class="mt-2 flex h-3 overflow-hidden rounded-full bg-surface-container">
+              <div class="bg-[#f1b33f]" style="width:${Math.max(0, availablePct)}%"></div>
+              <div class="bg-secondary" style="width:${Math.max(0, confirmedPct)}%"></div>
+              <div class="bg-[#b7c8e1]" style="width:${Math.max(0, pendingPct)}%"></div>
+            </div>
+            <div class="mt-2 grid grid-cols-3 gap-2 text-body-sm">
+              <span class="rounded-xl bg-[#fff7ea] px-3 py-2 text-[#b46900]">Libre ${lot.cantidadDisponible}</span>
+              <span class="rounded-xl bg-secondary-fixed px-3 py-2 text-on-secondary-fixed">Canal ${lot.cantidadConfirmada}</span>
+              <span class="rounded-xl bg-surface-container-low px-3 py-2 text-on-surface-variant">Pend. ${lot.cantidadPendiente}</span>
+            </div>
+          </div>
+
+          <div class="mt-4 grid gap-3 xl:grid-cols-[120px_repeat(3,minmax(0,1fr))]">
+            <input class="rounded-xl border border-outline-variant bg-white px-3 py-3 font-data-md text-primary" data-lot-qty="${lot.id}" min="0" placeholder="0" type="number" value="${draftValue}"/>
+            <button class="lot-assign rounded-xl bg-primary px-4 py-3 text-body-sm font-semibold text-white transition-colors hover:bg-primary-container" data-channel="meson" data-lot="${lot.id}" data-product="${lot.productoId}" type="button">
+              Mesón
+            </button>
+            <button class="lot-assign rounded-xl border border-outline-variant bg-white px-4 py-3 text-body-sm font-semibold text-primary transition-colors hover:bg-surface-container" data-channel="retiro" data-lot="${lot.id}" data-product="${lot.productoId}" type="button">
+              Retiro
+            </button>
+            <button class="lot-delivery-fill rounded-xl border border-[#d7ddff] bg-[#eef2ff] px-4 py-3 text-body-sm font-semibold text-primary transition-colors hover:bg-[#e2e8ff]" data-lot="${lot.id}" type="button">
+              Delivery
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderPendingItem(item, lotMap, productMap) {
+      const lot = item.loteId ? lotMap[item.loteId] : null;
+      const channel = distributionApi.channelBadge(item.canalId);
+      return `
+        <article class="rounded-2xl border border-outline-variant bg-white px-4 py-3">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-body-md font-semibold text-primary">${lot ? lot.productoNombre : productMap[item.productoId].nombre}</p>
+              <p class="mt-1 text-body-sm text-on-surface-variant">${lot ? `${lot.orderId || lot.turnoId} · ${lot.turno}` : "Sin lote"}</p>
+            </div>
+            <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${channel.className}">${channel.label}</span>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-body-sm">
+            <span class="text-on-surface-variant">Reserva</span>
+            <span class="font-data-md text-primary">${item.cantidad} u</span>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderDeliveryItem(pedido, productMap, lotMap) {
+      const selected = pedido.id === selectedDeliveryId;
+      const pct = pedido.paradasTotales ? Math.round((pedido.paradasCompletadas / pedido.paradasTotales) * 100) : 0;
+      const lot = pedido.loteId ? lotMap[pedido.loteId] : null;
+      return `
+        <article class="rounded-2xl border ${selected ? "border-primary bg-[#f5f7ff]" : "border-outline-variant bg-white"} p-4">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-label-caps text-on-surface-variant">${pedido.id}</p>
+              <h4 class="mt-1 text-body-md font-semibold text-primary">${pedido.cliente}</h4>
+              <p class="mt-1 text-body-sm text-on-surface-variant">${productMap[pedido.productoId].nombre} · ${pedido.cantidad} u</p>
+            </div>
+            <span class="rounded-full px-3 py-1 text-body-sm font-semibold ${
+              pedido.estado === "Entregada"
+                ? "bg-tertiary-fixed text-on-tertiary-fixed"
+                : pedido.estado === "En Ruta"
+                  ? "bg-secondary-fixed text-on-secondary-fixed"
+                  : "bg-surface-container text-on-surface-variant"
+            }">${pedido.estado}</span>
+          </div>
+          <p class="mt-3 text-body-sm text-on-surface-variant">${lot ? `${lot.orderId || lot.turnoId} · ${lot.turno}` : pedido.ruta}</p>
+          <div class="mt-3 h-2 overflow-hidden rounded-full bg-surface-container">
+            <div class="h-full bg-primary" style="width:${Math.max(8, pct)}%"></div>
+          </div>
+          <div class="mt-3 flex gap-2">
+            <button class="delivery-select rounded-lg border border-outline-variant px-3 py-2 text-body-sm font-semibold transition-colors hover:bg-surface-container" data-delivery="${pedido.id}" type="button">
+              ${selected ? "Activa" : "Ver"}
+            </button>
+            <button class="delivery-advance rounded-lg bg-primary px-3 py-2 text-body-sm font-semibold text-white transition-colors hover:bg-primary-container ${pedido.estado === "Entregada" ? "opacity-40" : ""}" ${pedido.estado === "Entregada" ? "disabled" : ""} data-delivery="${pedido.id}" type="button">
+              Avanzar
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    window.addEventListener("focus", renderDistribution);
+    window.addEventListener("storage", renderDistribution);
+    renderDistribution();
+  </script>
+</body>
+</html>
